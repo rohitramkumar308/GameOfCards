@@ -7,7 +7,11 @@ public class Hand
     private ArrayList<Cards> gameHand;
     private int numberOfCards;
 
-
+    Hand(ArrayList<Cards> cards)
+    {
+        this.gameHand=cards;
+        this.numberOfCards=cards.size();
+    }
 
     public void addCard(Cards card)
     {
@@ -19,5 +23,18 @@ public class Hand
         Cards ret=gameHand.get(numberOfCards-1);
         gameHand.remove(--numberOfCards);
         return ret;
+    }
+
+    public boolean playCards(ArrayList<Cards> cards)
+    {
+        return false;
+    }
+
+    public void printHand()
+    {
+        for (Cards card:gameHand)
+        {
+            System.out.println(card.toString());
+        }
     }
 }

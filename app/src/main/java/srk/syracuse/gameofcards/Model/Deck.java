@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class Deck
 {
-    private Cards[] cards;
-    private int numberOfCards=52;
+    public Cards[] cards;
+    public int numberOfCards;
 
     Deck()
     {
@@ -82,6 +82,13 @@ public class Deck
             cards[i]=cards[random];
             cards[random]=temp;
         }
+    }
+
+    public Cards removeCard()
+    {
+        Cards crd=cards[numberOfCards-1];
+        numberOfCards--;
+        return crd;
     }
 
     static int getRandomCard(int cardNumber)
