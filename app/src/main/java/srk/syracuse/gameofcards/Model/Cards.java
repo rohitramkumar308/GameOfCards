@@ -19,7 +19,6 @@ public class Cards
     private int suit;
     private int rank;
     private int imageID;
-    private String cardName;
 
     public enum Suits
     {
@@ -40,6 +39,17 @@ public class Cards
 
         String[] meta=cardName.split("_");
 
+        int _suit=getSuitAsInt(meta[0]);
+        int _rank=Integer.parseInt(meta[1]);
+
+        if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
+                _suit != CLUBS && _suit != JOKER)
+            throw new IllegalArgumentException("Illegal playing card suit");
+        if (_suit != JOKER && (_rank < 1 || _rank > 13))
+            throw new IllegalArgumentException("Illegal playing card value");
+
+        this.suit=_suit;
+        this.rank=_rank;
     }
 
     Cards(int _suit,int _rank)
@@ -149,5 +159,12 @@ public class Cards
         }
         else
             return getValueAsString() + " of " + getSuitAsString();
+    }
+
+    public boolean isEqual(Cards card)
+    {
+        if(suit==card.suit && rank==card.rank)
+            return true;
+        return false;
     }
 }
