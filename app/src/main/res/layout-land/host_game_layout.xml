@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -66,32 +66,12 @@
                 android:lines="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="password"
-                app:met_iconLeft="@drawable/password_icon"
-                android:inputType="textPassword"
-                app:met_baseColor="#ffffff"
-                android:imeOptions="actionNext"
-                app:met_primaryColor="@color/editTextSelect"
-                app:met_iconPadding="0dp"
-                android:maxLength="30"
-                android:lines="1" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText

@@ -3,19 +3,20 @@ package srk.syracuse.gameofcards.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import srk.syracuse.gameofcards.Adapters.DesignAdapter;
 import srk.syracuse.gameofcards.R;
 
-public class CardDesignFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     private static final int DATASET_COUNT = 60;
@@ -49,8 +50,33 @@ public class CardDesignFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.game_setting_layout, container, false);
-        rootView.setTag(TAG);
+        Button apply = (Button) rootView.findViewById(R.id.applySettings);
+        Button manageDeck = (Button) rootView.findViewById(R.id.manageDeck);
+        Button cancel = (Button) rootView.findViewById(R.id.cancelChanges);
 
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+        manageDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.container, new MainFragment()).addToBackStack(HostFragment.class.getName())
+//                        .commit();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         // BEGIN_INCLUDE(initializeRecyclerView)
         mCardRecyclerView = (RecyclerView) rootView.findViewById(R.id.cardDesignList);
         mTableRecyclerView = (RecyclerView) rootView.findViewById(R.id.tableDesignList);

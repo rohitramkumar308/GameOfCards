@@ -36,26 +36,25 @@
         android:layout_height="wrap_content"
         android:text="Host Game"
         android:textAllCaps="true"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button_drawable"
         android:textColor="@color/headerText"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_above="@+id/joinGame"
-        android:layout_alignLeft="@+id/joinGame"
-        android:layout_alignStart="@+id/joinGame" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
     <Button
         android:id="@+id/joinGame"
         android:layout_width="200dp"
+        android:layout_marginBottom="40dp"
         android:layout_height="wrap_content"
         android:text="Join Game"
+        android:textAllCaps="true"
         android:background="@drawable/button_drawable"
         android:textColor="@color/headerText"
-        android:layout_marginTop="10dp"
-        android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 

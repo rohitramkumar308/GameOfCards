@@ -90,7 +90,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/gameSettings"
+        android:id="@+id/cancelChanges"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Cancel"
@@ -112,11 +112,11 @@
         android:background="@drawable/button_drawable"
         android:textColor="@color/headerText"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_alignTop="@+id/gameSettings"
+        android:layout_alignTop="@+id/cancelChanges"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/playGame"
+        android:id="@+id/applySettings"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Apply"
