@@ -78,8 +78,11 @@ public class MainFragment extends Fragment {
                         joinGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+//                                fragmentManager.beginTransaction()
+//                                        .replace(R.id.container, new MainFragment()).addToBackStack(null)
+//                                        .commit();
                                 fragmentManager.beginTransaction()
-                                        .replace(R.id.container, new MainFragment()).addToBackStack(null)
+                                        .replace(R.id.container, new HostFragment()).addToBackStack(HostFragment.class.getName())
                                         .commit();
                             }
                         });

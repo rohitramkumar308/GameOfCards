@@ -29,7 +29,7 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/radioMale"
+            android:id="@+id/radioEven"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Deal Evenly"
@@ -37,7 +37,7 @@
             android:checked="true" />
 
         <RadioButton
-            android:id="@+id/radioFemale"
+            android:id="@+id/radioExact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -45,6 +45,8 @@
             android:text="Deal Exactly" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/dealNumber"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter Number"
