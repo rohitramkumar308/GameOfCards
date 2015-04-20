@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/card_background"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <View
+        android:layout_width="280dp"
+        android:background="@color/inputText"
+        android:layout_height="470dp"
+        android:alpha="0.3"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/view" />
+
+    <RadioGroup
+        android:id="@+id/dealtType"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deal Evenly"
+            android:textColor="#ffffff"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textColor="#ffffff"
+            android:text="Deal Exactly" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Number"
+            android:textSize="15dp"
+            android:maxLength="1"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            app:met_baseColor="#ffffff"
+            android:gravity="center"
+            app:met_primaryColor="@color/editTextSelect"
+            android:inputType="number"
+            android:imeOptions="actionGo" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardDesignList"
+            android:background="#ffffff"
+            android:alpha="0.7"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="3dp"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tableDesignList"
+            android:background="#ffffff"
+            android:alpha="0.7"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/gameSettings"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textAllCaps="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/manageDeck"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Manage Deck"
+        android:textAllCaps="true"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignTop="@+id/gameSettings"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/playGame"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:textAllCaps="true"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignTop="@+id/manageDeck"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+

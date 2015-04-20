@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/card_background"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <View
+        android:layout_width="280dp"
+        android:background="@color/inputText"
+        android:layout_height="470dp"
+        android:alpha="0.3"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/menuText"
+        android:layout_width="280dp"
+        android:paddingTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="MAIN MENU"
+        android:textColor="@color/headerText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/hostGame"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Host Game"
+        android:textAllCaps="true"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_above="@+id/joinGame"
+        android:layout_alignLeft="@+id/joinGame"
+        android:layout_alignStart="@+id/joinGame" />
+
+
+    <Button
+        android:id="@+id/joinGame"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Join Game"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+</RelativeLayout>
+

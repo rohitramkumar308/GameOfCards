@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/card_background"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <View
+        android:layout_width="280dp"
+        android:background="@color/inputText"
+        android:layout_height="470dp"
+        android:alpha="0.3"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/view" />
+
+    <TextView
+        android:id="@+id/menuText"
+        android:layout_width="280dp"
+        android:paddingTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="JOIN GAME"
+        android:textColor="@color/headerText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gameList"
+        android:background="#ffffff"
+        android:alpha="0.5"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/menuText"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/gameSettings" />
+
+
+    <Button
+        android:id="@+id/gameSettings"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Game Settings"
+        android:textAllCaps="true"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignBottom="@+id/view"
+        android:layout_alignLeft="@+id/gameList"
+        android:layout_alignStart="@+id/gameList" />
+
+    <Button
+        android:id="@+id/playGame"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Play Game"
+        android:textAllCaps="true"
+        android:background="@drawable/button_drawable"
+        android:textColor="@color/headerText"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignTop="@+id/gameSettings"
+        android:layout_alignRight="@+id/gameList"
+        android:layout_alignEnd="@+id/gameList" />
+
+</RelativeLayout>
+

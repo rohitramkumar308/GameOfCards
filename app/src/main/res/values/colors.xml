@@ -1,5 +1,10 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
+    <color name="mainBackground">#0099CC</color>
+    <color name="secondaryBackground">#d3d3d3</color>
+    <color name="headerText">#ffffff</color>
+    <color name="inputText">#000000</color>
+    <color name="editTextSelect">#03C03C</color>
 
 </resources>
