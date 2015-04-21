@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 
+import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.PlayerListFragment;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.PlayerInfo;
@@ -30,7 +31,11 @@ public class ServerHandler extends Handler {
             PlayerListFragment.mAdapter.notifyItemInserted(PlayerListFragment.deviceList.size() - 1);
         }
         if (gameObject instanceof Game) {
-            PlayerListFragment.gameObject = (Game) gameObject;
+            if (GameFragment.gameObject != null) {
+                GameFragment.gameObject = (Game) gameObject;
+            } else {
+                PlayerListFragment.gameObject = (Game) gameObject;
+            }
         }
 
 

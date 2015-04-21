@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
 import srk.syracuse.gameofcards.Model.Game;
 
@@ -28,7 +29,11 @@ public class ClientHandler extends Handler {
             JoinGameFragment.gameName.setText(gameName);
         }
         if (clientObject instanceof Game) {
-            JoinGameFragment.gameobject = (Game) clientObject;
+            if (GameFragment.gameObject != null) {
+                GameFragment.gameObject = (Game) clientObject;
+            } else {
+                JoinGameFragment.gameobject = (Game) clientObject;
+            }
         }
     }
 }
