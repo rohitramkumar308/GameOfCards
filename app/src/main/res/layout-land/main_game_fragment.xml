@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,7 +11,7 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <View
-        android:layout_width="280dp"
+        android:layout_width="320dp"
         android:background="@color/inputText"
         android:layout_height="470dp"
         android:alpha="0.3"
@@ -29,6 +30,23 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/userName"
+        android:layout_width="300dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:hint="username"
+        app:met_iconLeft="@drawable/user_icon"
+        android:inputType="text"
+        app:met_baseColor="#ffffff"
+        app:met_primaryColor="@color/editTextSelect"
+        app:met_iconPadding="0dp"
+        android:maxLength="30"
+        android:lines="1"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/menuText"
+        android:layout_alignEnd="@+id/menuText" />
 
     <Button
         android:id="@+id/hostGame"

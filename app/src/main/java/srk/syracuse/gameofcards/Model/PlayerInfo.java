@@ -1,11 +1,11 @@
 package srk.syracuse.gameofcards.Model;
 
-public class PlayerInfo 
-{
-	public String username;
-	
-	PlayerInfo(String username)
-	{
-		this.username=username;
-	}
+import java.io.Serializable;
+
+public class PlayerInfo implements Serializable {
+    public String username;
+
+    public PlayerInfo(String username) {
+        this.username = username;
+    }
 }

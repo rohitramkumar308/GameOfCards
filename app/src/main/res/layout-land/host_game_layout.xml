@@ -53,6 +53,7 @@
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/gameName"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Game Name"
@@ -75,6 +76,7 @@
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/numberofPlayers"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Number of Players"
@@ -84,7 +86,6 @@
                 app:met_primaryColor="@color/editTextSelect"
                 android:inputType="number"
                 app:met_iconLeft="@drawable/players_icon"
-                android:imeOptions="actionGo"
                 app:met_iconPadding="0dp" />
         </LinearLayout>
 
@@ -92,7 +93,7 @@
 
 
     <Button
-        android:id="@+id/joinGame"
+        android:id="@+id/startGame"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Start Game"

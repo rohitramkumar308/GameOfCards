@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -36,15 +35,54 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
+        android:id="@+id/welcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/menuText">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WELCOME  "
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:elegantTextHeight="true"
+            android:paddingTop="5dp"
+            android:textColor="#ffffff"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#ffffff"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:elegantTextHeight="true"
+            android:textStyle="bold|italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:background="@drawable/rectangular_box"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/menuText">
+        android:layout_below="@+id/welcomeMessage">
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,6 +96,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            android:id="@+id/gameName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kunal's Game"
@@ -71,27 +110,12 @@
 
     </LinearLayout>
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="password"
-        app:met_iconLeft="@drawable/password_icon"
-        android:inputType="textPassword"
-        app:met_baseColor="#ffffff"
-        android:imeOptions="actionNext"
-        app:met_primaryColor="@color/editTextSelect"
-        app:met_iconPadding="0dp"
-        android:maxLength="30"
-        android:lines="1"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/menuText"
-        android:layout_alignEnd="@+id/menuText" />
 
     <Button
         android:id="@+id/joinGame"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Join Game"
+        android:text="Start Game"
         android:textAllCaps="true"
         android:background="@drawable/button_drawable"
         android:textColor="@color/headerText"

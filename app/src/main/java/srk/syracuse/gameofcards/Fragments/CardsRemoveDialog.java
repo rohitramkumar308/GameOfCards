@@ -17,10 +17,10 @@ import srk.syracuse.gameofcards.R;
 /**
  * Created by rohitramkumar on 4/20/15.
  */
-public class CardExceptionFragment extends DialogFragment {
+public class CardsRemoveDialog extends DialogFragment {
 
 
-    public CardExceptionFragment() {
+    public CardsRemoveDialog() {
         // Required empty public constructor
     }
 

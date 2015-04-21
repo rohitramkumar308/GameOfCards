@@ -20,7 +20,8 @@ public class SettingsFragment extends Fragment {
 
     protected RecyclerView mCardRecyclerView;
     protected RecyclerView mTableRecyclerView;
-    protected DesignAdapter mAdapter;
+    protected DesignAdapter mCardAdapter;
+    protected DesignAdapter mTableAdapter;
     protected RecyclerView.LayoutManager mCardLayoutManager;
     protected RecyclerView.LayoutManager mTableLayoutManager;
 
@@ -68,7 +69,7 @@ public class SettingsFragment extends Fragment {
         manageDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardExceptionFragment cardException = new CardExceptionFragment();
+                CardsRemoveDialog cardException = new CardsRemoveDialog();
                 cardException.setTargetFragment(SettingsFragment.this, 2);
                 cardException.show(getFragmentManager(), "Remove Cards");
             }
@@ -85,9 +86,10 @@ public class SettingsFragment extends Fragment {
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardRecyclerView.setLayoutManager(mCardLayoutManager);
         mTableRecyclerView.setLayoutManager(mTableLayoutManager);
-        mAdapter = new DesignAdapter(mDataset);
-        mCardRecyclerView.setAdapter(mAdapter);
-        mTableRecyclerView.setAdapter(mAdapter);
+        mCardAdapter = new DesignAdapter(mDataset);
+        mTableAdapter = new DesignAdapter(mDataset);
+        mCardRecyclerView.setAdapter(mCardAdapter);
+        mTableRecyclerView.setAdapter(mTableAdapter);
         return rootView;
     }
 

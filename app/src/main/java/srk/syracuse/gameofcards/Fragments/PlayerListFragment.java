@@ -26,9 +26,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import srk.syracuse.gameofcards.Adapters.CustomAdapter;
+import srk.syracuse.gameofcards.Adapters.PlayerAdapter;
+import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
+import srk.syracuse.gameofcards.Connections.ServerSenderThread;
+import srk.syracuse.gameofcards.Model.Cards;
+import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
 
 
@@ -37,8 +43,6 @@ public class PlayerListFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
-    private static final int DATASET_COUNT = 60;
-
 
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -48,17 +52,14 @@ public class PlayerListFragment extends Fragment {
     protected LayoutManagerType mCurrentLayoutManagerType;
 
     protected RecyclerView mPlayerList;
-    protected CustomAdapter mAdapter;
+    public static PlayerAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected ArrayList<String> deviceList = new ArrayList<>();
+    public static ArrayList<String> deviceList = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        initDataset();
+//        initDataset();
     }
 
     @Override
@@ -84,6 +85,7 @@ public class PlayerListFragment extends Fragment {
 //                fragmentManager.beginTransaction()
 //                        .replace(R.id.container, new MainFragment()).addToBackStack(HostFragment.class.getName())
 //                        .commit();
+                initializeGame();
             }
         });
         mPlayerList = (RecyclerView) rootView.findViewById(R.id.gameList);
@@ -99,20 +101,14 @@ public class PlayerListFragment extends Fragment {
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-        mAdapter = new CustomAdapter(deviceList);
+        mAdapter = new PlayerAdapter(deviceList);
         mPlayerList.setAdapter(mAdapter);
         return rootView;
     }
 
-    /**
-     * Set RecyclerView's LayoutManager to the one given.
-     *
-     * @param layoutManagerType Type of layout manager to switch to.
-     */
     public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
 
-        // If a layout manager has already been set, get current scroll position.
         if (mPlayerList.getLayoutManager() != null) {
             scrollPosition = ((LinearLayoutManager) mPlayerList.getLayoutManager())
                     .findFirstCompletelyVisibleItemPosition();
@@ -138,15 +134,24 @@ public class PlayerListFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save currently selected layout manager.
         savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
         super.onSaveInstanceState(savedInstanceState);
     }
 
-
-    private void initDataset() {
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            deviceList.add("This is element #" + i);
+    public void initializeGame() {
+        Iterator<Socket> socketIterator = ServerConnectionThread.socketSet.iterator();
+        while (socketIterator.hasNext()) {
+            Socket soc = socketIterator.next();
+            ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
+            restrictedCards.add(new Cards("diamonds_10"));
+            restrictedCards.add(new Cards("spades_10"));
+            ArrayList<String> username = new ArrayList<String>();
+            username.add("Rohit");
+            username.add("Shivank");
+            username.add("Kunal");
+            Game game = new Game(username, 3, 5, false, restrictedCards, "Game of Cards");
+            ServerSenderThread sendServerGame = new ServerSenderThread(soc, game);
+            sendServerGame.start();
         }
     }
 }

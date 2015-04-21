@@ -29,7 +29,7 @@ import srk.syracuse.gameofcards.R;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
 
     private ArrayList<String> mDataSet;
@@ -64,7 +64,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(ArrayList<String> dataSet) {
+    public PlayerAdapter(ArrayList<String> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -74,7 +74,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.player_list_item, viewGroup, false);
 
         return new ViewHolder(v);
     }

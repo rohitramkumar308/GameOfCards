@@ -1,13 +1,21 @@
 package srk.syracuse.gameofcards.Connections;
 
+
+import android.os.Bundle;
+import android.os.Message;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
+
+import srk.syracuse.gameofcards.Fragments.MainFragment;
+import srk.syracuse.gameofcards.Model.Game;
+import srk.syracuse.gameofcards.Utils.ClientHandler;
 
 public class ClientListenerThread extends Thread {
 
-    String response = "";
     Socket socket;
 
     ClientListenerThread(Socket soc) {
@@ -16,17 +24,31 @@ public class ClientListenerThread extends Thread {
 
     @Override
     public void run() {
-        ByteArrayOutputStream byteArrayOutputStream =
-                new ByteArrayOutputStream(1024);
-        byte[] buffer = new byte[1024];
+        ObjectInputStream objectInputStream;
         try {
-            int bytesRead;
             InputStream inputStream = socket.getInputStream();
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, bytesRead);
-                response += byteArrayOutputStream.toString("UTF-8");
+            objectInputStream = new ObjectInputStream(inputStream);
+            while (true) {
+                Bundle data = new Bundle();
+                Object serverObject = (Object) objectInputStream.readObject();
+
+                if (serverObject != null) {
+                    if (serverObject instanceof Game) {
+
+                    }
+                    if (serverObject instanceof String) {
+                        data.putSerializable(ClientHandler.DATA_KEY, (String) serverObject);
+                        data.putString(ClientHandler.ACTION_KEY, ClientHandler.UPDATE_GAME_NAME);
+                    }
+
+                    Message msg = new Message();
+                    msg.setData(data);
+                    MainFragment.clientHandler.sendMessage(msg);
+                }
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

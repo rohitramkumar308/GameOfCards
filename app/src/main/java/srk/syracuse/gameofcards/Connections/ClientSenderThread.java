@@ -5,12 +5,12 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class ServerSenderThread extends Thread {
+public class ClientSenderThread extends Thread {
 
     private Socket hostThreadSocket;
     Object message;
 
-    public ServerSenderThread(Socket socket, Object message) {
+    ClientSenderThread(Socket socket, Object message) {
         hostThreadSocket = socket;
         this.message = message;
     }

@@ -5,30 +5,41 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
+import java.util.Set;
+
+import srk.syracuse.gameofcards.Fragments.HostFragment;
+
 
 public class ServerConnectionThread extends Thread {
 
     static final int SocketServerPORT = 8080;
-    int count = 0;
-    public static HashSet<Socket> socketSet = new HashSet<Socket>();
+    public static Set<Socket> socketSet = new HashSet();
+    public static boolean serverStarted = false;
     ServerSocket serverSocket;
 
-    ServerConnectionThread() {
+
+    public ServerConnectionThread() {
+
     }
 
     @Override
     public void run() {
-        try {
-            serverSocket = new ServerSocket(SocketServerPORT);
-            while (true) {
-                Socket socket = serverSocket.accept();
-                Thread socketAcceptThread = new Thread(new ServerListenerThread(socket, "Client " + count));
-                socketAcceptThread.start();
-                socketSet.add(socket);
+        if (serverSocket == null) {
+
+            try {
+                serverSocket = new ServerSocket(SocketServerPORT);
+                serverStarted = true;
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    Thread socketListenThread = new Thread(new ServerListenerThread(socket));
+                    socketListenThread.start();
+                    ServerSenderThread sendGameName = new ServerSenderThread(socket, new String(HostFragment.gameName.getText().toString()));
+                    sendGameName.run();
+                    socketSet.add(socket);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-
 }

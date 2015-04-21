@@ -1,8 +1,9 @@
 package srk.syracuse.gameofcards.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Hand
+public class Hand implements Serializable
 {
     private ArrayList<Cards> gameHand;
     private int numberOfCards;

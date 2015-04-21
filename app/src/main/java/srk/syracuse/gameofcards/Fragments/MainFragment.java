@@ -1,8 +1,6 @@
 package srk.syracuse.gameofcards.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,32 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
+import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
+import srk.syracuse.gameofcards.Connections.ServerSenderThread;
+import srk.syracuse.gameofcards.Model.Cards;
+import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.ClientHandler;
 
 
 public class MainFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-
-    public static MainFragment newInstance(String param1, String param2) {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public static ClientHandler clientHandler;
+    public static MaterialEditText userName;
 
     public MainFragment() {
     }
@@ -44,10 +39,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -58,6 +50,7 @@ public class MainFragment extends Fragment {
         Button joinGame = (Button) rootView.findViewById(R.id.joinGame);
         WifiManager wifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
         Method[] wmMethods = wifi.getClass().getDeclaredMethods();
+        userName = (MaterialEditText) rootView.findViewById(R.id.userName);
         for (Method method : wmMethods) {
             if (method.getName().equals("isWifiApEnabled")) {
                 try {
@@ -65,6 +58,7 @@ public class MainFragment extends Fragment {
                     final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (isWifiAPEnabled) {
                         joinGame.setVisibility(View.GONE);
+                        userName.setVisibility(View.GONE);
                         hostGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -74,25 +68,31 @@ public class MainFragment extends Fragment {
                             }
                         });
                     } else {
+                        if (clientHandler == null) {
+                            clientHandler = new ClientHandler();
+                        }
+                        userName.setVisibility(View.VISIBLE);
                         hostGame.setVisibility(View.GONE);
                         joinGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-//                                fragmentManager.beginTransaction()
-//                                        .replace(R.id.container, new MainFragment()).addToBackStack(null)
-//                                        .commit();
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.container, new HostFragment()).addToBackStack(HostFragment.class.getName())
-                                        .commit();
+                                if (userName.getText() != null && userName.getText().toString().trim().length() > 0) {
+                                    ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
+                                    clientConnect.start();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
+                                            .commit();
+                                } else {
+                                    Toast.makeText(getActivity(), "Please enter a UserName", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
                 } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
@@ -100,35 +100,6 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
 
 }
