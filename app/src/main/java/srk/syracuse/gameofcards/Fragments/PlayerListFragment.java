@@ -29,6 +29,7 @@ import android.widget.Button;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import srk.syracuse.gameofcards.Adapters.PlayerAdapter;
 import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
@@ -43,6 +44,8 @@ public class PlayerListFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
+    public static Game gameObject;
+    public static ArrayList<String> deviceList = new ArrayList<String>();
 
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -54,7 +57,6 @@ public class PlayerListFragment extends Fragment {
     protected RecyclerView mPlayerList;
     public static PlayerAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    public static ArrayList<String> deviceList = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,10 +84,13 @@ public class PlayerListFragment extends Fragment {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.container, new MainFragment()).addToBackStack(HostFragment.class.getName())
-//                        .commit();
-                initializeGame();
+                if (gameObject != null) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
+                            .commit();
+                } else {
+                    initializeGame();
+                }
             }
         });
         mPlayerList = (RecyclerView) rootView.findViewById(R.id.gameList);
@@ -140,18 +145,17 @@ public class PlayerListFragment extends Fragment {
 
     public void initializeGame() {
         Iterator<Socket> socketIterator = ServerConnectionThread.socketSet.iterator();
+        ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
+        Socket socket;
+        restrictedCards.add(new Cards("diamonds_10"));
+        restrictedCards.add(new Cards("spades_10"));
+        deviceList.add(MainFragment.userName.getText().toString());
+        Game gameObject = new Game(deviceList, 3, 5, false, restrictedCards, "Game of Cards");
         while (socketIterator.hasNext()) {
-            Socket soc = socketIterator.next();
-            ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
-            restrictedCards.add(new Cards("diamonds_10"));
-            restrictedCards.add(new Cards("spades_10"));
-            ArrayList<String> username = new ArrayList<String>();
-            username.add("Rohit");
-            username.add("Shivank");
-            username.add("Kunal");
-            Game game = new Game(username, 3, 5, false, restrictedCards, "Game of Cards");
-            ServerSenderThread sendServerGame = new ServerSenderThread(soc, game);
-            sendServerGame.start();
+            socket = socketIterator.next();
+            ServerSenderThread sendGameName = new ServerSenderThread(socket, gameObject);
+            sendGameName.start();
+
         }
     }
 }

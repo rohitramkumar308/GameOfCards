@@ -4,15 +4,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import srk.syracuse.gameofcards.Fragments.HostFragment;
-import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
+
 import srk.syracuse.gameofcards.Fragments.PlayerListFragment;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.PlayerInfo;
 
-/**
- * Created by rohitramkumar on 4/20/15.
- */
+
 public class ServerHandler extends Handler {
 
     public final static String PLAYER_LIST_UPDATE = "updatePlayerList";
@@ -31,6 +28,9 @@ public class ServerHandler extends Handler {
             PlayerInfo playerInfo = (PlayerInfo) gameObject;
             PlayerListFragment.deviceList.add(playerInfo.username);
             PlayerListFragment.mAdapter.notifyItemInserted(PlayerListFragment.deviceList.size() - 1);
+        }
+        if (gameObject instanceof Game) {
+            PlayerListFragment.gameObject = (Game) gameObject;
         }
 
 

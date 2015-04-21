@@ -40,7 +40,7 @@ public class Game implements Serializable {
         }
 
         for (int i = 0; i < usernames.size(); i++) {
-            players.add(new Player(i + 1, usernames.get(i), getHand()));
+            players.add(new Player(i + 1, usernames.get(i), getHand(), true));
         }
 
     }

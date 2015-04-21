@@ -15,15 +15,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
-import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
-import srk.syracuse.gameofcards.Connections.ServerSenderThread;
-import srk.syracuse.gameofcards.Model.Cards;
-import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
 import srk.syracuse.gameofcards.Utils.ClientHandler;
 
@@ -45,7 +38,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.main_game_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.main_screen_layout, container, false);
         Button hostGame = (Button) rootView.findViewById(R.id.hostGame);
         Button joinGame = (Button) rootView.findViewById(R.id.joinGame);
         WifiManager wifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
@@ -58,20 +51,22 @@ public class MainFragment extends Fragment {
                     final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (isWifiAPEnabled) {
                         joinGame.setVisibility(View.GONE);
-                        userName.setVisibility(View.GONE);
                         hostGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.container, new HostFragment()).addToBackStack(HostFragment.class.getName())
-                                        .commit();
+                                if (userName.getText() != null && userName.getText().toString().trim().length() > 0) {
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.container, new HostFragment()).addToBackStack(HostFragment.class.getName())
+                                            .commit();
+                                } else {
+                                    Toast.makeText(getActivity(), "Please enter a UserName", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     } else {
                         if (clientHandler == null) {
                             clientHandler = new ClientHandler();
                         }
-                        userName.setVisibility(View.VISIBLE);
                         hostGame.setVisibility(View.GONE);
                         joinGame.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -80,7 +75,7 @@ public class MainFragment extends Fragment {
                                     ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
                                     clientConnect.start();
                                     fragmentManager.beginTransaction()
-                                            .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
+                                            .replace(R.id.container, new HostFragment()).addToBackStack(JoinGameFragment.class.getName())
                                             .commit();
                                 } else {
                                     Toast.makeText(getActivity(), "Please enter a UserName", Toast.LENGTH_SHORT).show();
@@ -99,7 +94,6 @@ public class MainFragment extends Fragment {
         }
         return rootView;
     }
-
 
 
 }

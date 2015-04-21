@@ -11,14 +11,7 @@ import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
-import srk.syracuse.gameofcards.Connections.ServerSenderThread;
-import srk.syracuse.gameofcards.Model.Cards;
-import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
 
@@ -47,7 +40,6 @@ public class HostFragment extends Fragment {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (gameName.getText() != null && numberOfPlayers.getText() != null
                         && numberOfPlayers.getText().toString().trim().length() > 0 && gameName.getText().toString().trim().length() > 0) {
                     Toast.makeText(getActivity(), "Server started", Toast.LENGTH_SHORT).show();

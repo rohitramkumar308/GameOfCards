@@ -1,0 +1,148 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/card_background"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/inputText"
+        android:alpha="0.5"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/player1Image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/player1Text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player1" />
+
+        <ImageView
+            android:id="@+id/player2Image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/player2Text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player2" />
+
+        <ImageView
+            android:id="@+id/player3Image"
+            android:layout_width="20dp"
+            android:visibility="gone"
+            android:layout_height="20dp"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/player3Text"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player3" />
+
+        <ImageView
+            android:id="@+id/player4Image"
+            android:visibility="gone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/player4Text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player4" />
+
+        <ImageView
+            android:id="@+id/player5Image"
+            android:layout_width="20dp"
+            android:visibility="gone"
+            android:layout_height="20dp"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/player5Text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player5" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/inputText"
+        android:alpha="0.5"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/currentPlayerImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/active_icon" />
+
+        <TextView
+            android:id="@+id/currentPlayerText"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondaryBackground"
+            android:text="Player1" />
+    </LinearLayout>
+
+</RelativeLayout>
+

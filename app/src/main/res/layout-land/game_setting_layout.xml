@@ -24,7 +24,7 @@
 
     <RadioGroup
         android:id="@+id/dealtType"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -48,23 +48,46 @@
             android:textColor="#ffffff"
             android:text="Deal Exactly" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/dealNumber"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter Number"
-            android:textSize="15dp"
-            android:maxLength="1"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            app:met_baseColor="#ffffff"
-            android:gravity="center"
-            app:met_primaryColor="@color/editTextSelect"
-            android:inputType="number"
-            android:imeOptions="actionGo" />
-
     </RadioGroup>
+
+    <Spinner
+        android:id="@+id/planets_spinner"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dealtType"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/dealtType" />
+    <!--<com.rengwuxian.materialedittext.MaterialEditText-->
+    <!--android:id="@+id/dealNumber"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:hint="Enter Number"-->
+    <!--android:textSize="15dp"-->
+    <!--android:maxLength="1"-->
+    <!--android:layout_toRightOf="@+id/dealtType"-->
+    <!--android:textStyle="bold"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--app:met_baseColor="#ffffff"-->
+    <!--android:gravity="center"-->
+    <!--app:met_primaryColor="@color/editTextSelect"-->
+    <!--android:inputType="number" />-->
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/deckNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number of Decks"
+        android:textSize="15dp"
+        android:maxLength="1"
+        android:textStyle="bold"
+        app:met_baseColor="#ffffff"
+        android:gravity="center"
+        app:met_iconLeft="@drawable/deck_icon"
+        app:met_primaryColor="@color/editTextSelect"
+        android:inputType="number"
+        android:layout_alignTop="@+id/dealtType"
+        android:layout_alignRight="@+id/view"
+        android:layout_alignEnd="@+id/view" />
 
     <LinearLayout
         android:layout_width="wrap_content"

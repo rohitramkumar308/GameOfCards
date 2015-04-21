@@ -34,7 +34,7 @@ public class ServerConnectionThread extends Thread {
                     Thread socketListenThread = new Thread(new ServerListenerThread(socket));
                     socketListenThread.start();
                     ServerSenderThread sendGameName = new ServerSenderThread(socket, new String(HostFragment.gameName.getText().toString()));
-                    sendGameName.run();
+                    sendGameName.start();
                     socketSet.add(socket);
                 }
             } catch (IOException e) {

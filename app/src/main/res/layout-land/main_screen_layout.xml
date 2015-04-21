@@ -34,7 +34,6 @@
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/userName"
         android:layout_width="300dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:hint="username"
         app:met_iconLeft="@drawable/user_icon"

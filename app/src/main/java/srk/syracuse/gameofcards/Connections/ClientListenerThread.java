@@ -24,23 +24,22 @@ public class ClientListenerThread extends Thread {
 
     @Override
     public void run() {
-        ObjectInputStream objectInputStream;
         try {
-            InputStream inputStream = socket.getInputStream();
-            objectInputStream = new ObjectInputStream(inputStream);
             while (true) {
+                ObjectInputStream objectInputStream;
+                InputStream inputStream = null;
+                inputStream = socket.getInputStream();
+                objectInputStream = new ObjectInputStream(inputStream);
                 Bundle data = new Bundle();
                 Object serverObject = (Object) objectInputStream.readObject();
-
                 if (serverObject != null) {
-                    if (serverObject instanceof Game) {
-
-                    }
                     if (serverObject instanceof String) {
                         data.putSerializable(ClientHandler.DATA_KEY, (String) serverObject);
                         data.putString(ClientHandler.ACTION_KEY, ClientHandler.UPDATE_GAME_NAME);
                     }
-
+                    if (serverObject instanceof Game) {
+                        data.putSerializable(ClientHandler.DATA_KEY, (Game) serverObject);
+                    }
                     Message msg = new Message();
                     msg.setData(data);
                     MainFragment.clientHandler.sendMessage(msg);

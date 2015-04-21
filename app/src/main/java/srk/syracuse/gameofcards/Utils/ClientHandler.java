@@ -22,12 +22,13 @@ public class ClientHandler extends Handler {
         super.handleMessage(msg);
         messageData = msg.getData();
         String value = messageData.getString(ACTION_KEY);
-        if (value.equals(UPDATE_GAME_NAME)) {
-            String gameName = (String) messageData.getSerializable(DATA_KEY);
+        Object clientObject = (Object) messageData.getSerializable(DATA_KEY);
+        if (value != null && value.equals(UPDATE_GAME_NAME)) {
+            String gameName = (String) clientObject;
             JoinGameFragment.gameName.setText(gameName);
-        } else {
-            Game gameObject = (Game) messageData.getSerializable(DATA_KEY);
-
+        }
+        if (clientObject instanceof Game) {
+            JoinGameFragment.gameobject = (Game) clientObject;
         }
     }
 }
