@@ -75,7 +75,7 @@ public class MainFragment extends Fragment {
                                     ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
                                     clientConnect.start();
                                     fragmentManager.beginTransaction()
-                                            .replace(R.id.container, new HostFragment()).addToBackStack(JoinGameFragment.class.getName())
+                                            .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
                                             .commit();
                                 } else {
                                     Toast.makeText(getActivity(), "Please enter a UserName", Toast.LENGTH_SHORT).show();
