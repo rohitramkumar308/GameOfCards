@@ -106,7 +106,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedCardImage = Integer.valueOf(image.getTag().toString());
+                //selectedCardImage = Integer.valueOf(image.getTag().toString());
             }
         });
 

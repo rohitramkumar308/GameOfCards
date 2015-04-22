@@ -215,11 +215,13 @@ public class GameFragment extends Fragment {
                     for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
                         setCardFaceUp(i, false);
                         mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                        thisPlayer.hand.handFaceUp = false;
                     }
                 else
                     for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
                         setCardFaceUp(i, true);
                         mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                        thisPlayer.hand.handFaceUp = true;
                     }
                 mCardHandAdapter.notifyDataSetChanged();
             }
@@ -231,6 +233,11 @@ public class GameFragment extends Fragment {
     public void setCardFaceUp(int position, boolean isFaceUp) {
         this.thisPlayer.hand.getCard(position).cardFaceUp = isFaceUp;
         this.thisPlayer.hand.isHandFaceUp();
+        Button b = (Button) rootView.findViewById(R.id.hideCardsButton);
+        if(thisPlayer.hand.handFaceUp)
+            b.setText("Hide Cards");
+        else
+            b.setText("Show Cards");
     }
 
     public static void updatePlayers() {
