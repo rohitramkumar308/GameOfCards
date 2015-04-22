@@ -16,6 +16,7 @@ public class Game implements Serializable {
     public String cardBackImage;
     public String senderUsername;
     public Table mTable;
+    private int actionKey;
 
     public Game(ArrayList<String> usernames, int numberOfDeck, int numberOfCardsDraw, boolean drawEqual, ArrayList<Cards> restrictedCards, String gameName) {
         this.senderUsername = null;
@@ -77,6 +78,14 @@ public class Game implements Serializable {
             System.out.println(player.playerID + " " + player.username);
             player.hand.printHand();
         }
+    }
+
+    public int getActionKey() {
+        return actionKey;
+    }
+
+    public void setActionKey(int actionKey) {
+        this.actionKey = actionKey;
     }
 }
 

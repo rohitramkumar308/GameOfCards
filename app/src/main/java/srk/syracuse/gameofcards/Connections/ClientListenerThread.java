@@ -32,7 +32,7 @@ public class ClientListenerThread extends Thread {
                 if (serverObject != null) {
                     if (serverObject instanceof String) {
                         data.putSerializable(Constants.DATA_KEY, (String) serverObject);
-                        data.putString(Constants.ACTION_KEY, Constants.UPDATE_GAME_NAME);
+                        data.putInt(Constants.ACTION_KEY, Constants.UPDATE_GAME_NAME);
                     }
                     if (serverObject instanceof Game) {
                         data.putSerializable(Constants.DATA_KEY, (Game) serverObject);

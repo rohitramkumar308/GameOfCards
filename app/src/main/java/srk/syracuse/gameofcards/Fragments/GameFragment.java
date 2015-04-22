@@ -4,8 +4,6 @@ package srk.syracuse.gameofcards.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +23,6 @@ import srk.syracuse.gameofcards.Adapters.CardHandAdapter;
 import srk.syracuse.gameofcards.Adapters.TableViewAdapter;
 import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
 import srk.syracuse.gameofcards.Connections.ClientSenderThread;
-import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
@@ -46,7 +43,7 @@ public class GameFragment extends Fragment {
     public static TableViewAdapter mTableViewAdapter;
     public Button foldButton;
     public static Player thisPlayer = null;
-
+    public AlertDialog dialog;
     public static Socket socket;
     protected RecyclerView.LayoutManager mCardLayoutManager;
     protected RecyclerView.LayoutManager mTableLayoutManager;
@@ -128,6 +125,7 @@ public class GameFragment extends Fragment {
                 gameObject.mTable.TableCards.remove(position);
                 mCardHandAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mTableViewAdapter.notifyItemRemoved(position);
+                gameObject.setActionKey(Constants.GAME_PLAY);
                 updateGameForAll(gameObject);
             }
         });
@@ -135,7 +133,8 @@ public class GameFragment extends Fragment {
         foldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog dialog = confirmMove(Constants.MOVE_FOLD).create();
+                dialog = confirmMove(Constants.MOVE_FOLD).create();
+                dialog.show();
             }
         });
 
@@ -216,14 +215,19 @@ public class GameFragment extends Fragment {
     private AlertDialog.Builder confirmMove(final int message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
-
+        String alertMessage = "Are you sure ?";
+        switch (message) {
+            case Constants.MOVE_FOLD:
+                alertMessage = "Do you want to FOLD ?";
+                break;
+        }
         alertDialogBuilder.setTitle("Confirm");
         alertDialogBuilder
-                .setMessage("Do you want to " + message)
+                .setMessage(alertMessage)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        actionTobeMade(message);
+                        actionTaken(message);
                         dialog.cancel();
                     }
                 })
@@ -236,9 +240,13 @@ public class GameFragment extends Fragment {
         return alertDialogBuilder;
     }
 
-    private void actionTobeMade(final int keyword) {
+    private void actionTaken(int keyword) {
         switch (keyword) {
-
+            case Constants.MOVE_FOLD:
+                thisPlayer.isActive = false;
+                gameObject.setActionKey(Constants.MOVE_FOLD);
+                updateGameForAll(gameObject);
+                break;
         }
     }
 }

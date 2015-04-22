@@ -33,7 +33,7 @@ public class ServerListenerThread extends Thread {
                 if (gameObject != null) {
                     if (gameObject instanceof PlayerInfo) {
                         data.putSerializable(Constants.DATA_KEY, (PlayerInfo) gameObject);
-                        data.putString(Constants.ACTION_KEY, Constants.PLAYER_LIST_UPDATE);
+                        data.putInt(Constants.ACTION_KEY, Constants.PLAYER_LIST_UPDATE);
                         ServerConnectionThread.socketUserMap.put(hostThreadSocket, ((PlayerInfo) gameObject).username);
                     } else {
                         data.putSerializable(Constants.DATA_KEY, (Game) gameObject);
