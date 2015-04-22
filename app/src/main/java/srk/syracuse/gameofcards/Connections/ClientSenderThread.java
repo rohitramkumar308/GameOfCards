@@ -5,6 +5,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import srk.syracuse.gameofcards.Fragments.GameFragment;
+import srk.syracuse.gameofcards.Model.Game;
+
 public class ClientSenderThread extends Thread {
 
     private Socket hostThreadSocket;
@@ -24,11 +27,16 @@ public class ClientSenderThread extends Thread {
                 outputStream = hostThreadSocket.getOutputStream();
                 objectOutputStream = new ObjectOutputStream(outputStream);
                 objectOutputStream.writeObject(message);
+                if (message instanceof Game && !GameFragment.thisPlayer.isActive) {
+                    ClientConnectionThread.closeServerSocket();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
     }
+
 
 }

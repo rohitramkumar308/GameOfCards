@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
+import srk.syracuse.gameofcards.Connections.ClientSenderThread;
 import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
 import srk.syracuse.gameofcards.Model.Game;
@@ -18,9 +20,9 @@ public class ClientHandler extends Handler {
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
         messageData = msg.getData();
-        String value = messageData.getString(Constants.ACTION_KEY);
+        int value = messageData.getInt(Constants.ACTION_KEY);
         Object clientObject = messageData.getSerializable(Constants.DATA_KEY);
-        if (value != null && value.equals(Constants.UPDATE_GAME_NAME)) {
+        if (value == Constants.UPDATE_GAME_NAME) {
             String gameName = (String) clientObject;
             JoinGameFragment.gameName.setText(gameName);
         }
@@ -33,5 +35,10 @@ public class ClientHandler extends Handler {
                 JoinGameFragment.gameobject = (Game) clientObject;
             }
         }
+    }
+
+    public static void sendToServer(Object gameObject) {
+        ClientSenderThread sendGameChange = new ClientSenderThread(ClientConnectionThread.socket, gameObject);
+        sendGameChange.start();
     }
 }

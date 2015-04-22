@@ -12,7 +12,7 @@ import srk.syracuse.gameofcards.Fragments.HostFragment;
 public class ServerConnectionThread extends Thread {
 
     static final int SocketServerPORT = 8080;
-    public static HashMap<Socket, String> socketUserMap;
+    public static HashMap<Socket, String> socketUserMap = new HashMap();
     public static boolean serverStarted = false;
     public static ServerSocket serverSocket;
 

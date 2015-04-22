@@ -6,13 +6,17 @@ import android.os.Message;
 
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
 import srk.syracuse.gameofcards.Connections.ServerSenderThread;
 import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.PlayerListFragment;
 import srk.syracuse.gameofcards.Model.Game;
+import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.Model.PlayerInfo;
 
 
@@ -33,6 +37,20 @@ public class ServerHandler extends Handler {
         if (gameObject instanceof Game) {
             if (GameFragment.gameObject != null) {
                 GameFragment.gameObject = (Game) gameObject;
+                if (((Game) gameObject).getActionKey() == Constants.MOVE_FOLD) {
+                    ArrayList<Player> players = ((Game) gameObject).players;
+                    for (Player player : players) {
+                        if (!player.isActive && ServerConnectionThread.socketUserMap.containsValue(player.username)) {
+                            for (Map.Entry<Socket, String> entry : ServerConnectionThread.socketUserMap.entrySet()) {
+                                if (entry.getValue().equals(player.username)) {
+                                    ServerConnectionThread.socketUserMap.remove(entry.getKey());
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                }
                 GameFragment.updatePlayerStatus();
                 GameFragment.updateTable();
                 sendToAll(gameObject);

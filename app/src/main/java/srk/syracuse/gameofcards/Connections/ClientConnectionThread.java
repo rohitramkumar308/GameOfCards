@@ -22,9 +22,7 @@ public class ClientConnectionThread extends Thread {
     @Override
     public void run() {
         if (socket == null) {
-
             try {
-
                 dstAddress = WifiHelper.getDeviceList().get(0);
                 if (dstAddress != null) {
                     socket = new Socket(dstAddress, dstPort);
@@ -39,6 +37,16 @@ public class ClientConnectionThread extends Thread {
                 }
             } catch (UnknownHostException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void closeServerSocket() {
+        if (socket != null) {
+            try {
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

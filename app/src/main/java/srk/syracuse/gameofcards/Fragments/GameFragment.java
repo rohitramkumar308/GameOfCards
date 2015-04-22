@@ -27,6 +27,7 @@ import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.ClientHandler;
 import srk.syracuse.gameofcards.Utils.Constants;
 import srk.syracuse.gameofcards.Utils.Flipping;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
@@ -47,6 +48,8 @@ public class GameFragment extends Fragment {
     public static Socket socket;
     protected RecyclerView.LayoutManager mCardLayoutManager;
     protected RecyclerView.LayoutManager mTableLayoutManager;
+    public static ImageView currentUserImage;
+    public static TextView currentUserText;
 
     public GameFragment(Game gameObject, Socket socket) {
         this.gameObject = gameObject;
@@ -68,6 +71,8 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.main_game_layout, container, false);
+        currentUserImage = (ImageView) rootView.findViewById(R.id.currentPlayerImage);
+        currentUserText = (TextView) rootView.findViewById(R.id.currentPlayerText);
         if (SettingsFragment.selectedTableImage != -1) {
             rootView.setBackgroundResource(SettingsFragment.selectedTableImage);
         }
@@ -135,6 +140,7 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 dialog = confirmMove(Constants.MOVE_FOLD).create();
                 dialog.show();
+
             }
         });
 
@@ -162,8 +168,7 @@ public class GameFragment extends Fragment {
                 playerImage.setVisibility(View.VISIBLE);
                 playerText.setText(playerList.get(i - 1).username);
             } else {
-                playerText = (TextView) rootView.findViewById(R.id.currentPlayerText);
-                playerText.setText(playerList.get(i - 1).username);
+                currentUserText.setText(playerList.get(i - 1).username);
             }
         }
     }
@@ -179,7 +184,7 @@ public class GameFragment extends Fragment {
         ImageView playerImage;
         for (int i = 1; i <= playerList.size(); i++) {
             playerImage = (ImageView) rootView.findViewById(
-                    GameFragment.context.getResources().getIdentifier("player" + i + "Image", "drawable", GameFragment.context.getPackageName()));
+                    GameFragment.context.getResources().getIdentifier("player" + i + "Image", "id", GameFragment.context.getPackageName()));
             if (playerList.get(i - 1).isActive) {
                 playerImage.setImageResource(R.drawable.active_icon);
             } else {
@@ -204,9 +209,8 @@ public class GameFragment extends Fragment {
     }
 
     public void updateGameForAll(Game gameObject) {
-        if (ClientConnectionThread.socket != null) {
-            ClientSenderThread sendGameChange = new ClientSenderThread(ClientConnectionThread.socket, gameObject);
-            sendGameChange.start();
+        if (ClientConnectionThread.serverStarted) {
+            ClientHandler.sendToServer(gameObject);
         } else {
             ServerHandler.sendToAll(gameObject);
         }
@@ -244,6 +248,13 @@ public class GameFragment extends Fragment {
         switch (keyword) {
             case Constants.MOVE_FOLD:
                 thisPlayer.isActive = false;
+                for (int i = 0; i < gameObject.players.size(); i++) {
+                    if (thisPlayer.username.equals(gameObject.players.get(i).username)) {
+                        gameObject.players.set(i, thisPlayer);
+                        break;
+                    }
+                }
+                currentUserImage.setImageResource(R.drawable.inactive_icon);
                 gameObject.setActionKey(Constants.MOVE_FOLD);
                 updateGameForAll(gameObject);
                 break;

@@ -11,7 +11,9 @@ public class WifiHelper {
     public static ArrayList<String> deviceList;
 
     public static ArrayList<String> getDeviceList() {
-
+        if (deviceList == null) {
+            deviceList = new ArrayList();
+        }
         BufferedReader br;
         boolean isFirstLine = true;
 

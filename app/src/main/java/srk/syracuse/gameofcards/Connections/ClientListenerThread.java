@@ -4,6 +4,7 @@ package srk.syracuse.gameofcards.Connections;
 import android.os.Bundle;
 import android.os.Message;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -11,6 +12,7 @@ import java.net.Socket;
 
 import srk.syracuse.gameofcards.Fragments.MainFragment;
 import srk.syracuse.gameofcards.Model.Game;
+import srk.syracuse.gameofcards.Utils.ClientHandler;
 import srk.syracuse.gameofcards.Utils.Constants;
 
 public class ClientListenerThread extends Thread {
@@ -25,10 +27,12 @@ public class ClientListenerThread extends Thread {
     public void run() {
         try {
             while (true) {
-                InputStream inputStream = socket.getInputStream();
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                ObjectInputStream objectInputStream;
+                InputStream inputStream = null;
+                inputStream = socket.getInputStream();
+                objectInputStream = new ObjectInputStream(inputStream);
                 Bundle data = new Bundle();
-                Object serverObject = objectInputStream.readObject();
+                Object serverObject = (Object) objectInputStream.readObject();
                 if (serverObject != null) {
                     if (serverObject instanceof String) {
                         data.putSerializable(Constants.DATA_KEY, (String) serverObject);
