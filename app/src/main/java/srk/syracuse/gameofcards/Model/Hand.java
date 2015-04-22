@@ -26,6 +26,12 @@ public class Hand implements Serializable
         return ret;
     }
 
+    public Cards getCard(int position)
+    {
+        Cards ret=gameHand.get(position);
+        return ret;
+    }
+
     public boolean playCards(ArrayList<Cards> cards)
     {
         return false;

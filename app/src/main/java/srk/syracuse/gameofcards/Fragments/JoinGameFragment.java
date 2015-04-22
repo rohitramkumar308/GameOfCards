@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import srk.syracuse.gameofcards.Connections.ClientListenerThread;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
 

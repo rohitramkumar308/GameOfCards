@@ -29,7 +29,6 @@ import android.widget.Button;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import srk.syracuse.gameofcards.Adapters.PlayerAdapter;
 import srk.syracuse.gameofcards.Connections.ServerConnectionThread;

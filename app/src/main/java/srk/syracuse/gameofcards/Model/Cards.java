@@ -2,9 +2,6 @@ package srk.syracuse.gameofcards.Model;
 
 import java.io.Serializable;
 
-/**
- * Created by kunalshrivastava on 4/19/15.
- */
 public class Cards implements Serializable {
     public final static int SPADES = 0;
     public final static int HEARTS = 1;

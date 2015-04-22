@@ -4,7 +4,6 @@ package srk.syracuse.gameofcards.Connections;
 import android.os.Bundle;
 import android.os.Message;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;

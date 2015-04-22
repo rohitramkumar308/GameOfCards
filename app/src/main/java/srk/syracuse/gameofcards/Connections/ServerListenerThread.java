@@ -3,19 +3,14 @@ package srk.syracuse.gameofcards.Connections;
 import android.os.Bundle;
 import android.os.Message;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import srk.syracuse.gameofcards.Fragments.HostFragment;
-import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
-import srk.syracuse.gameofcards.Fragments.MainFragment;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.PlayerInfo;
-import srk.syracuse.gameofcards.Utils.ClientHandler;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
 
 public class ServerListenerThread extends Thread {

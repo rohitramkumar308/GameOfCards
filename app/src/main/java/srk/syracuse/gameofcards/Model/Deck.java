@@ -3,9 +3,6 @@ package srk.syracuse.gameofcards.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by kunalshrivastava on 4/19/15.
- */
 public class Deck implements Serializable {
     public Cards[] cards;
     public int numberOfCards;

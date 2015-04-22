@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +41,20 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Cards currCard = cards.get(position);
+
+        ImageView cardFront = holder.cardFront;
+        ImageView cardBack = holder.cardBack;
+
+        cardFront.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
+                context.getPackageName()));
+
+        cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
+                context.getPackageName()));
+
         if (currCard.cardFaceUp == true) {
-            //context.getResources().getIdentifier(currCard.imageID, "drawable", context.getPackageName());
-            holder.imageView.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
-                    context.getPackageName()));
+            cardBack.setVisibility(View.VISIBLE);
         } else {
-            holder.imageView.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
-                    context.getPackageName()));
+            cardBack.setVisibility(View.GONE);
         }
     }
 
@@ -56,7 +64,9 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+
+        ImageView cardFront;
+        ImageView cardBack;
 
         public ViewHolder(View v) {
             super(v);
@@ -65,8 +75,9 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
                 public void onClick(View v) {
                 }
             });
-            imageView = (ImageView) v.findViewById(R.id.cardDesign);
-            imageView.setOnClickListener(new View.OnClickListener() {
+            cardFront = (ImageView) v.findViewById(R.id.cardDesign);
+            cardBack = (ImageView) v.findViewById(R.id.cardDesignBack);
+            cardFront.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mItemClickListener != null) {
@@ -74,6 +85,15 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
                     }
                 }
             });
+            cardBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.OnItemClick(v, getPosition());
+                    }
+                }
+            });
+
         }
 
     }

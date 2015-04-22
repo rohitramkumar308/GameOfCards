@@ -2,7 +2,6 @@ package srk.syracuse.gameofcards.Fragments;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +18,7 @@ import srk.syracuse.gameofcards.Adapters.CardHandAdapter;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.Flipping;
 
 
 public class GameFragment extends Fragment {
@@ -64,13 +64,32 @@ public class GameFragment extends Fragment {
         mCardHandAdapter = new CardHandAdapter(context,thisPlayer.hand.gameHand, gameObject.cardBackImage);
         mCardHand.setAdapter(mCardHandAdapter);
 
-//        final LinearLayoutManager mCardHandLayoutManager = new LinearLayoutManager(context);
-//        mCardHandLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        mCardHandAdapter = new CardHandAdapter(thisPlayer.hand.gameHand, gameObject.cardBackImage);
-//        mCardHand.setAdapter(mCardHandAdapter);
-//        mCardHand.setLayoutManager(mCardHandLayoutManager);
-//        mCardHand.setHasFixedSize(true);
+        mCardHandAdapter.setOnItemCLickListener(new CardHandAdapter.OnItemClickListener() {
+
+            @Override
+            public void OnItemClick(View v, int position) {
+                View rootLayout = (View) v.getParent();
+                View cardFace = rootLayout.findViewById(R.id.cardDesignBack);
+                View cardBack = rootLayout.findViewById(R.id.cardDesign);
+
+                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth()/2, cardFace.getHeight()/2);
+
+                updateHand();
+                if (cardFace.getVisibility() == View.GONE)
+                {
+                    flipAnimation.reverse();
+                    setCardFaceUp(position, true);
+                }
+                else
+                    setCardFaceUp(position, false);
+                rootLayout.startAnimation(flipAnimation);
+            }
+        });
         return rootView;
+    }
+
+    public void setCardFaceUp(int position, boolean isFaceUp){
+        this.thisPlayer.hand.getCard(position).cardFaceUp = isFaceUp;
     }
 
     public static void updatePlayers() {
@@ -119,6 +138,8 @@ public class GameFragment extends Fragment {
                 thisPlayer = player;
             }
         }
+
+
 //        if (mCardHandAdapter != null)
 //            mCardHandAdapter.notifyDataSetChanged();
     }

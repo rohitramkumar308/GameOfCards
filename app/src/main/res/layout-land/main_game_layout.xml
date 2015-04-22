@@ -17,7 +17,6 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:id="@+id/linearLayout2">
 
-
         <ImageView
             android:id="@+id/player1Image"
             android:layout_width="20dp"
