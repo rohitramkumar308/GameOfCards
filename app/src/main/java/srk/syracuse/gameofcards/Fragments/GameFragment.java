@@ -44,7 +44,11 @@ public class GameFragment extends Fragment {
     public static CardHandAdapter mCardHandAdapter;
     public static TableViewAdapter mTableViewAdapter;
     public Button foldButton;
+
+    public Button playButton;
+
     public Button hideButton;
+
     public static Player thisPlayer = null;
     public AlertDialog dialog;
     public static Socket socket;
@@ -52,6 +56,8 @@ public class GameFragment extends Fragment {
     protected RecyclerView.LayoutManager mTableLayoutManager;
     public static ImageView currentUserImage;
     public static TextView currentUserText;
+    public static boolean tableChanged=false;
+    public static ArrayList<Cards> tempHandCards = new ArrayList<Cards>();
 
     public GameFragment(Game gameObject, Socket socket) {
         this.gameObject = gameObject;
@@ -83,7 +89,14 @@ public class GameFragment extends Fragment {
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
         mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
         foldButton = (Button) rootView.findViewById(R.id.foldCardsButton);
+
         hideButton = (Button) rootView.findViewById(R.id.hideCardsButton);
+
+        playButton = (Button) rootView.findViewById(R.id.playButton);
+        final com.skyfishjy.library.RippleBackground rippleBackground = (com.skyfishjy.library.RippleBackground)rootView.findViewById(R.id.playButtonAnimation);
+
+        hideButton = (Button) rootView.findViewById(R.id.hideCardsButton);
+
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardHand.setLayoutManager(mCardLayoutManager);
@@ -106,11 +119,21 @@ public class GameFragment extends Fragment {
             @Override
             public boolean OnItemLongClick(View v, int position) {
                 gameObject.mTable.TableCards.add(thisPlayer.hand.gameHand.get(position));
+                tempHandCards.add(thisPlayer.hand.gameHand.get(position));
+                if(tempHandCards.size()>0)
+                {
+                    playButton.setVisibility(View.VISIBLE);
+                    rippleBackground.startRippleAnimation();
+                }
                 thisPlayer.hand.gameHand.remove(position);
                 mTableViewAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mCardHandAdapter.notifyItemRemoved(position);
+
+                //updateGameForAll(gameObject);
+
                 updateGameForAll(gameObject);
                 return true;
+
             }
         });
         mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards);
@@ -125,12 +148,25 @@ public class GameFragment extends Fragment {
 
             @Override
             public void OnItemLongClick(View v, int position) {
+                boolean fromTempHand=false;
+                tableChanged=true;
                 thisPlayer.hand.gameHand.add(gameObject.mTable.TableCards.get(position));
+                if(tempHandCards.contains(gameObject.mTable.TableCards.get(position)))
+                {
+                    tempHandCards.remove(gameObject.mTable.TableCards.get(position));
+                    fromTempHand=true;
+                }
+                if(tempHandCards.size()==0 && !tableChanged)
+                {
+                    playButton.setVisibility(View.GONE);
+                    rippleBackground.stopRippleAnimation();
+                }
+
                 gameObject.mTable.TableCards.remove(position);
                 mCardHandAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mTableViewAdapter.notifyItemRemoved(position);
                 gameObject.setActionKey(Constants.GAME_PLAY);
-                updateGameForAll(gameObject);
+                //updateGameForAll(gameObject);
             }
         });
 
@@ -139,6 +175,36 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 dialog = confirmMove(Constants.MOVE_FOLD).create();
                 dialog.show();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tempHandCards.size()>0 || tableChanged)
+                {
+                    tableChanged=false;
+                    playButton.setVisibility(View.GONE);
+                    updateGameForAll(gameObject);
+                }
+            }
+        });
+
+        hideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(thisPlayer.hand.handFaceUp)
+                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                        setCardFaceUp(i, false);
+                        mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                    }
+                else
+                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                        setCardFaceUp(i, true);
+                        mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                    }
+                mCardHandAdapter.notifyDataSetChanged();
+
             }
         });
 

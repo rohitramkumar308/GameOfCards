@@ -189,6 +189,29 @@
         android:paddingRight="10dp"
         android:id="@+id/linearLayout5">
 
+        <com.skyfishjy.library.RippleBackground
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/playButtonAnimation"
+            app:rb_color="#0099CC"
+            app:rb_radius="32dp"
+            app:rb_rippleAmount="4"
+            app:rb_duration="3000"
+            app:rb_scale="6">
+            <Button
+                android:id="@+id/playButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="Play&#10;Move"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/circle_button_drawable" />
+        </com.skyfishjy.library.RippleBackground>
+
         <Button
             android:id="@+id/hideCardsButton"
             android:layout_width="wrap_content"
@@ -214,25 +237,31 @@
         android:id="@+id/tableView"
         android:background="#ffffff"
         android:alpha="0.7"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout5"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/linearLayout4" />
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:layout_alignStart="@+id/linearLayout2"
+        android:layout_toStartOf="@+id/linearLayout5"
+        android:layout_above="@+id/linearLayout3"
+        android:layout_toLeftOf="@+id/linearLayout5" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardHand"
         android:background="#ffffff"
         android:alpha="0.7"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/linearLayout3"
-        android:layout_toLeftOf="@+id/linearLayout4"
         android:layout_toRightOf="@+id/linearLayout3"
-        android:layout_toEndOf="@+id/linearLayout3"
-        android:layout_marginLeft="30dp" />
+        android:layout_marginLeft="30dp"
+        android:layout_toLeftOf="@+id/linearLayout5"
+        android:layout_toStartOf="@+id/linearLayout5" />
 
 </RelativeLayout>
 
