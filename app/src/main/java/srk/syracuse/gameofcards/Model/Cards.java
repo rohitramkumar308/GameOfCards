@@ -41,9 +41,7 @@ public class Cards implements Serializable {
 
         this.suit = _suit;
         this.rank = _rank;
-        this.cardFaceUp=false;
-        this.imageID=getSuitAsString()+"_"+getValueAsString();
-        this.cardFaceUp = true;
+        this.cardFaceUp = false;
         this.imageID = getSuitAsString() + "_" + getValueAsString();
     }
 
