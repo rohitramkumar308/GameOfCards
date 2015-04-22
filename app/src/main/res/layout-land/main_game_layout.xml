@@ -14,7 +14,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+<<<<<<< Updated upstream
         android:layout_marginLeft="@dimen/activity_horizontal_margin">
+=======
+        android:id="@+id/linearLayout2">
+>>>>>>> Stashed changes
 
         <ImageView
             android:id="@+id/player1Image"
@@ -143,6 +147,7 @@
             android:text="Player1" />
     </LinearLayout>
 
+<<<<<<< Updated upstream
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -205,6 +210,29 @@
             android:background="@drawable/circle_button_drawable"
             />
     </LinearLayout>
+=======
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/cardTable"-->
+            <!--android:background="#ffffff"-->
+            <!--android:alpha="0.7"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginRight="3dp"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardHand"
+            android:background="#ffffff"
+            android:alpha="0.7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+
+>>>>>>> Stashed changes
 
 </RelativeLayout>
 

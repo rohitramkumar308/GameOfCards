@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Hand implements Serializable
 {
-    private ArrayList<Cards> gameHand;
-    private int numberOfCards;
+    public ArrayList<Cards> gameHand;
+    public int numberOfCards;
 
     Hand(ArrayList<Cards> cards)
     {

@@ -16,7 +16,8 @@ public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder
     private int[] mDataSet;
     private boolean isCardType;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder
+    {
         private final ImageView imageView;
 
         public ViewHolder(View v) {

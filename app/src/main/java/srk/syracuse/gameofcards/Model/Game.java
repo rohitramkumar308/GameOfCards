@@ -16,6 +16,7 @@ public class Game implements Serializable {
     private ArrayList<Deck> decks;
     public ArrayList<Player> players;
     public String gameName;
+    public String cardBackImage;
 
     public Game(ArrayList<String> usernames, int numberOfDeck, int numberOfCardsDraw, boolean drawEqual, ArrayList<Cards> restrictedCards, String gameName) {
         this.decks = new ArrayList<Deck>();
@@ -25,6 +26,7 @@ public class Game implements Serializable {
         this.numberOfCardsDraw = numberOfCardsDraw;
         this.drawEqual = drawEqual;
         this.gameName = gameName;
+        this.cardBackImage="cardback1";
         if (usernames.size() > 6) {
             throw new IllegalArgumentException("Number of players above the allowed limit (6)");
         }

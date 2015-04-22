@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import srk.syracuse.gameofcards.Adapters.CardHandAdapter;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.R;
@@ -23,6 +26,15 @@ public class GameFragment extends Fragment {
     public static View rootView;
     public static Game gameObject;
     public static Context context;
+    public RecyclerView mCardHand;
+    //public static RecyclerView.LayoutManager mCardHandLayoutManager;
+    public CardHandAdapter mCardHandAdapter;
+    public static Player thisPlayer = null;
+
+    protected RecyclerView mCardRecyclerView;
+    protected RecyclerView mTableRecyclerView;
+    protected RecyclerView.LayoutManager mCardLayoutManager;
+    protected RecyclerView.LayoutManager mTableLayoutManager;
 
     public GameFragment(Game gameObject) {
         this.gameObject = gameObject;
@@ -40,6 +52,24 @@ public class GameFragment extends Fragment {
         rootView = inflater.inflate(R.layout.main_game_layout, container, false);
         context = getActivity();
         updatePlayers();
+        updateHand();
+        mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
+        //mCardHand.setLayoutManager(new LinearLayoutManager(mCardHand.getContext()));
+
+        //final RecyclerView.LayoutManager mCardHandLayoutManager = new LinearLayoutManager(context);
+        //mCardHandLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mCardHand.setLayoutManager(mCardLayoutManager);
+        mCardHandAdapter = new CardHandAdapter(context,thisPlayer.hand.gameHand, gameObject.cardBackImage);
+        mCardHand.setAdapter(mCardHandAdapter);
+
+//        final LinearLayoutManager mCardHandLayoutManager = new LinearLayoutManager(context);
+//        mCardHandLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        mCardHandAdapter = new CardHandAdapter(thisPlayer.hand.gameHand, gameObject.cardBackImage);
+//        mCardHand.setAdapter(mCardHandAdapter);
+//        mCardHand.setLayoutManager(mCardHandLayoutManager);
+//        mCardHand.setHasFixedSize(true);
         return rootView;
     }
 
@@ -80,5 +110,16 @@ public class GameFragment extends Fragment {
         }
     }
 
+    public static void updateHand() {
+        List<Player> playerList = gameObject.players;
 
+        String currentUser = MainFragment.userName.getText().toString();
+        for (Player player : playerList) {
+            if (player.username.equals(currentUser)) {
+                thisPlayer = player;
+            }
+        }
+//        if (mCardHandAdapter != null)
+//            mCardHandAdapter.notifyDataSetChanged();
+    }
 }

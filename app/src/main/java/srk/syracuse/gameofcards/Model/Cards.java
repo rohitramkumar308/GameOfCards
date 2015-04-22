@@ -19,7 +19,8 @@ public class Cards implements Serializable {
 
     private int suit;
     private int rank;
-    private int imageID;
+    public String imageID;
+    public boolean cardFaceUp;
 
     public enum Suits {
         hearts,
@@ -33,12 +34,14 @@ public class Cards implements Serializable {
         if (cardName.equals("joker")) {
             this.rank = JOKER;
             this.suit = 1;
+            this.cardFaceUp=true;
+            this.imageID=cardName;
         }
 
         String[] meta = cardName.split("_");
 
         int _suit = getSuitAsInt(meta[0]);
-        int _rank = Integer.parseInt(meta[1]);
+        int _rank = getRankFromString(meta[1]);
 
         if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
                 _suit != CLUBS && _suit != JOKER)
@@ -60,15 +63,6 @@ public class Cards implements Serializable {
         this.suit = _suit;
         this.rank = _rank;
     }
-
-    public int getImageID() {
-        return imageID;
-    }
-
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
-    }
-
 
     public int getSuit() {
         return suit;
@@ -133,6 +127,40 @@ public class Cards implements Serializable {
                 default:
                     return "King";
             }
+        }
+    }
+
+    public int getRankFromString(String rank)
+    {
+        if (suit == JOKER)
+            return 0;
+        switch (rank) {
+            case "ace":
+                return 1;
+            case "two":
+                return 2;
+            case "three":
+                return 3;
+            case "four":
+                return 4;
+            case "five":
+                return 5;
+            case "six":
+                return 6;
+            case "seven":
+                return 7;
+            case "eight":
+                return 8;
+            case "nine":
+                return 9;
+            case "ten":
+                return 10;
+            case "jack":
+                return JACK;
+            case "queen":
+                return QUEEN;
+            default:
+                return KING;
         }
     }
 
