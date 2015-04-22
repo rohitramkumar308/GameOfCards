@@ -83,12 +83,24 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
                     }
                 }
             });
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.OnItemLongClick(view, getPosition());
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
     }
 
     public interface OnItemClickListener {
-        public void OnItemClick(View v, int position);
+        void OnItemClick(View v, int position);
+
+        void OnItemLongClick(View v, int position);
     }
 
     public void setOnItemCLickListener(final OnItemClickListener onItemClickListener) {

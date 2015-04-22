@@ -105,17 +105,28 @@ public class GameFragment extends Fragment {
                 thisPlayer.hand.gameHand.remove(position);
                 mTableViewAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mCardHandAdapter.notifyItemRemoved(position);
-                if (ClientConnectionThread.socket != null) {
-                    ClientSenderThread sendGameChange = new ClientSenderThread(ClientConnectionThread.socket, gameObject);
-                    sendGameChange.start();
-                } else {
-                    ServerHandler.sendToAll(gameObject);
-                }
+                updateGameForAll(gameObject);
             }
         });
         mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards, gameObject.cardBackImage);
         mTableView.setLayoutManager(mTableLayoutManager);
         mTableView.setAdapter(mTableViewAdapter);
+
+        mTableViewAdapter.setOnItemCLickListener(new TableViewAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View v, int position) {
+
+            }
+
+            @Override
+            public void OnItemLongClick(View v, int position) {
+                thisPlayer.hand.gameHand.add(gameObject.mTable.TableCards.get(position));
+                gameObject.mTable.TableCards.remove(position);
+                mCardHandAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
+                mTableViewAdapter.notifyItemRemoved(position);
+                updateGameForAll(gameObject);
+            }
+        });
 
         return rootView;
     }
@@ -181,4 +192,15 @@ public class GameFragment extends Fragment {
             mCardHandAdapter.notifyDataSetChanged();
         }
     }
+
+    public void updateGameForAll(Game gameObject) {
+        if (ClientConnectionThread.socket != null) {
+            ClientSenderThread sendGameChange = new ClientSenderThread(ClientConnectionThread.socket, gameObject);
+            sendGameChange.start();
+        } else {
+            ServerHandler.sendToAll(gameObject);
+        }
+    }
 }
+
+
