@@ -1,5 +1,6 @@
 package srk.syracuse.gameofcards.Fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import srk.syracuse.gameofcards.Adapters.DesignAdapter;
 import srk.syracuse.gameofcards.R;
@@ -27,9 +26,11 @@ public class SettingsFragment extends Fragment {
     protected DesignAdapter mTableAdapter;
     protected RecyclerView.LayoutManager mCardLayoutManager;
     protected RecyclerView.LayoutManager mTableLayoutManager;
+    public static int selectedCardImage = -1;
+    public static int selectedTableImage = -1;
 
     private int[] mCardDataSet;
-    private int[] mTableset;
+    private int[] mTableDataSet;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.game_setting_layout, container, false);
+        final View rootView = inflater.inflate(R.layout.game_setting_layout, container, false);
         Button apply = (Button) rootView.findViewById(R.id.applySettings);
         Button manageDeck = (Button) rootView.findViewById(R.id.manageDeck);
         Button cancel = (Button) rootView.findViewById(R.id.cancelChanges);
@@ -62,12 +63,6 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
-        dealExact.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                spinner.setVisibility(View.VISIBLE);
-            }
-        });
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +74,6 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 DeckCustomizeDialog cardException = new DeckCustomizeDialog();
                 cardException.setTargetFragment(SettingsFragment.this, 2);
-                cardException.setCancelable(false);
                 cardException.show(getFragmentManager(), "Remove Cards");
             }
         });
@@ -89,16 +83,34 @@ public class SettingsFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
         mCardRecyclerView = (RecyclerView) rootView.findViewById(R.id.cardDesignList);
-        mTableRecyclerView = (RecyclerView) rootView.findViewById(R.id.tableDesignList);
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardRecyclerView.setLayoutManager(mCardLayoutManager);
-        mTableRecyclerView.setLayoutManager(mTableLayoutManager);
         mCardAdapter = new DesignAdapter(mCardDataSet, true);
-        mTableAdapter = new DesignAdapter(mCardDataSet, false);
         mCardRecyclerView.setAdapter(mCardAdapter);
+
+        mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mTableRecyclerView = (RecyclerView) rootView.findViewById(R.id.tableDesignList);
+        mTableRecyclerView.setLayoutManager(mTableLayoutManager);
+        mTableAdapter = new DesignAdapter(mTableDataSet, false);
         mTableRecyclerView.setAdapter(mTableAdapter);
+        mCardAdapter.setOnItemClickListener(new DesignAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
+                selectedCardImage = image.getId();
+            }
+        });
+
+        mTableAdapter.setOnItemClickListener(new DesignAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
+                selectedTableImage = image.getId();
+                rootView.setBackgroundResource(selectedTableImage);
+            }
+        });
         return rootView;
     }
 
@@ -108,12 +120,15 @@ public class SettingsFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
+
     private void initDataset() {
         mCardDataSet = new int[]{R.drawable.cardback1, R.drawable.cardback2, R.drawable.cardback3, R.drawable.cardback4};
-        mTableset = new int[]{R.drawable.ericcartman};
+        mTableDataSet = new int[]{R.drawable.table_back1, R.drawable.table_back3};
+        if (selectedTableImage == -1) {
+            selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "drawable", getActivity().getPackageName());
+        }
+        if (selectedCardImage == -1) {
+            selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "drawable", getActivity().getPackageName());
+        }
     }
 }

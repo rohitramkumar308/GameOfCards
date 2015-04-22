@@ -4,7 +4,9 @@ package srk.syracuse.gameofcards.Connections;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import srk.syracuse.gameofcards.Fragments.HostFragment;
@@ -13,9 +15,9 @@ import srk.syracuse.gameofcards.Fragments.HostFragment;
 public class ServerConnectionThread extends Thread {
 
     static final int SocketServerPORT = 8080;
-    public static Set<Socket> socketSet = new HashSet();
+    public static Map<Socket, String> socketUserMap = new HashMap();
     public static boolean serverStarted = false;
-    ServerSocket serverSocket;
+    public static ServerSocket serverSocket;
 
 
     public ServerConnectionThread() {
@@ -25,7 +27,6 @@ public class ServerConnectionThread extends Thread {
     @Override
     public void run() {
         if (serverSocket == null) {
-
             try {
                 serverSocket = new ServerSocket(SocketServerPORT);
                 serverStarted = true;
@@ -35,7 +36,7 @@ public class ServerConnectionThread extends Thread {
                     socketListenThread.start();
                     ServerSenderThread sendGameName = new ServerSenderThread(socket, new String(HostFragment.gameName.getText().toString()));
                     sendGameName.start();
-                    socketSet.add(socket);
+                    socketUserMap.put(socket, null);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

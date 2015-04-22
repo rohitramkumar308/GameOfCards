@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_margin="5dp"
     android:background="@color/secondaryBackground"
+    android:descendantFocusability="blocksDescendants"
     card_view:cardCornerRadius="5dp">
 
     <RelativeLayout
@@ -41,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:focusable="false"
+            android:clickable="false"
             android:checked="true"
             android:id="@+id/cardSelect"
             android:layout_marginRight="40dp"

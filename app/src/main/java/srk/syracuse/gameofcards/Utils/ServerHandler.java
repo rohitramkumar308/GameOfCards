@@ -5,6 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 
 
+import java.net.Socket;
+import java.util.Iterator;
+
+import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
+import srk.syracuse.gameofcards.Connections.ServerSenderThread;
 import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.PlayerListFragment;
 import srk.syracuse.gameofcards.Model.Game;
@@ -23,7 +28,7 @@ public class ServerHandler extends Handler {
         super.handleMessage(msg);
         Bundle messageData = msg.getData();
         String value = messageData.getString(ACTION_KEY);
-        Object gameObject = (Object) messageData.getSerializable(DATA_KEY);
+        Object gameObject = messageData.getSerializable(DATA_KEY);
 
         if (gameObject instanceof PlayerInfo) {
             PlayerInfo playerInfo = (PlayerInfo) gameObject;
@@ -33,11 +38,31 @@ public class ServerHandler extends Handler {
         if (gameObject instanceof Game) {
             if (GameFragment.gameObject != null) {
                 GameFragment.gameObject = (Game) gameObject;
+//                GameFragment.updatePlayerStatus();
+                GameFragment.updateTable();
+                sendToAll(gameObject);
             } else {
                 PlayerListFragment.gameObject = (Game) gameObject;
             }
         }
 
 
+    }
+
+    public static void sendToAll(Object gameObject) {
+        Iterator<Socket> socketIterator = ServerConnectionThread.socketUserMap.keySet().iterator();
+        Socket socket;
+        while (socketIterator.hasNext()) {
+            socket = socketIterator.next();
+            if (!ServerConnectionThread.socketUserMap.get(socket).equals(((Game) gameObject).senderUsername)) {
+                ServerSenderThread sendGameName = new ServerSenderThread(socket, gameObject);
+                sendGameName.start();
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

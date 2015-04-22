@@ -85,18 +85,6 @@ public class DeckCustomizeAdapter extends BaseAdapter {
             holder.selected = (CheckBox) adaptView.findViewById(R.id.cardSelect);
             holder.cardImage = (ImageView) adaptView.findViewById(R.id.cardImage);
             adaptView.setTag(holder);
-            holder.selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    cardList.get(position).setIsSelected(b);
-                }
-            });
-            holder.selected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cardList.get(position).setIsSelected(holder.selected.isSelected());
-                }
-            });
             holder.cardCustom = cardList.get(position);
         } else {
             adaptView = convertView;

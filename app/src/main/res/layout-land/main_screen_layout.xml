@@ -7,10 +7,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/card_background"
+    style="@style/tableBackground"
     tools:context=".MainActivity$PlaceholderFragment">
 
     <View
+
         android:layout_width="320dp"
         android:background="@color/inputText"
         android:layout_height="470dp"

@@ -24,4 +24,7 @@
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
 
+    <style name="tableBackground">
+        <item name="android:background">@drawable/table_back1</item>
+    </style>
 </resources>

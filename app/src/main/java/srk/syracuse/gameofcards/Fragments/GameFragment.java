@@ -2,6 +2,8 @@ package srk.syracuse.gameofcards.Fragments;
 
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +14,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 import srk.syracuse.gameofcards.Adapters.CardHandAdapter;
+import srk.syracuse.gameofcards.Adapters.TableViewAdapter;
+import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
+import srk.syracuse.gameofcards.Connections.ClientSenderThread;
+import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
+import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.R;
 import srk.syracuse.gameofcards.Utils.Flipping;
+import srk.syracuse.gameofcards.Utils.ServerHandler;
 
 
 public class GameFragment extends Fragment {
@@ -27,17 +37,24 @@ public class GameFragment extends Fragment {
     public static Game gameObject;
     public static Context context;
     public RecyclerView mCardHand;
-    //public static RecyclerView.LayoutManager mCardHandLayoutManager;
-    public CardHandAdapter mCardHandAdapter;
+    public RecyclerView mTableView;
+    public static CardHandAdapter mCardHandAdapter;
+    public static TableViewAdapter mTableViewAdapter;
+
     public static Player thisPlayer = null;
 
-    protected RecyclerView mCardRecyclerView;
-    protected RecyclerView mTableRecyclerView;
+    public static Socket socket;
     protected RecyclerView.LayoutManager mCardLayoutManager;
     protected RecyclerView.LayoutManager mTableLayoutManager;
 
+    public GameFragment(Game gameObject, Socket socket) {
+        this.gameObject = gameObject;
+        this.socket = socket;
+    }
+
     public GameFragment(Game gameObject) {
         this.gameObject = gameObject;
+
     }
 
     @Override
@@ -50,45 +67,60 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.main_game_layout, container, false);
+        if (SettingsFragment.selectedTableImage != -1) {
+            rootView.setBackgroundResource(SettingsFragment.selectedTableImage);
+        }
         context = getActivity();
         updatePlayers();
         updateHand();
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
-        //mCardHand.setLayoutManager(new LinearLayoutManager(mCardHand.getContext()));
-
-        //final RecyclerView.LayoutManager mCardHandLayoutManager = new LinearLayoutManager(context);
-        //mCardHandLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
 
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardHand.setLayoutManager(mCardLayoutManager);
-        mCardHandAdapter = new CardHandAdapter(context,thisPlayer.hand.gameHand, gameObject.cardBackImage);
+        mCardHandAdapter = new CardHandAdapter(context, thisPlayer.hand.gameHand, gameObject.cardBackImage);
         mCardHand.setAdapter(mCardHandAdapter);
-
         mCardHandAdapter.setOnItemCLickListener(new CardHandAdapter.OnItemClickListener() {
-
             @Override
             public void OnItemClick(View v, int position) {
                 View rootLayout = (View) v.getParent();
                 View cardFace = rootLayout.findViewById(R.id.cardDesignBack);
                 View cardBack = rootLayout.findViewById(R.id.cardDesign);
 
-                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth()/2, cardFace.getHeight()/2);
+                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth() / 2, cardFace.getHeight() / 2);
 
                 updateHand();
-                if (cardFace.getVisibility() == View.GONE)
-                {
+                if (cardFace.getVisibility() == View.GONE) {
                     flipAnimation.reverse();
                     setCardFaceUp(position, true);
-                }
-                else
+                } else
                     setCardFaceUp(position, false);
                 rootLayout.startAnimation(flipAnimation);
             }
+
+            @Override
+            public void OnItemLongClick(View v, int position) {
+                gameObject.mTable.TableCards.add(thisPlayer.hand.gameHand.get(position));
+                thisPlayer.hand.gameHand.remove(position);
+                mTableViewAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
+                mCardHandAdapter.notifyItemRemoved(position);
+                if (ClientConnectionThread.socket != null) {
+                    ClientSenderThread sendGameChange = new ClientSenderThread(ClientConnectionThread.socket, gameObject);
+                    sendGameChange.start();
+                } else {
+                    ServerHandler.sendToAll(gameObject);
+                }
+            }
         });
+        mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards, gameObject.cardBackImage);
+        mTableView.setLayoutManager(mTableLayoutManager);
+        mTableView.setAdapter(mTableViewAdapter);
+
         return rootView;
     }
 
-    public void setCardFaceUp(int position, boolean isFaceUp){
+    public void setCardFaceUp(int position, boolean isFaceUp) {
         this.thisPlayer.hand.getCard(position).cardFaceUp = isFaceUp;
     }
 
@@ -115,6 +147,12 @@ public class GameFragment extends Fragment {
         }
     }
 
+    public static void updateTable() {
+        ArrayList<Cards> tableList = gameObject.mTable.TableCards;
+        mTableViewAdapter.setCards(tableList);
+        mTableViewAdapter.notifyDataSetChanged();
+    }
+
     public static void updatePlayerStatus() {
         List<Player> playerList = gameObject.players;
         ImageView playerImage;
@@ -138,9 +176,9 @@ public class GameFragment extends Fragment {
                 thisPlayer = player;
             }
         }
-
-
-//        if (mCardHandAdapter != null)
-//            mCardHandAdapter.notifyDataSetChanged();
+        if (mCardHandAdapter != null) {
+            mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+            mCardHandAdapter.notifyDataSetChanged();
+        }
     }
 }

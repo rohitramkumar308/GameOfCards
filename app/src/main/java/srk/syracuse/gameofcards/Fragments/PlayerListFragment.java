@@ -1,19 +1,4 @@
-package srk.syracuse.gameofcards.Fragments;/*
-* Copyright (C) 2014 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
+package srk.syracuse.gameofcards.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +21,7 @@ import srk.syracuse.gameofcards.Connections.ServerSenderThread;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.ServerHandler;
 
 
 public class PlayerListFragment extends Fragment {
@@ -44,7 +30,7 @@ public class PlayerListFragment extends Fragment {
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     public static Game gameObject;
-    public static ArrayList<String> deviceList = new ArrayList<String>();
+    public static ArrayList<String> deviceList = new ArrayList();
 
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -60,7 +46,6 @@ public class PlayerListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        initDataset();
     }
 
     @Override
@@ -83,13 +68,10 @@ public class PlayerListFragment extends Fragment {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gameObject != null) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
-                            .commit();
-                } else {
-                    initializeGame();
-                }
+                initializeGame();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
+                        .commit();
             }
         });
         mPlayerList = (RecyclerView) rootView.findViewById(R.id.gameList);
@@ -100,7 +82,6 @@ public class PlayerListFragment extends Fragment {
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
         if (savedInstanceState != null) {
-            // Restore saved layout manager type.
             mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
@@ -143,18 +124,13 @@ public class PlayerListFragment extends Fragment {
     }
 
     public void initializeGame() {
-        Iterator<Socket> socketIterator = ServerConnectionThread.socketSet.iterator();
         ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
-        Socket socket;
-        restrictedCards.add(new Cards(1,1));
-        restrictedCards.add(new Cards(2,2));
+        restrictedCards.add(new Cards(1, 1));
+        restrictedCards.add(new Cards(2, 2));
         deviceList.add(MainFragment.userName.getText().toString());
-        Game gameObject = new Game(deviceList, 3, 5, false, restrictedCards, "Game of Cards");
-        while (socketIterator.hasNext()) {
-            socket = socketIterator.next();
-            ServerSenderThread sendGameName = new ServerSenderThread(socket, gameObject);
-            sendGameName.start();
-
-        }
+        gameObject = new Game(deviceList, 3, 5, false, restrictedCards, HostFragment.gameName.getText().toString());
+        ServerHandler.sendToAll(gameObject);
     }
+
+
 }

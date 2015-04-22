@@ -74,9 +74,13 @@ public class MainFragment extends Fragment {
                                 if (userName.getText() != null && userName.getText().toString().trim().length() > 0) {
                                     ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
                                     clientConnect.start();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
-                                            .commit();
+//                                    if (ClientConnectionThread.socket != null) {
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
+                                                .commit();
+//                                    } else {
+//                                        Toast.makeText(getActivity(), "Game yet to be hosted", Toast.LENGTH_SHORT).show();
+//                                    }
                                 } else {
                                     Toast.makeText(getActivity(), "Please enter a UserName", Toast.LENGTH_SHORT).show();
                                 }

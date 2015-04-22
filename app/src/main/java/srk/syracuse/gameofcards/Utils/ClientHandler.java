@@ -8,9 +8,7 @@ import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
 import srk.syracuse.gameofcards.Model.Game;
 
-/**
- * Created by rohitramkumar on 4/20/15.
- */
+
 public class ClientHandler extends Handler {
 
     public final static String UPDATE_GAME_NAME = "gameName";
@@ -31,6 +29,8 @@ public class ClientHandler extends Handler {
         if (clientObject instanceof Game) {
             if (GameFragment.gameObject != null) {
                 GameFragment.gameObject = (Game) clientObject;
+//                GameFragment.updatePlayerStatus();
+                GameFragment.updateTable();
             } else {
                 JoinGameFragment.gameobject = (Game) clientObject;
             }

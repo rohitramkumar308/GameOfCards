@@ -10,7 +10,7 @@ public class ClientSenderThread extends Thread {
     private Socket hostThreadSocket;
     Object message;
 
-    ClientSenderThread(Socket socket, Object message) {
+    public ClientSenderThread(Socket socket, Object message) {
         hostThreadSocket = socket;
         this.message = message;
     }
@@ -19,15 +19,15 @@ public class ClientSenderThread extends Thread {
     public void run() {
         OutputStream outputStream;
         ObjectOutputStream objectOutputStream;
-
-        try {
-            outputStream = hostThreadSocket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (hostThreadSocket.isConnected()) {
+            try {
+                outputStream = hostThreadSocket.getOutputStream();
+                objectOutputStream = new ObjectOutputStream(outputStream);
+                objectOutputStream.writeObject(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
 
     }
 

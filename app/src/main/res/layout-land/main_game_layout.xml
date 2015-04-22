@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/card_background"
+    style="@style/tableBackground"
     tools:context=".MainActivity$PlaceholderFragment">
 
     <LinearLayout
@@ -164,8 +164,8 @@
             android:text="Deal Cards"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@color/inputText"
-            />
+            android:background="@color/inputText" />
+
         <Button
             android:id="@+id/newGameButton"
             android:layout_width="wrap_content"
@@ -174,8 +174,7 @@
             android:text="New Game"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@color/inputText"
-            />
+            android:background="@color/inputText" />
     </LinearLayout>
 
     <LinearLayout
@@ -186,7 +185,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:id="@+id/linearLayout5">
 
         <Button
             android:id="@+id/hideCardsButton"
@@ -196,8 +196,8 @@
             android:textStyle="bold"
             android:layout_marginBottom="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/circle_button_drawable"
-            />
+            android:background="@drawable/circle_button_drawable" />
+
         <Button
             android:id="@+id/foldCardsButton"
             android:layout_width="60dp"
@@ -205,9 +205,19 @@
             android:text="Fold&#10;Cards"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/circle_button_drawable"
-            />
+            android:background="@drawable/circle_button_drawable" />
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tableView"
+        android:background="#ffffff"
+        android:alpha="0.7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout5"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/linearLayout4" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardHand"

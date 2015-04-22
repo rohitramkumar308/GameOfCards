@@ -11,13 +11,12 @@ import srk.syracuse.gameofcards.R;
 
 
 public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder> {
-    private static final String TAG = "CustomAdapter";
 
+    OnItemClickListener mOnItemClickListner;
     private int[] mDataSet;
     private boolean isCardType;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView;
 
         public ViewHolder(View v) {
@@ -31,7 +30,9 @@ public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (mOnItemClickListner != null) {
+                        mOnItemClickListner.onItemClick(itemView, getPosition());
+                    }
                 }
             });
         }
@@ -65,4 +66,13 @@ public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder
     public int getItemCount() {
         return mDataSet.length;
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListner = mOnItemClickListener;
+    }
+
 }

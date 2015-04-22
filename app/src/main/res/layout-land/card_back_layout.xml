@@ -7,16 +7,19 @@
     android:id="@+id/cardHolder">
 
     <ImageView
+        android:layout_marginTop="20dp"
+        android:padding="2dp"
         android:id="@+id/cardDesign"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
         android:src="@drawable/ericcartman" />
+
     <ImageView
         android:id="@+id/cardDesignBack"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
-        android:src="@drawable/ericcartman"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:src="@drawable/ericcartman" />
 </RelativeLayout>

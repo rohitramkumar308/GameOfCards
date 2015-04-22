@@ -1,6 +1,5 @@
 package srk.syracuse.gameofcards.Activities;
 
-import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +10,7 @@ import srk.syracuse.gameofcards.Fragments.MainFragment;
 import srk.syracuse.gameofcards.R;
 
 
-public class GameActivity extends ActionBarActivity{
+public class GameActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

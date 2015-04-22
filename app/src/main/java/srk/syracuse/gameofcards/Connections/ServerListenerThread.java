@@ -29,22 +29,22 @@ public class ServerListenerThread extends Thread {
                 InputStream inputStream = null;
                 inputStream = hostThreadSocket.getInputStream();
                 objectInputStream = new ObjectInputStream(inputStream);
-                Object gameObject ;
-                while (true) {
-                    Bundle data = new Bundle();
-                    gameObject = objectInputStream.readObject();
-                    if (gameObject != null) {
-                        if (gameObject instanceof PlayerInfo) {
-                            data.putSerializable(ServerHandler.DATA_KEY, (PlayerInfo) gameObject);
-                            data.putString(ServerHandler.ACTION_KEY, ServerHandler.PLAYER_LIST_UPDATE);
-                        } else {
-                            data.putSerializable(ServerHandler.DATA_KEY, (Game) gameObject);
-                        }
-                        Message msg = new Message();
-                        msg.setData(data);
-                        HostFragment.serverHandler.sendMessage(msg);
+                Object gameObject;
+                Bundle data = new Bundle();
+                gameObject = objectInputStream.readObject();
+                if (gameObject != null) {
+                    if (gameObject instanceof PlayerInfo) {
+                        data.putSerializable(ServerHandler.DATA_KEY, (PlayerInfo) gameObject);
+                        data.putString(ServerHandler.ACTION_KEY, ServerHandler.PLAYER_LIST_UPDATE);
+                        ServerConnectionThread.socketUserMap.put(hostThreadSocket, ((PlayerInfo) gameObject).username);
+                    } else {
+                        data.putSerializable(ServerHandler.DATA_KEY, (Game) gameObject);
                     }
+                    Message msg = new Message();
+                    msg.setData(data);
+                    HostFragment.serverHandler.sendMessage(msg);
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
