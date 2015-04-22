@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,26 +24,6 @@ public class DeckCustomizeAdapter extends BaseAdapter {
         if (cardList != null) {
             this.cardList = cardList;
             context = con;
-        }
-    }
-
-    public void removeItem(int i) {
-        if (cardList != null && i >= 0 && i < cardList.size()) {
-            cardList.remove(i);
-        }
-    }
-
-    public List<CardCustomize> getList() {
-        if (cardList != null) {
-            return cardList;
-        }
-        return null;
-    }
-
-
-    public void setList(List<CardCustomize> newMovieList) {
-        if (newMovieList != null) {
-            cardList = newMovieList;
         }
     }
 

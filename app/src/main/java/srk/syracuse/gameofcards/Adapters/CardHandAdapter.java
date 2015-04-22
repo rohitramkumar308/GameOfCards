@@ -48,13 +48,13 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
         Cards currCard = cards.get(position);
         holder.cardFront.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
                 context.getPackageName()));
-        holder.cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
-                context.getPackageName()));
-        if (currCard.cardFaceUp == true) {
-            holder.cardBack.setVisibility(View.VISIBLE);
-        } else {
-            holder.cardBack.setVisibility(View.GONE);
-        }
+//        holder.cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
+//                context.getPackageName()));
+//        if (currCard.cardFaceUp == true) {
+//            holder.cardBack.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.cardBack.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -74,16 +74,16 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
                 }
             });
             cardFront = (ImageView) v.findViewById(R.id.cardDesign);
-            cardBack = (ImageView) v.findViewById(R.id.cardDesignBack);
-
-            cardBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.OnItemClick(v, getPosition());
-                    }
-                }
-            });
+//            cardBack = (ImageView) v.findViewById(R.id.cardDesignBack);
+//
+//            cardBack.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (mItemClickListener != null) {
+//                        mItemClickListener.OnItemClick(v, getPosition());
+//                    }
+//                }
+//            });
             cardFront.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

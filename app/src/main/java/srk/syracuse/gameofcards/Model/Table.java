@@ -3,7 +3,6 @@ package srk.syracuse.gameofcards.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import srk.syracuse.gameofcards.Model.Cards;
 
 public class Table implements Serializable {
     public ArrayList<Cards> TableCards;

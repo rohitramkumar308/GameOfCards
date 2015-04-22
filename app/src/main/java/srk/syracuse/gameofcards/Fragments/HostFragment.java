@@ -15,9 +15,7 @@ import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
 import srk.syracuse.gameofcards.R;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
 
-/**
- * Created by rohitramkumar on 4/19/15.
- */
+
 public class HostFragment extends Fragment {
     public static ServerHandler serverHandler;
     public static MaterialEditText gameName;

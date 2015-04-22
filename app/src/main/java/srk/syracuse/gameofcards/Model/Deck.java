@@ -36,7 +36,7 @@ public class Deck implements Serializable {
     private void initDeckWithRestrictedCards(ArrayList<Cards> restrictedCards)
     {
         int cardIndex=0;
-        boolean contains=false;
+        boolean contains;
         for (int rank=1;rank<=13;rank++)
         {
             for (int suit=0;suit<4;suit++)
@@ -71,7 +71,7 @@ public class Deck implements Serializable {
 
     public void shuffleDeck()
     {
-        int random=0;
+        int random;
         for (int i=0;i<numberOfCards;i++)
         {
             random=getRandomCard(i);

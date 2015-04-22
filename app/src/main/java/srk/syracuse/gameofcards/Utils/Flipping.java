@@ -7,9 +7,6 @@ import android.view.animation.Animation;
 import android.graphics.Camera;
 import android.view.animation.Transformation;
 
-/**
- * Created by shivankmalik on 4/22/15.
- */
 public class Flipping extends Animation {
     private Camera camera;
 
@@ -32,9 +29,9 @@ public class Flipping extends Animation {
      * be "visible". If forward is false, the reverse is assumed.
      *
      * @param fromView First view in the transition.
-     * @param toView Second view in the transition.
-     * @param centerX The center of the views in the x-axis.
-     * @param centerY The center of the views in the y-axis.
+     * @param toView   Second view in the transition.
+     * @param centerX  The center of the views in the x-axis.
+     * @param centerY  The center of the views in the y-axis.
      */
     public Flipping(View fromView, View toView, int centerX, int centerY) {
         this.fromView = fromView;

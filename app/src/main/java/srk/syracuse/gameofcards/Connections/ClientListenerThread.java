@@ -11,7 +11,7 @@ import java.net.Socket;
 
 import srk.syracuse.gameofcards.Fragments.MainFragment;
 import srk.syracuse.gameofcards.Model.Game;
-import srk.syracuse.gameofcards.Utils.ClientHandler;
+import srk.syracuse.gameofcards.Utils.Constants;
 
 public class ClientListenerThread extends Thread {
 
@@ -25,19 +25,17 @@ public class ClientListenerThread extends Thread {
     public void run() {
         try {
             while (true) {
-                ObjectInputStream objectInputStream;
-                InputStream inputStream = null;
-                inputStream = socket.getInputStream();
-                objectInputStream = new ObjectInputStream(inputStream);
+                InputStream inputStream = socket.getInputStream();
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 Bundle data = new Bundle();
-                Object serverObject = (Object) objectInputStream.readObject();
+                Object serverObject = objectInputStream.readObject();
                 if (serverObject != null) {
                     if (serverObject instanceof String) {
-                        data.putSerializable(ClientHandler.DATA_KEY, (String) serverObject);
-                        data.putString(ClientHandler.ACTION_KEY, ClientHandler.UPDATE_GAME_NAME);
+                        data.putSerializable(Constants.DATA_KEY, (String) serverObject);
+                        data.putString(Constants.ACTION_KEY, Constants.UPDATE_GAME_NAME);
                     }
                     if (serverObject instanceof Game) {
-                        data.putSerializable(ClientHandler.DATA_KEY, (Game) serverObject);
+                        data.putSerializable(Constants.DATA_KEY, (Game) serverObject);
                     }
                     Message msg = new Message();
                     msg.setData(data);

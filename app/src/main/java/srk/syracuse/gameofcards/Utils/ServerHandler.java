@@ -18,17 +18,12 @@ import srk.syracuse.gameofcards.Model.PlayerInfo;
 
 public class ServerHandler extends Handler {
 
-    public final static String PLAYER_LIST_UPDATE = "updatePlayerList";
-    public final static String ACTION_KEY = "action";
-    public final static String DATA_KEY = "data";
-
 
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
         Bundle messageData = msg.getData();
-        String value = messageData.getString(ACTION_KEY);
-        Object gameObject = messageData.getSerializable(DATA_KEY);
+        Object gameObject = messageData.getSerializable(Constants.DATA_KEY);
 
         if (gameObject instanceof PlayerInfo) {
             PlayerInfo playerInfo = (PlayerInfo) gameObject;

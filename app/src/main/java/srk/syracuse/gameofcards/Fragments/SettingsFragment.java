@@ -1,6 +1,5 @@
 package srk.syracuse.gameofcards.Fragments;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +27,8 @@ public class SettingsFragment extends Fragment {
     protected RecyclerView.LayoutManager mTableLayoutManager;
     public static int selectedCardImage = -1;
     public static int selectedTableImage = -1;
-
+    public RadioButton dealEven;
+    public RadioButton dealExact;
     private int[] mCardDataSet;
     private int[] mTableDataSet;
 
@@ -46,8 +46,8 @@ public class SettingsFragment extends Fragment {
         Button apply = (Button) rootView.findViewById(R.id.applySettings);
         Button manageDeck = (Button) rootView.findViewById(R.id.manageDeck);
         Button cancel = (Button) rootView.findViewById(R.id.cancelChanges);
-        RadioButton dealEven = (RadioButton) rootView.findViewById(R.id.radioEven);
-        RadioButton dealExact = (RadioButton) rootView.findViewById(R.id.radioExact);
+        dealEven = (RadioButton) rootView.findViewById(R.id.radioEven);
+        dealExact = (RadioButton) rootView.findViewById(R.id.radioExact);
         final Spinner spinner = (Spinner) rootView.findViewById(R.id.planets_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.deal_exactly, android.R.layout.simple_spinner_item);

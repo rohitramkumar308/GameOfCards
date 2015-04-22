@@ -5,19 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import srk.syracuse.gameofcards.Model.CardCustomize;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.R;
 
-/**
- * Created by kunalshrivastava on 4/21/15.
- */
+
 public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.ViewHolder> {
 
     public static OnItemClickListener mItemClickListener;
@@ -49,8 +44,7 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Cards currCard = cards.get(position);
-        if (currCard.cardFaceUp == true) {
-            //context.getResources().getIdentifier(currCard.imageID, "drawable", context.getPackageName());
+        if (currCard.cardFaceUp) {
             holder.imageView.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
                     context.getPackageName()));
         } else {
@@ -104,6 +98,6 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
     }
 
     public void setOnItemCLickListener(final OnItemClickListener onItemClickListener) {
-        this.mItemClickListener = onItemClickListener;
+        mItemClickListener = onItemClickListener;
     }
 }

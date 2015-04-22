@@ -11,13 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import srk.syracuse.gameofcards.Adapters.PlayerAdapter;
-import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
-import srk.syracuse.gameofcards.Connections.ServerSenderThread;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
@@ -124,7 +120,7 @@ public class PlayerListFragment extends Fragment {
     }
 
     public void initializeGame() {
-        ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
+        ArrayList<Cards> restrictedCards = new ArrayList();
         restrictedCards.add(new Cards(1, 1));
         restrictedCards.add(new Cards(2, 2));
         deviceList.add(MainFragment.userName.getText().toString());

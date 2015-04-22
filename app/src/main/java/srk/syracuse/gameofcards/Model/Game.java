@@ -1,13 +1,10 @@
 package srk.syracuse.gameofcards.Model;
 
-import java.awt.font.NumericShaper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by kunalshrivastava on 4/20/15.
- */
+
 public class Game implements Serializable {
     private int numberOfPlayer;
     private int numberOfDeck;
@@ -22,8 +19,8 @@ public class Game implements Serializable {
 
     public Game(ArrayList<String> usernames, int numberOfDeck, int numberOfCardsDraw, boolean drawEqual, ArrayList<Cards> restrictedCards, String gameName) {
         this.senderUsername = null;
-        this.decks = new ArrayList<Deck>();
-        this.players = new ArrayList<Player>();
+        this.decks = new ArrayList();
+        this.players = new ArrayList();
         this.numberOfPlayer = usernames.size();
         this.numberOfDeck = numberOfDeck;
         this.numberOfCardsDraw = numberOfCardsDraw;
@@ -52,12 +49,12 @@ public class Game implements Serializable {
     }
 
     public Hand getHand() {
-        ArrayList<Cards> handCards = new ArrayList<Cards>();
-        int deckNum = 0;
-        boolean didGive = false;
+        ArrayList<Cards> handCards = new ArrayList();
+        int deckNum;
+        boolean didGive;
         for (int i = 0; i < this.numberOfCardsDraw; i++) {
             didGive = false;
-            while (didGive != true) {
+            while (!didGive) {
                 deckNum = randInt(0, numberOfDeck - 1);
                 Deck deck = decks.get(deckNum);
                 if (deck.numberOfCards > 0) {
@@ -71,15 +68,8 @@ public class Game implements Serializable {
     }
 
     public static int randInt(int min, int max) {
-
-        // Usually this can be a field rather than a method variable
         Random rand = new Random();
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-
-        return randomNum;
+        return rand.nextInt((max - min) + 1) + min;
     }
 
     public void articulate() {

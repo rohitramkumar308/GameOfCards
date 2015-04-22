@@ -1,7 +1,9 @@
 package srk.syracuse.gameofcards.Fragments;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.Model.Player;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.Constants;
 import srk.syracuse.gameofcards.Utils.Flipping;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
 
@@ -40,7 +44,7 @@ public class GameFragment extends Fragment {
     public RecyclerView mTableView;
     public static CardHandAdapter mCardHandAdapter;
     public static TableViewAdapter mTableViewAdapter;
-
+    public Button foldButton;
     public static Player thisPlayer = null;
 
     public static Socket socket;
@@ -75,7 +79,7 @@ public class GameFragment extends Fragment {
         updateHand();
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
         mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
-
+        foldButton = (Button) rootView.findViewById(R.id.foldCardsButton);
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardHand.setLayoutManager(mCardLayoutManager);
@@ -84,19 +88,19 @@ public class GameFragment extends Fragment {
         mCardHandAdapter.setOnItemCLickListener(new CardHandAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View v, int position) {
-                View rootLayout = (View) v.getParent();
-                View cardFace = rootLayout.findViewById(R.id.cardDesignBack);
-                View cardBack = rootLayout.findViewById(R.id.cardDesign);
-
-                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth() / 2, cardFace.getHeight() / 2);
-
-                updateHand();
-                if (cardFace.getVisibility() == View.GONE) {
-                    flipAnimation.reverse();
-                    setCardFaceUp(position, true);
-                } else
-                    setCardFaceUp(position, false);
-                rootLayout.startAnimation(flipAnimation);
+//                View rootLayout = (View) v.getParent();
+//                View cardFace = rootLayout.findViewById(R.id.cardDesignBack);
+//                View cardBack = rootLayout.findViewById(R.id.cardDesign);
+//
+//                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth() / 2, cardFace.getHeight() / 2);
+//
+//                updateHand();
+//                if (cardFace.getVisibility() == View.GONE) {
+//                    flipAnimation.reverse();
+//                    setCardFaceUp(position, true);
+//                } else
+//                    setCardFaceUp(position, false);
+//                rootLayout.startAnimation(flipAnimation);
             }
 
             @Override
@@ -125,6 +129,13 @@ public class GameFragment extends Fragment {
                 mCardHandAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mTableViewAdapter.notifyItemRemoved(position);
                 updateGameForAll(gameObject);
+            }
+        });
+
+        foldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog dialog = confirmMove(Constants.MOVE_FOLD).create();
             }
         });
 
@@ -199,6 +210,35 @@ public class GameFragment extends Fragment {
             sendGameChange.start();
         } else {
             ServerHandler.sendToAll(gameObject);
+        }
+    }
+
+    private AlertDialog.Builder confirmMove(final int message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        alertDialogBuilder.setTitle("Confirm");
+        alertDialogBuilder
+                .setMessage("Do you want to " + message)
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        actionTobeMade(message);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        return alertDialogBuilder;
+    }
+
+    private void actionTobeMade(final int keyword) {
+        switch (keyword) {
+
         }
     }
 }
