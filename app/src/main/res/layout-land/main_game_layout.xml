@@ -190,9 +190,10 @@
 
         <Button
             android:id="@+id/hideCardsButton"
-            android:layout_width="60dp"
-            android:layout_height="61dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Hide&#10;Cards"
+
             android:textStyle="bold"
             android:layout_marginBottom="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"

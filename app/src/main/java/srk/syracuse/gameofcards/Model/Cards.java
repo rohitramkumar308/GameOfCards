@@ -19,6 +19,7 @@ public class Cards implements Serializable {
     public String imageID;
     public boolean cardFaceUp;
 
+
     public enum Suits {
         hearts,
         spades,
@@ -36,7 +37,7 @@ public class Cards implements Serializable {
 
         this.suit = _suit;
         this.rank = _rank;
-        this.cardFaceUp=true;
+        this.cardFaceUp=false;
         this.imageID=getSuitAsString()+"_"+getValueAsString();
     }
 

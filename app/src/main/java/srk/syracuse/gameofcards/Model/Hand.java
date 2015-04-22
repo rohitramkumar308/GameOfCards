@@ -7,11 +7,13 @@ public class Hand implements Serializable
 {
     public ArrayList<Cards> gameHand;
     public int numberOfCards;
+    public boolean handFaceUp;
 
     Hand(ArrayList<Cards> cards)
     {
         this.gameHand=cards;
         this.numberOfCards=cards.size();
+        this.handFaceUp = false;
     }
 
     public void addCard(Cards card)
@@ -43,5 +45,15 @@ public class Hand implements Serializable
         {
             System.out.println(card.toString());
         }
+    }
+
+    public void isHandFaceUp()
+    {
+        for(int i=0; i<this.gameHand.size(); i++)
+            if(!this.getCard(i).cardFaceUp) {
+                this.handFaceUp = false;
+                return;
+            }
+        this.handFaceUp = true;
     }
 }

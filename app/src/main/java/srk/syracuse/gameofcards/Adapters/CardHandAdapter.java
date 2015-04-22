@@ -18,6 +18,7 @@ import srk.syracuse.gameofcards.R;
 public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHolder> {
 
     public static OnItemClickListener mItemClickListener;
+    public static OnItemLongClickListener mItemLongClickListener;
 
     public ArrayList<Cards> getCards() {
         return cards;
@@ -48,13 +49,13 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
         Cards currCard = cards.get(position);
         holder.cardFront.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
                 context.getPackageName()));
-//        holder.cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
-//                context.getPackageName()));
-//        if (currCard.cardFaceUp == true) {
-//            holder.cardBack.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.cardBack.setVisibility(View.GONE);
-//        }
+        holder.cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
+                context.getPackageName()));
+        if (currCard.cardFaceUp == true) {
+            holder.cardBack.setVisibility(View.INVISIBLE);
+        } else {
+            holder.cardBack.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -74,17 +75,9 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
                 }
             });
             cardFront = (ImageView) v.findViewById(R.id.cardDesign);
-//            cardBack = (ImageView) v.findViewById(R.id.cardDesignBack);
-//
-//            cardBack.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mItemClickListener != null) {
-//                        mItemClickListener.OnItemClick(v, getPosition());
-//                    }
-//                }
-//            });
-            cardFront.setOnClickListener(new View.OnClickListener() {
+            cardBack = (ImageView) v.findViewById(R.id.cardDesignBack);
+
+            cardBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mItemClickListener != null) {
@@ -92,14 +85,14 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
                     }
                 }
             });
+
             cardFront.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.OnItemLongClick(view, getPosition());
-                        return true;
+                    if (mItemLongClickListener != null) {
+                        mItemLongClickListener.OnItemLongClick(view, getPosition());
                     }
-                    return false;
+                    return true;
                 }
             });
         }
@@ -108,11 +101,16 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
 
     public interface OnItemClickListener {
         void OnItemClick(View v, int position);
-
-        void OnItemLongClick(View v, int position);
+    }
+    public interface OnItemLongClickListener{
+        boolean OnItemLongClick(View v, int position);
     }
 
-    public void setOnItemCLickListener(final OnItemClickListener onItemClickListener) {
+    public void setOnItemLongClickListener(final OnItemLongClickListener onItemLongClickListener) {
+        this.mItemLongClickListener = onItemLongClickListener;
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener onItemClickListener) {
         this.mItemClickListener = onItemClickListener;
     }
 }

@@ -43,6 +43,7 @@ public class GameFragment extends Fragment {
     public static CardHandAdapter mCardHandAdapter;
     public static TableViewAdapter mTableViewAdapter;
     public Button foldButton;
+    public Button hideButton;
     public static Player thisPlayer = null;
     public AlertDialog dialog;
     public static Socket socket;
@@ -82,38 +83,37 @@ public class GameFragment extends Fragment {
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
         mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
         foldButton = (Button) rootView.findViewById(R.id.foldCardsButton);
+        hideButton = (Button) rootView.findViewById(R.id.hideCardsButton);
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardHand.setLayoutManager(mCardLayoutManager);
         mCardHandAdapter = new CardHandAdapter(context, thisPlayer.hand.gameHand, gameObject.cardBackImage);
         mCardHand.setAdapter(mCardHandAdapter);
-        mCardHandAdapter.setOnItemCLickListener(new CardHandAdapter.OnItemClickListener() {
+
+        mCardHandAdapter.setOnItemClickListener(new CardHandAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View v, int position) {
-//                View rootLayout = (View) v.getParent();
-//                View cardFace = rootLayout.findViewById(R.id.cardDesignBack);
-//                View cardBack = rootLayout.findViewById(R.id.cardDesign);
-//
-//                Flipping flipAnimation = new Flipping(cardFace, cardBack, cardFace.getWidth() / 2, cardFace.getHeight() / 2);
-//
-//                updateHand();
-//                if (cardFace.getVisibility() == View.GONE) {
-//                    flipAnimation.reverse();
-//                    setCardFaceUp(position, true);
-//                } else
-//                    setCardFaceUp(position, false);
-//                rootLayout.startAnimation(flipAnimation);
+                View rootLayout = (View) v.getParent();
+                View cardFace = rootLayout.findViewById(R.id.cardDesign);
+                View cardBack = rootLayout.findViewById(R.id.cardDesignBack);
+                updateHand();
+                cardBack.setVisibility(View.INVISIBLE);
+                setCardFaceUp(position, true);
             }
+        });
 
+        mCardHandAdapter.setOnItemLongClickListener(new CardHandAdapter.OnItemLongClickListener() {
             @Override
-            public void OnItemLongClick(View v, int position) {
+            public boolean OnItemLongClick(View v, int position) {
                 gameObject.mTable.TableCards.add(thisPlayer.hand.gameHand.get(position));
                 thisPlayer.hand.gameHand.remove(position);
                 mTableViewAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
                 mCardHandAdapter.notifyItemRemoved(position);
                 updateGameForAll(gameObject);
+                return true;
             }
         });
+
         mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards, gameObject.cardBackImage);
         mTableView.setLayoutManager(mTableLayoutManager);
         mTableView.setAdapter(mTableViewAdapter);
@@ -144,11 +144,29 @@ public class GameFragment extends Fragment {
             }
         });
 
+        hideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(thisPlayer.hand.handFaceUp)
+                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                        setCardFaceUp(i, false);
+                        mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                    }
+                else
+                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                        setCardFaceUp(i, true);
+                        mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
+                    }
+                mCardHandAdapter.notifyDataSetChanged();
+            }
+        });
+
         return rootView;
     }
 
     public void setCardFaceUp(int position, boolean isFaceUp) {
         this.thisPlayer.hand.getCard(position).cardFaceUp = isFaceUp;
+        this.thisPlayer.hand.isHandFaceUp();
     }
 
     public static void updatePlayers() {

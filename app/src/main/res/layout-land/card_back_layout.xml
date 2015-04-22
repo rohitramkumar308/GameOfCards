@@ -3,16 +3,17 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:layout_margin="1dp"
+    android:layout_marginTop="10dp"
     android:alpha="1.0"
     android:id="@+id/cardHolder">
 
     <ImageView
-        android:layout_marginTop="20dp"
         android:padding="2dp"
         android:id="@+id/cardDesign"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
+        android:visibility="visible"
         android:src="@drawable/ericcartman" />
 
     <ImageView
@@ -20,6 +21,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:src="@drawable/ericcartman" />
 </RelativeLayout>
