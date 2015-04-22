@@ -55,7 +55,6 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
         return cards.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
 
@@ -86,5 +85,4 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
     public void setOnItemCLickListener(final OnItemClickListener onItemClickListener) {
         this.mItemClickListener = onItemClickListener;
     }
-
 }

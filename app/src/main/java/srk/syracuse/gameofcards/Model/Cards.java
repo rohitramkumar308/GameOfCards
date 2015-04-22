@@ -30,19 +30,7 @@ public class Cards implements Serializable {
         joker
     }
 
-    public Cards(String cardName) {
-        if (cardName.equals("joker")) {
-            this.rank = JOKER;
-            this.suit = 1;
-            this.cardFaceUp=true;
-            this.imageID=cardName;
-        }
-
-        String[] meta = cardName.split("_");
-
-        int _suit = getSuitAsInt(meta[0]);
-        int _rank = getRankFromString(meta[1]);
-
+    public Cards(int _suit, int _rank) {
         if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
                 _suit != CLUBS && _suit != JOKER)
             throw new IllegalArgumentException("Illegal playing card suit");
@@ -51,17 +39,8 @@ public class Cards implements Serializable {
 
         this.suit = _suit;
         this.rank = _rank;
-    }
-
-    Cards(int _suit, int _rank) {
-        if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
-                _suit != CLUBS && _suit != JOKER)
-            throw new IllegalArgumentException("Illegal playing card suit");
-        if (_suit != JOKER && (_rank < 1 || _rank > 13))
-            throw new IllegalArgumentException("Illegal playing card value");
-
-        this.suit = _suit;
-        this.rank = _rank;
+        this.cardFaceUp=true;
+        this.imageID=getSuitAsString()+"_"+getValueAsString();
     }
 
     public int getSuit() {
@@ -83,15 +62,15 @@ public class Cards implements Serializable {
     public String getSuitAsString() {
         switch (suit) {
             case SPADES:
-                return "Spades";
+                return "spades";
             case HEARTS:
-                return "Hearts";
+                return "hearts";
             case DIAMONDS:
-                return "Diamonds";
+                return "diamonds";
             case CLUBS:
-                return "Clubs";
+                return "clubs";
             default:
-                return "Joker";
+                return "joker";
         }
     }
 
@@ -101,95 +80,44 @@ public class Cards implements Serializable {
         else {
             switch (rank) {
                 case 1:
-                    return "Ace";
+                    return "ace";
                 case 2:
-                    return "2";
+                    return "two";
                 case 3:
-                    return "3";
+                    return "three";
                 case 4:
-                    return "4";
+                    return "four";
                 case 5:
-                    return "5";
+                    return "five";
                 case 6:
-                    return "6";
+                    return "six";
                 case 7:
-                    return "7";
+                    return "seven";
                 case 8:
-                    return "8";
+                    return "eight";
                 case 9:
-                    return "9";
+                    return "nine";
                 case 10:
-                    return "10";
+                    return "ten";
                 case 11:
-                    return "Jack";
+                    return "jack";
                 case 12:
-                    return "Queen";
+                    return "queen";
                 default:
-                    return "King";
+                    return "king";
             }
         }
     }
 
-    public int getRankFromString(String rank)
-    {
-        if (suit == JOKER)
-            return 0;
-        switch (rank) {
-            case "ace":
-                return 1;
-            case "two":
-                return 2;
-            case "three":
-                return 3;
-            case "four":
-                return 4;
-            case "five":
-                return 5;
-            case "six":
-                return 6;
-            case "seven":
-                return 7;
-            case "eight":
-                return 8;
-            case "nine":
-                return 9;
-            case "ten":
-                return 10;
-            case "jack":
-                return JACK;
-            case "queen":
-                return QUEEN;
-            default:
-                return KING;
-        }
-    }
-
-    public int getSuitAsInt(String suit) {
-        switch (Suits.valueOf(suit)) {
-            case diamonds:
-                return DIAMONDS;
-            case spades:
-                return SPADES;
-            case clubs:
-                return CLUBS;
-            case hearts:
-                return HEARTS;
-            case joker:
-                return JOKER;
-            default:
-                return -1;
-        }
-    }
-
-    public String toString() {
-        if (suit == JOKER) {
-            if (suit == 1)
-                return "Joker";
-            else
-                return "Joker #" + rank;
-        } else
-            return getValueAsString() + " of " + getSuitAsString();
-    }
+//    public String toString() {
+//        if (suit == JOKER) {
+//            if (suit == 1)
+//                return "Joker";
+//            else
+//                return "Joker #" + rank;
+//        } else
+//            return getValueAsString() + " of " + getSuitAsString();
+//    }
 
     public boolean isEqual(Cards card) {
         if (suit == card.suit && rank == card.rank)

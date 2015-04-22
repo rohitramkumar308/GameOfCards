@@ -147,8 +147,8 @@ public class PlayerListFragment extends Fragment {
         Iterator<Socket> socketIterator = ServerConnectionThread.socketSet.iterator();
         ArrayList<Cards> restrictedCards = new ArrayList<Cards>();
         Socket socket;
-        restrictedCards.add(new Cards("diamonds_10"));
-        restrictedCards.add(new Cards("spades_10"));
+        restrictedCards.add(new Cards(1,1));
+        restrictedCards.add(new Cards(2,2));
         deviceList.add(MainFragment.userName.getText().toString());
         Game gameObject = new Game(deviceList, 3, 5, false, restrictedCards, "Game of Cards");
         while (socketIterator.hasNext()) {

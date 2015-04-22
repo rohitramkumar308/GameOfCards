@@ -14,11 +14,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-<<<<<<< Updated upstream
-        android:layout_marginLeft="@dimen/activity_horizontal_margin">
-=======
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:id="@+id/linearLayout2">
->>>>>>> Stashed changes
+
 
         <ImageView
             android:id="@+id/player1Image"
@@ -127,7 +125,8 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout4">
 
         <ImageView
             android:id="@+id/currentPlayerImage"
@@ -147,7 +146,6 @@
             android:text="Player1" />
     </LinearLayout>
 
-<<<<<<< Updated upstream
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,7 +154,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:id="@+id/linearLayout3">
 
         <Button
             android:id="@+id/dealCardsButton"
@@ -210,29 +209,19 @@
             android:background="@drawable/circle_button_drawable"
             />
     </LinearLayout>
-=======
 
-
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/cardTable"-->
-            <!--android:background="#ffffff"-->
-            <!--android:alpha="0.7"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_marginRight="3dp"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/cardHand"
-            android:background="#ffffff"
-            android:alpha="0.7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-
->>>>>>> Stashed changes
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardHand"
+        android:background="#ffffff"
+        android:alpha="0.7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/linearLayout3"
+        android:layout_toLeftOf="@+id/linearLayout4"
+        android:layout_toRightOf="@+id/linearLayout3"
+        android:layout_toEndOf="@+id/linearLayout3"
+        android:layout_marginLeft="30dp" />
 
 </RelativeLayout>
 
