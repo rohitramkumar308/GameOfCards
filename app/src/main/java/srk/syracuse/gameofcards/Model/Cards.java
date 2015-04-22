@@ -28,6 +28,10 @@ public class Cards implements Serializable {
         joker
     }
 
+    public Cards() {
+
+    }
+
     public Cards(int _suit, int _rank) {
         if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
                 _suit != CLUBS && _suit != JOKER)
@@ -39,6 +43,8 @@ public class Cards implements Serializable {
         this.rank = _rank;
         this.cardFaceUp=false;
         this.imageID=getSuitAsString()+"_"+getValueAsString();
+        this.cardFaceUp = true;
+        this.imageID = getSuitAsString() + "_" + getValueAsString();
     }
 
     public int getSuit() {

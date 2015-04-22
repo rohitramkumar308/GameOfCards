@@ -60,6 +60,7 @@ public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.imageView.setImageResource(mDataSet[position]);
+        viewHolder.imageView.setTag(mDataSet[position]);
     }
 
     @Override

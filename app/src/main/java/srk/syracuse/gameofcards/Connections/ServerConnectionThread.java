@@ -15,7 +15,7 @@ public class ServerConnectionThread extends Thread {
     public static HashMap<Socket, String> socketUserMap = new HashMap();
     public static boolean serverStarted = false;
     public static ServerSocket serverSocket;
-
+    public static boolean allPlayersJoined = false;
 
     public ServerConnectionThread() {
 
@@ -29,11 +29,16 @@ public class ServerConnectionThread extends Thread {
                 serverStarted = true;
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    Thread socketListenThread = new Thread(new ServerListenerThread(socket));
-                    socketListenThread.start();
-                    ServerSenderThread sendGameName = new ServerSenderThread(socket, HostFragment.gameName.getText().toString());
-                    sendGameName.start();
-                    socketUserMap.put(socket, null);
+                    if (!allPlayersJoined) {
+                        Thread socketListenThread = new Thread(new ServerListenerThread(socket));
+                        socketListenThread.start();
+                        ServerSenderThread sendGameName = new ServerSenderThread(socket, HostFragment.gameName.getText().toString());
+                        sendGameName.start();
+                        socketUserMap.put(socket, null);
+                        if (socketUserMap.size() == HostFragment.numberPlayers) {
+                            allPlayersJoined = true;
+                        }
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

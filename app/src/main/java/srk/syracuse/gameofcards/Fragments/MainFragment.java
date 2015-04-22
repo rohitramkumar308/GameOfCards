@@ -71,13 +71,13 @@ public class MainFragment extends Fragment {
                         joinGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
+                                clientConnect.start();
                                 if (userName.getText() != null && userName.getText().toString().trim().length() > 0) {
-                                    ClientConnectionThread clientConnect = new ClientConnectionThread(userName.getText().toString());
-                                    clientConnect.start();
-//                                    if (ClientConnectionThread.socket != null) {
-                                        fragmentManager.beginTransaction()
-                                                .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
-                                                .commit();
+//                                    if (ClientConnectionThread.serverStarted) {
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.container, new JoinGameFragment()).addToBackStack(JoinGameFragment.class.getName())
+                                            .commit();
 //                                    } else {
 //                                        Toast.makeText(getActivity(), "Game yet to be hosted", Toast.LENGTH_SHORT).show();
 //                                    }

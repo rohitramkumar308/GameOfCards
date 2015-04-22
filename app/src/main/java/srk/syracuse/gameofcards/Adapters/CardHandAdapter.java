@@ -30,9 +30,9 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
 
     ArrayList<Cards> cards;
     Context context;
-    String cardBack;
+    int cardBack;
 
-    public CardHandAdapter(Context context, ArrayList<Cards> cards, String cardBack) {
+    public CardHandAdapter(Context context, ArrayList<Cards> cards, int cardBack) {
         this.context = context;
         this.cards = cards;
         this.cardBack = cardBack;
@@ -49,8 +49,7 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
         Cards currCard = cards.get(position);
         holder.cardFront.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
                 context.getPackageName()));
-        holder.cardBack.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
-                context.getPackageName()));
+        holder.cardBack.setImageResource(this.cardBack);
         if (currCard.cardFaceUp == true) {
             holder.cardBack.setVisibility(View.INVISIBLE);
         } else {
@@ -102,7 +101,8 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
     public interface OnItemClickListener {
         void OnItemClick(View v, int position);
     }
-    public interface OnItemLongClickListener{
+
+    public interface OnItemLongClickListener {
         boolean OnItemLongClick(View v, int position);
     }
 

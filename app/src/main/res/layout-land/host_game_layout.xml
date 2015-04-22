@@ -76,7 +76,7 @@
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/numberofPlayers"
+                android:id="@+id/numberOfPlayers"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Number of Players"

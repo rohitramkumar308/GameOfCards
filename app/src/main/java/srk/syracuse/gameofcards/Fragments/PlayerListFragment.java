@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import srk.syracuse.gameofcards.Adapters.PlayerAdapter;
+import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
@@ -64,10 +66,14 @@ public class PlayerListFragment extends Fragment {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initializeGame();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
-                        .commit();
+                if (ServerConnectionThread.allPlayersJoined) {
+                    initializeGame();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
+                            .commit();
+                } else {
+                    Toast.makeText(getActivity(), "Waiting for all players to Join the game", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mPlayerList = (RecyclerView) rootView.findViewById(R.id.gameList);
@@ -121,10 +127,30 @@ public class PlayerListFragment extends Fragment {
 
     public void initializeGame() {
         ArrayList<Cards> restrictedCards = new ArrayList();
-        restrictedCards.add(new Cards(1, 1));
-        restrictedCards.add(new Cards(2, 2));
         deviceList.add(MainFragment.userName.getText().toString());
-        gameObject = new Game(deviceList, 3, 5, false, restrictedCards, HostFragment.gameName.getText().toString());
+        gameObject = new Game(deviceList, 1, 5, true, restrictedCards, HostFragment.gameName.getText().toString());
+
+        if (SettingsFragment.dealExact != null && SettingsFragment.dealExact.isChecked()) {
+            gameObject.setDrawEqual(false);
+            gameObject.setNumberOfCardsDraw(Integer.valueOf(SettingsFragment.dealExactCards.getSelectedItem().toString()));
+        }
+        if (SettingsFragment.deckNumber != null && SettingsFragment.deckNumber.getText().length() > 0) {
+            int numberOfDecks = Integer.valueOf(SettingsFragment.deckNumber.toString());
+            if (numberOfDecks >= 1 && numberOfDecks <= 6) {
+                gameObject.setNumberOfDeck(numberOfDecks);
+            }
+        }
+
+        gameObject.gameBackground = SettingsFragment.selectedTableImage;
+        gameObject.cardBackImage = SettingsFragment.selectedCardImage;
+
+
+//        if (DeckCustomizeDialog.exclusionCardList != null) {
+//            Cards card = new Cards();
+//            for (int i = 0; i < DeckCustomizeDialog.exclusionCardList.size(); i +=) {
+//                card.imageID
+//            }
+//        }
         ServerHandler.sendToAll(gameObject);
     }
 

@@ -51,7 +51,7 @@
     </RadioGroup>
 
     <Spinner
-        android:id="@+id/planets_spinner"
+        android:id="@+id/cards_spinner"
         android:layout_width="60dp"
         android:visibility="gone"
         android:layout_height="wrap_content"

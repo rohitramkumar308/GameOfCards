@@ -46,6 +46,7 @@ public class ClientConnectionThread extends Thread {
     public static void closeServerSocket() {
         if (socket != null) {
             try {
+                serverStarted = false;
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();

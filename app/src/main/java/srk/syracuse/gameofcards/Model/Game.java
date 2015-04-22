@@ -13,10 +13,11 @@ public class Game implements Serializable {
     private ArrayList<Deck> decks;
     public ArrayList<Player> players;
     public String gameName;
-    public String cardBackImage;
+    public int cardBackImage;
     public String senderUsername;
     public Table mTable;
     private int actionKey;
+    public int gameBackground;
 
     public Game(ArrayList<String> usernames, int numberOfDeck, int numberOfCardsDraw, boolean drawEqual, ArrayList<Cards> restrictedCards, String gameName) {
         this.senderUsername = null;
@@ -27,7 +28,6 @@ public class Game implements Serializable {
         this.numberOfCardsDraw = numberOfCardsDraw;
         this.drawEqual = drawEqual;
         this.gameName = gameName;
-        this.cardBackImage = "cardback1";
         mTable = new Table();
         if (usernames.size() > 6) {
             throw new IllegalArgumentException("Number of players above the allowed limit (6)");
@@ -86,6 +86,79 @@ public class Game implements Serializable {
 
     public void setActionKey(int actionKey) {
         this.actionKey = actionKey;
+    }
+
+    public int getNumberOfPlayer() {
+        return numberOfPlayer;
+    }
+
+    public void setNumberOfPlayer(int numberOfPlayer) {
+        this.numberOfPlayer = numberOfPlayer;
+    }
+
+    public int getNumberOfDeck() {
+        return numberOfDeck;
+    }
+
+    public void setNumberOfDeck(int numberOfDeck) {
+        this.numberOfDeck = numberOfDeck;
+    }
+
+    public int getNumberOfCardsDraw() {
+        return numberOfCardsDraw;
+    }
+
+    public void setNumberOfCardsDraw(int numberOfCardsDraw) {
+        this.numberOfCardsDraw = numberOfCardsDraw;
+    }
+
+    public boolean isDrawEqual() {
+        return drawEqual;
+    }
+
+    public void setDrawEqual(boolean drawEqual) {
+        this.drawEqual = drawEqual;
+    }
+
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(ArrayList<Deck> decks) {
+        this.decks = decks;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
+    public Table getmTable() {
+        return mTable;
+    }
+
+    public void setmTable(Table mTable) {
+        this.mTable = mTable;
     }
 }
 

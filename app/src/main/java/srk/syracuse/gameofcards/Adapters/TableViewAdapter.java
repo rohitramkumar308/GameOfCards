@@ -27,12 +27,10 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
 
     ArrayList<Cards> cards;
     Context context;
-    String cardBack;
 
-    public TableViewAdapter(Context context, ArrayList<Cards> cards, String cardBack) {
+    public TableViewAdapter(Context context, ArrayList<Cards> cards) {
         this.context = context;
         this.cards = cards;
-        this.cardBack = cardBack;
     }
 
     @Override
@@ -46,9 +44,6 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
         Cards currCard = cards.get(position);
         if (currCard.cardFaceUp) {
             holder.imageView.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
-                    context.getPackageName()));
-        } else {
-            holder.imageView.setImageResource(context.getResources().getIdentifier(this.cardBack, "drawable",
                     context.getPackageName()));
         }
     }
@@ -98,6 +93,6 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
     }
 
     public void setOnItemCLickListener(final OnItemClickListener onItemClickListener) {
-        mItemClickListener = onItemClickListener;
+        this.mItemClickListener = onItemClickListener;
     }
 }

@@ -19,7 +19,8 @@ import srk.syracuse.gameofcards.Utils.ServerHandler;
 public class HostFragment extends Fragment {
     public static ServerHandler serverHandler;
     public static MaterialEditText gameName;
-    public static MaterialEditText numberOfPlayers;
+    public MaterialEditText numberOfPlayers;
+    public static int numberPlayers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,19 +34,24 @@ public class HostFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.host_game_layout, container, false);
         Button startGame = (Button) rootView.findViewById(R.id.startGame);
         gameName = (MaterialEditText) rootView.findViewById(R.id.gameName);
-        numberOfPlayers = (MaterialEditText) rootView.findViewById(R.id.numberofPlayers);
+        numberOfPlayers = (MaterialEditText) rootView.findViewById(R.id.numberOfPlayers);
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (gameName.getText() != null && numberOfPlayers.getText() != null
                         && numberOfPlayers.getText().toString().trim().length() > 0 && gameName.getText().toString().trim().length() > 0) {
-                    Toast.makeText(getActivity(), "Server started", Toast.LENGTH_SHORT).show();
-                    ServerConnectionThread startServerThread = new ServerConnectionThread();
-                    startServerThread.start();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, new PlayerListFragment()).addToBackStack(PlayerListFragment.class.getName())
-                            .commit();
+                    numberPlayers = Integer.valueOf(numberOfPlayers.getText().toString());
+                    if (numberPlayers > 5 || numberPlayers < 1) {
+                        Toast.makeText(getActivity(), "Maximum 5 players allowed ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Server started", Toast.LENGTH_SHORT).show();
+                        ServerConnectionThread startServerThread = new ServerConnectionThread();
+                        startServerThread.start();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, new PlayerListFragment()).addToBackStack(PlayerListFragment.class.getName())
+                                .commit();
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Missing game name or player numbers", Toast.LENGTH_SHORT).show();
                 }

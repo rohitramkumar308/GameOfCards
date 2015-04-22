@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.Socket;
@@ -74,9 +75,8 @@ public class GameFragment extends Fragment {
         rootView = inflater.inflate(R.layout.main_game_layout, container, false);
         currentUserImage = (ImageView) rootView.findViewById(R.id.currentPlayerImage);
         currentUserText = (TextView) rootView.findViewById(R.id.currentPlayerText);
-        if (SettingsFragment.selectedTableImage != -1) {
-            rootView.setBackgroundResource(SettingsFragment.selectedTableImage);
-        }
+        RelativeLayout relative = (RelativeLayout) rootView.findViewById(R.id.mainGameLayout);
+        relative.setBackgroundResource(gameObject.gameBackground);
         context = getActivity();
         updatePlayers();
         updateHand();
@@ -113,8 +113,7 @@ public class GameFragment extends Fragment {
                 return true;
             }
         });
-
-        mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards, gameObject.cardBackImage);
+        mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards);
         mTableView.setLayoutManager(mTableLayoutManager);
         mTableView.setAdapter(mTableViewAdapter);
 
@@ -140,7 +139,6 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 dialog = confirmMove(Constants.MOVE_FOLD).create();
                 dialog.show();
-
             }
         });
 

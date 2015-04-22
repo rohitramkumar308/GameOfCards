@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import srk.syracuse.gameofcards.Adapters.DesignAdapter;
 import srk.syracuse.gameofcards.R;
 
@@ -27,10 +29,12 @@ public class SettingsFragment extends Fragment {
     protected RecyclerView.LayoutManager mTableLayoutManager;
     public static int selectedCardImage = -1;
     public static int selectedTableImage = -1;
-    public RadioButton dealEven;
-    public RadioButton dealExact;
+    public static RadioButton dealEven;
+    public static RadioButton dealExact;
     private int[] mCardDataSet;
     private int[] mTableDataSet;
+    public static Spinner dealExactCards;
+    public static MaterialEditText deckNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,18 +52,19 @@ public class SettingsFragment extends Fragment {
         Button cancel = (Button) rootView.findViewById(R.id.cancelChanges);
         dealEven = (RadioButton) rootView.findViewById(R.id.radioEven);
         dealExact = (RadioButton) rootView.findViewById(R.id.radioExact);
-        final Spinner spinner = (Spinner) rootView.findViewById(R.id.planets_spinner);
+        dealExactCards = (Spinner) rootView.findViewById(R.id.cards_spinner);
+        deckNumber = (MaterialEditText) rootView.findViewById(R.id.deckNumber);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.deal_exactly, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        dealExactCards.setAdapter(adapter);
         dealEven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    spinner.setVisibility(View.GONE);
+                    dealExactCards.setVisibility(View.GONE);
                 } else {
-                    spinner.setVisibility(View.VISIBLE);
+                    dealExactCards.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -80,6 +85,10 @@ public class SettingsFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                selectedCardImage = -1;
+                selectedTableImage = -1;
+                dealExact.setChecked(false);
+                dealExactCards.setVisibility(View.GONE);
                 getActivity().onBackPressed();
             }
         });
@@ -89,7 +98,6 @@ public class SettingsFragment extends Fragment {
         mCardRecyclerView.setLayoutManager(mCardLayoutManager);
         mCardAdapter = new DesignAdapter(mCardDataSet, true);
         mCardRecyclerView.setAdapter(mCardAdapter);
-
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTableRecyclerView = (RecyclerView) rootView.findViewById(R.id.tableDesignList);
         mTableRecyclerView.setLayoutManager(mTableLayoutManager);
@@ -99,7 +107,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedCardImage = image.getId();
+                selectedCardImage = Integer.valueOf(image.getTag().toString());
             }
         });
 
@@ -107,23 +115,20 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedTableImage = image.getId();
-                rootView.setBackgroundResource(selectedTableImage);
+                selectedTableImage = Integer.valueOf(image.getTag().toString());
             }
         });
         return rootView;
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-
     private void initDataset() {
         mCardDataSet = new int[]{R.drawable.cardback1, R.drawable.cardback2, R.drawable.cardback3, R.drawable.cardback4};
-        mTableDataSet = new int[]{R.drawable.table_back1, R.drawable.table_back3};
+        mTableDataSet = new int[]{R.drawable.table_back1, R.drawable.table_back2};
         if (selectedTableImage == -1) {
             selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "drawable", getActivity().getPackageName());
         }
