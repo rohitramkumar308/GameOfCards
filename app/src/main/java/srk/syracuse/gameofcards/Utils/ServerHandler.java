@@ -38,7 +38,7 @@ public class ServerHandler extends Handler {
         if (gameObject instanceof Game) {
             if (GameFragment.gameObject != null) {
                 GameFragment.gameObject = (Game) gameObject;
-//                GameFragment.updatePlayerStatus();
+                GameFragment.updatePlayerStatus();
                 GameFragment.updateTable();
                 sendToAll(gameObject);
             } else {

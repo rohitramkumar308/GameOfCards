@@ -29,7 +29,7 @@ public class ClientHandler extends Handler {
         if (clientObject instanceof Game) {
             if (GameFragment.gameObject != null) {
                 GameFragment.gameObject = (Game) clientObject;
-//                GameFragment.updatePlayerStatus();
+                GameFragment.updatePlayerStatus();
                 GameFragment.updateTable();
             } else {
                 JoinGameFragment.gameobject = (Game) clientObject;

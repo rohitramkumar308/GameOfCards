@@ -158,7 +158,7 @@ public class GameFragment extends Fragment {
         ImageView playerImage;
         for (int i = 1; i <= playerList.size(); i++) {
             playerImage = (ImageView) rootView.findViewById(
-                    GameFragment.context.getResources().getIdentifier("R.id.player" + i + "Image", "drawable", GameFragment.context.getPackageName()));
+                    GameFragment.context.getResources().getIdentifier("player" + i + "Image", "drawable", GameFragment.context.getPackageName()));
             if (playerList.get(i - 1).isActive) {
                 playerImage.setImageResource(R.drawable.active_icon);
             } else {
