@@ -140,7 +140,12 @@ public class PlayerListFragment extends Fragment {
                 gameObject.setNumberOfDeck(numberOfDecks);
             }
         }
-
+        if (SettingsFragment.selectedTableImage == -1) {
+            SettingsFragment.selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "id", getActivity().getPackageName());
+        }
+        if (SettingsFragment.selectedCardImage == -1) {
+            SettingsFragment.selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "id", getActivity().getPackageName());
+        }
         gameObject.gameBackground = SettingsFragment.selectedTableImage;
         gameObject.cardBackImage = SettingsFragment.selectedCardImage;
 

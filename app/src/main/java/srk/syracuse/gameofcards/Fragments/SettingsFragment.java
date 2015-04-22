@@ -39,7 +39,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initDataset();
     }
 
@@ -130,10 +129,10 @@ public class SettingsFragment extends Fragment {
         mCardDataSet = new int[]{R.drawable.cardback1, R.drawable.cardback2, R.drawable.cardback3, R.drawable.cardback4};
         mTableDataSet = new int[]{R.drawable.table_back1, R.drawable.table_back2};
         if (selectedTableImage == -1) {
-            selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "drawable", getActivity().getPackageName());
+            selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "id", getActivity().getPackageName());
         }
         if (selectedCardImage == -1) {
-            selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "drawable", getActivity().getPackageName());
+            selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "id", getActivity().getPackageName());
         }
     }
 }

@@ -193,13 +193,13 @@ public class GameFragment extends Fragment {
         hideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(thisPlayer.hand.handFaceUp)
-                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                if (thisPlayer.hand.handFaceUp)
+                    for (int i = 0; i < thisPlayer.hand.gameHand.size(); i++) {
                         setCardFaceUp(i, false);
                         mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
                     }
                 else
-                    for(int i=0; i<thisPlayer.hand.gameHand.size(); i++) {
+                    for (int i = 0; i < thisPlayer.hand.gameHand.size(); i++) {
                         setCardFaceUp(i, true);
                         mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
                     }
