@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -31,8 +32,8 @@ public class SettingsFragment extends Fragment {
     public static int selectedTableImage = -1;
     public static RadioButton dealEven;
     public static RadioButton dealExact;
-    private int[] mCardDataSet;
-    private int[] mTableDataSet;
+    private static int[] mCardDataSet;
+    private static int[] mTableDataSet;
     public static Spinner dealExactCards;
     public static MaterialEditText deckNumber;
 
@@ -91,7 +92,9 @@ public class SettingsFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
+        final AlphaAnimation alpha = new AlphaAnimation(0.5F, 0.5F);
+        alpha.setDuration(0);
+        alpha.setFillAfter(true);
         mCardRecyclerView = (RecyclerView) rootView.findViewById(R.id.cardDesignList);
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCardRecyclerView.setLayoutManager(mCardLayoutManager);
@@ -106,7 +109,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                //selectedCardImage = Integer.valueOf(image.getTag().toString());
+                selectedCardImage = mCardDataSet[position];
             }
         });
 
@@ -114,7 +117,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedTableImage = Integer.valueOf(image.getTag().toString());
+                selectedTableImage = mTableDataSet[position];
             }
         });
         return rootView;
@@ -129,10 +132,10 @@ public class SettingsFragment extends Fragment {
         mCardDataSet = new int[]{R.drawable.cardback1, R.drawable.cardback2, R.drawable.cardback3, R.drawable.cardback4};
         mTableDataSet = new int[]{R.drawable.table_back1, R.drawable.table_back2};
         if (selectedTableImage == -1) {
-            selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "id", getActivity().getPackageName());
+            selectedTableImage = R.drawable.table_back1;
         }
         if (selectedCardImage == -1) {
-            selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "id", getActivity().getPackageName());
+            selectedCardImage = R.drawable.cardback1;
         }
     }
 }

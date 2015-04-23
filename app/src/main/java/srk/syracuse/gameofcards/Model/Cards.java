@@ -1,6 +1,7 @@
 package srk.syracuse.gameofcards.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Cards implements Serializable {
     public final static int SPADES = 0;
@@ -41,7 +42,7 @@ public class Cards implements Serializable {
 
         this.suit = _suit;
         this.rank = _rank;
-        this.cardFaceUp=false;
+        this.cardFaceUp = false;
         this.imageID = getSuitAsString() + "_" + getValueAsString();
     }
 
@@ -120,6 +121,119 @@ public class Cards implements Serializable {
 //        } else
 //            return getValueAsString() + " of " + getSuitAsString();
 //    }
+
+//    public ArrayList<Cards> getCopyForAll(String cardRank) {
+//        ArrayList<Cards> tempCardSuitList = new ArrayList();
+//        if (cardRank.equals("joker")) {
+//            Cards card = new Cards();
+//            card.imageID = cardRank;
+//            tempCardSuitList.add(card);
+//        } else {
+//            Cards card = new Cards();
+//            card.imageID = "diamonds_" + cardRank;
+//            tempCardSuitList.add(card);
+//            card = new Cards();
+//            card.imageID = "hearts_" + cardRank;
+//            tempCardSuitList.add(card);
+//            card = new Cards();
+//            card.imageID = "clubs_" + cardRank;
+//            tempCardSuitList.add(card);
+//            card = new Cards();
+//            card.imageID = "spades_" + cardRank;
+//            tempCardSuitList.add(card);
+//        }
+//        return tempCardSuitList;
+//    }
+
+    public ArrayList<Cards> getCopyForAll(String cardRank) {
+        ArrayList<Cards> tempCardSuitList = new ArrayList();
+        if (cardRank.equals("joker")) {
+            Cards card = new Cards();
+            String[] meta = card.imageID.split("_");
+            card.rank = getRankFromString(meta[1]);
+            card.suit = getSuitFromString(meta[0]);
+            card.imageID = meta[0];
+            tempCardSuitList.add(card);
+        } else {
+            Cards card = new Cards();
+
+            card.imageID = "diamonds_" + cardRank;
+            String[] meta = card.imageID.split("_");
+            card.rank = getRankFromString(meta[1]);
+            card.suit = getSuitFromString(meta[0]);
+            tempCardSuitList.add(card);
+
+            card = new Cards();
+            card.imageID = "hearts_" + cardRank;
+            String[] meta1 = card.imageID.split("_");
+            card.rank = getRankFromString(meta1[1]);
+            card.suit = getSuitFromString(meta1[0]);
+            tempCardSuitList.add(card);
+
+            card = new Cards();
+            card.imageID = "clubs_" + cardRank;
+            String[] meta2 = card.imageID.split("_");
+            card.rank = getRankFromString(meta2[1]);
+            card.suit = getSuitFromString(meta2[0]);
+            tempCardSuitList.add(card);
+
+            card = new Cards();
+            card.imageID = "spades_" + cardRank;
+            String[] meta3 = card.imageID.split("_");
+            card.rank = getRankFromString(meta3[1]);
+            card.suit = getSuitFromString(meta3[0]);
+            tempCardSuitList.add(card);
+        }
+        return tempCardSuitList;
+    }
+
+    public int getSuitFromString(String suit) {
+        if (suit.equals("diamonds"))
+            return DIAMONDS;
+        else if (suit.equals("hearts"))
+            return HEARTS;
+        else if (suit.equals("clubs"))
+            return CLUBS;
+        else if (suit.equals("spades"))
+            return SPADES;
+
+        return JOKER;
+    }
+
+    public int getRankFromString(String rank) {
+        if (suit == JOKER)
+            return 0;
+        switch (rank) {
+            case "ace":
+                return 1;
+            case "two":
+                return 2;
+            case "three":
+                return 3;
+            case "four":
+                return 4;
+            case "five":
+                return 5;
+            case "six":
+                return 6;
+            case "seven":
+                return 7;
+            case "eight":
+                return 8;
+            case "nine":
+                return 9;
+            case "ten":
+                return 10;
+            case "jack":
+                return JACK;
+            case "queen":
+                return QUEEN;
+            case "joker":
+                return JOKER;
+            default:
+                return KING;
+        }
+    }
 
     public boolean isEqual(Cards card) {
         if (suit == card.suit && rank == card.rank)

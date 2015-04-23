@@ -30,9 +30,11 @@ public class Game implements Serializable {
         this.gameName = gameName;
         mTable = new Table();
         if (usernames.size() > 6) {
+            usernames.remove(usernames.size() - 1);
             throw new IllegalArgumentException("Number of players above the allowed limit (6)");
         }
-        if (numberOfCardsDraw > ((numberOfDeck * (52 - restrictedCards.size())) / numberOfPlayer)) {
+        if (drawEqual && numberOfCardsDraw > ((numberOfDeck * (52 - restrictedCards.size())) / numberOfPlayer)) {
+            usernames.remove(usernames.size() - 1);
             throw new IllegalArgumentException("Cards to be drawn per person not a valid number");
         }
 
@@ -43,29 +45,87 @@ public class Game implements Serializable {
                 decks.add(new Deck());
         }
 
-        for (int i = 0; i < usernames.size(); i++) {
-            players.add(new Player(i + 1, usernames.get(i), getHand(), true));
-        }
+        if (!drawEqual) {
+            ArrayList<Hand> hands = getHand();
 
+            for (int i = 0; i < numberOfPlayer; i++) {
+                players.add(new Player(i + 1, usernames.get(i), hands.get(i), true));
+            }
+        } else {
+            ArrayList<Hand> hands = getHand(this.numberOfCardsDraw);
+            for (int i = 0; i < numberOfPlayer; i++) {
+                players.add(new Player(i + 1, usernames.get(i), hands.get(i), true));
+            }
+        }
     }
 
-    public Hand getHand() {
+    public ArrayList<Hand> getHand(int number) {
+        ArrayList<Hand> allHands = new ArrayList();
+        ArrayList<Cards> allCards = new ArrayList();
         ArrayList<Cards> handCards = new ArrayList();
         int deckNum;
         boolean didGive;
-        for (int i = 0; i < this.numberOfCardsDraw; i++) {
-            didGive = false;
-            while (!didGive) {
-                deckNum = randInt(0, numberOfDeck - 1);
-                Deck deck = decks.get(deckNum);
-                if (deck.numberOfCards > 0) {
-                    deck.shuffleDeck();
-                    handCards.add(deck.removeCard());
-                    didGive = true;
-                }
+
+        for (int i = 0; i < numberOfDeck; i++) {
+            Deck temp = decks.get(i);
+            for (Cards card : temp.cards) {
+                allCards.add(card);
             }
         }
-        return new Hand(handCards);
+
+        for (int k = 0; k < numberOfPlayer; k++) {
+            for (int i = 0; i < number; i++) {
+                shuffleDeck(allCards);
+                handCards.add(allCards.get(0));
+                allCards.remove(0);
+            }
+            allHands.add(new Hand(handCards));
+            handCards = new ArrayList<>();
+        }
+        return allHands;
+    }
+
+    public ArrayList<Hand> getHand() {
+        ArrayList<Hand> allHands = new ArrayList<Hand>(numberOfPlayer);
+        ArrayList<Cards> allCards = new ArrayList();
+
+        for (int j = 0; j < numberOfPlayer; j++) {
+            allHands.add(new Hand());
+        }
+
+        for (int i = 0; i < numberOfDeck; i++) {
+            Deck temp = decks.get(i);
+            for (Cards card : temp.cards) {
+                allCards.add(card);
+            }
+        }
+
+        while (allCards.size() > 0) {
+            int playernum = 0;
+            while (playernum < numberOfPlayer && allCards.size() > 0) {
+                if (allCards.size() != 1)
+                    shuffleDeck(allCards);
+                allHands.get(playernum).addCard(allCards.get(0));
+                allCards.remove(0);
+                playernum++;
+            }
+        }
+        return allHands;
+    }
+
+    public ArrayList<Cards> shuffleDeck(ArrayList<Cards> allCards) {
+        int random;
+        for (int i = 0; i < allCards.size(); i++) {
+            random = getRandomCard(i);
+            Cards temp = allCards.get(i);
+            allCards.set(i, allCards.get(random));
+            allCards.set(random, temp);
+        }
+        return allCards;
+    }
+
+    static int getRandomCard(int cardNumber) {
+        return (int) (Math.random() * cardNumber + 1);
     }
 
     public static int randInt(int min, int max) {

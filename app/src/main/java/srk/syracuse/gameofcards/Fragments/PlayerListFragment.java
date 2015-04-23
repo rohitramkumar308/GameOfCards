@@ -67,10 +67,14 @@ public class PlayerListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (ServerConnectionThread.allPlayersJoined) {
-                    initializeGame();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
-                            .commit();
+                    try {
+                        initializeGame();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
+                                .commit();
+                    } catch (IllegalArgumentException exception) {
+                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Waiting for all players to Join the game", Toast.LENGTH_SHORT).show();
                 }
@@ -128,35 +132,41 @@ public class PlayerListFragment extends Fragment {
     public void initializeGame() {
         ArrayList<Cards> restrictedCards = new ArrayList();
         deviceList.add(MainFragment.userName.getText().toString());
-        gameObject = new Game(deviceList, 1, 5, true, restrictedCards, HostFragment.gameName.getText().toString());
+        boolean dealExact = false;
+        int numberOfDecks = 1;
+        int numberOfCardsDraw = 5;
 
         if (SettingsFragment.dealExact != null && SettingsFragment.dealExact.isChecked()) {
-            gameObject.setDrawEqual(false);
-            gameObject.setNumberOfCardsDraw(Integer.valueOf(SettingsFragment.dealExactCards.getSelectedItem().toString()));
+            dealExact = true;
+            numberOfCardsDraw = Integer.valueOf(SettingsFragment.dealExactCards.getSelectedItem().toString());
         }
         if (SettingsFragment.deckNumber != null && SettingsFragment.deckNumber.getText().length() > 0) {
-            int numberOfDecks = Integer.valueOf(SettingsFragment.deckNumber.toString());
-            if (numberOfDecks >= 1 && numberOfDecks <= 6) {
-                gameObject.setNumberOfDeck(numberOfDecks);
+            numberOfDecks = Integer.valueOf(SettingsFragment.deckNumber.getText().toString());
+            if (!(numberOfDecks >= 1 && numberOfDecks <= 6)) {
+                numberOfDecks = 1;
+                Toast.makeText(getActivity(), "Only a total of 6 decks is allowed", Toast.LENGTH_SHORT).show();
             }
         }
+        if (DeckCustomizeDialog.exclusionCardList != null) {
+            Cards card = new Cards();
+            for (int i = 0; i < DeckCustomizeDialog.exclusionCardList.size(); i++) {
+                restrictedCards.addAll(card.getCopyForAll(DeckCustomizeDialog.exclusionCardList.get(i).getCardTitle()));
+            }
+        }
+        gameObject = new Game(deviceList, numberOfDecks, numberOfCardsDraw, dealExact, restrictedCards, HostFragment.gameName.getText().toString());
+
         if (SettingsFragment.selectedTableImage == -1) {
-            SettingsFragment.selectedTableImage = getActivity().getResources().getIdentifier("table_back1", "id", getActivity().getPackageName());
+            gameObject.gameBackground = R.drawable.table_back1;
+        } else {
+            gameObject.gameBackground = SettingsFragment.selectedTableImage;
         }
         if (SettingsFragment.selectedCardImage == -1) {
-            SettingsFragment.selectedCardImage = getActivity().getResources().getIdentifier("cardback1", "id", getActivity().getPackageName());
+            gameObject.cardBackImage = R.drawable.cardback1;
+        } else {
+            gameObject.cardBackImage = SettingsFragment.selectedCardImage;
         }
-        gameObject.gameBackground = SettingsFragment.selectedTableImage;
-        gameObject.cardBackImage = SettingsFragment.selectedCardImage;
-
-
-//        if (DeckCustomizeDialog.exclusionCardList != null) {
-//            Cards card = new Cards();
-//            for (int i = 0; i < DeckCustomizeDialog.exclusionCardList.size(); i +=) {
-//                card.imageID
-//            }
-//        }
         ServerHandler.sendToAll(gameObject);
+
     }
 
 

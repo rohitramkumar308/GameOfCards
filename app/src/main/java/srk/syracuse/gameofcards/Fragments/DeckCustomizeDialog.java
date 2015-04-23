@@ -87,7 +87,7 @@ public class DeckCustomizeDialog extends DialogFragment {
 
     private void initCardList() {
         CardCustomize cards = new CardCustomize();
-        cards.setCardImage(R.drawable.joker);
+        cards.setCardImage(R.drawable.joker_zero);
         cards.setIsSelected(true);
         cards.setCardTitle("Joker");
         cardList.add(cards);

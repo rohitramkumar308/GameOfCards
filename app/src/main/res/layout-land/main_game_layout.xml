@@ -152,6 +152,7 @@
         android:background="@drawable/layout_drawable"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
+        android:visibility="invisible"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:paddingRight="10dp"
@@ -189,8 +190,7 @@
         android:paddingRight="10dp"
         android:id="@+id/linearLayout5">
 
-        <com.skyfishjy.library.RippleBackground
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -200,6 +200,7 @@
             app:rb_rippleAmount="4"
             app:rb_duration="3000"
             app:rb_scale="6">
+
             <Button
                 android:id="@+id/playButton"
                 android:layout_width="60dp"
