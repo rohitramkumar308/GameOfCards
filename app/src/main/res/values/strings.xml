@@ -39,4 +39,6 @@
         <item>queen</item>
         <item>king</item>
     </string-array>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 </resources>

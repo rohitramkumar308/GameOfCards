@@ -184,76 +184,20 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:paddingRight="10dp"
-        android:id="@+id/linearLayout5">
+        android:id="@+id/linearLayout5"
+        android:layout_alignTop="@+id/tableView"
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <at.markushi.ui.CircleButton
-                android:layout_width="64dip"
-                android:layout_height="64dip"
-                android:id="@+id/playButton"
-                android:visibility="gone"
-                app:cb_color="#0099CC"
-                app:cb_pressedRingWidth="8dip"
-                android:layout_marginBottom="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:background="@drawable/circle_button_drawable" />
-
-            <TextView
-                android:id="@+id/myImageViewText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_alignLeft="@+id/playButton"
-                android:layout_alignTop="@+id/playButton"
-                android:layout_alignRight="@+id/playButton"
-                android:layout_alignBottom="@+id/playButton"
-                android:text="Play&#10;Move"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#ffffff" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <at.markushi.ui.CircleButton
-                android:id="@+id/hideCardsButton"
-                android:layout_width="60dp"
-                android:layout_height="61dp"
-                android:textStyle="bold"
-                app:cb_pressedRingWidth="8dip"
-                android:layout_marginBottom="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:background="@drawable/circle_button_drawable" />
-
-            <TextView
-                android:id="@+id/myImageViewText1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/hideCardsButton"
-                android:layout_alignTop="@+id/hideCardsButton"
-                android:layout_alignRight="@+id/hideCardsButton"
-                android:layout_alignBottom="@+id/hideCardsButton"
-                android:text="Show&#10;Cards"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#ffffff" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
 
             <at.markushi.ui.CircleButton
                 android:id="@+id/foldCardsButton"
@@ -279,13 +223,76 @@
                 android:textColor="#ffffff" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <at.markushi.ui.CircleButton
+                android:layout_width="64dip"
+                android:layout_height="64dip"
+                android:id="@+id/playButton"
+                app:cb_color="#0099CC"
+                android:visibility="invisible"
+                app:cb_pressedRingWidth="8dip"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/circle_button_drawable" />
+
+            <TextView
+                android:id="@+id/myImageViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_alignLeft="@+id/playButton"
+                android:layout_alignTop="@+id/playButton"
+                android:layout_alignRight="@+id/playButton"
+                android:layout_alignBottom="@+id/playButton"
+                android:text="Play&#10;Move"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/hideCardsButton"
+                android:layout_width="60dp"
+                android:layout_height="61dp"
+                android:textStyle="bold"
+                app:cb_pressedRingWidth="8dip"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/circle_button_drawable" />
+
+            <TextView
+                android:id="@+id/myImageViewText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/hideCardsButton"
+                android:layout_alignTop="@+id/hideCardsButton"
+                android:layout_alignRight="@+id/hideCardsButton"
+                android:layout_alignBottom="@+id/hideCardsButton"
+                android:text="Show&#10;Cards"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tableView"
-        android:background="#ffffff"
+        android:background="@color/inputText"
         android:alpha="0.7"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -299,15 +306,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardHand"
-        android:background="#ffffff"
+        android:background="@color/inputText"
         android:alpha="0.7"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/linearLayout3"
         android:layout_toRightOf="@+id/linearLayout3"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="18dp"
         android:layout_toLeftOf="@+id/linearLayout5"
         android:layout_toStartOf="@+id/linearLayout5" />
 

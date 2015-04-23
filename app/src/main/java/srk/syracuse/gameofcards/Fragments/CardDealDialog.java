@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
-
-import java.util.ArrayList;
 
 import srk.syracuse.gameofcards.R;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
@@ -35,7 +34,7 @@ public class CardDealDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                 getActivity());
-        builderSingle.setIcon(R.drawable.card_icon);
+        builderSingle.setIcon(R.drawable.deck_icon);
         builderSingle.setTitle("Deal Deck");
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.card_deal_layout, null);
         toPlayer = (RadioButton) rootView.findViewById(R.id.toPlayersRadio);
@@ -49,26 +48,43 @@ public class CardDealDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         boolean checked = ((RadioButton) toPlayer).isChecked();
-                        if (checked) {
-                            GameFragment.gameObject.getHand(Integer.parseInt(numberCards.getText().toString()));
-                            GameFragment.mCardHandAdapter.notifyDataSetChanged();
-                            ServerHandler.sendToAll(GameFragment.gameObject);
-                        } else {
-                            GameFragment.gameObject.mTable.putCardsOnTable(GameFragment.gameObject.getCardsFromDeck(Integer.parseInt(numberCards.getText().toString())));
-                            GameFragment.mTableViewAdapter.notifyDataSetChanged();
-                            ServerHandler.sendToAll(GameFragment.gameObject);
+                        if (numberCards.getText() != null && numberCards.getText().toString().trim().length() > 0) {
+                            int numCards = Integer.parseInt(numberCards.getText().toString());
+                            if (checked) {
+                                if (GameFragment.gameObject.deckCards.size() >= (numCards * GameFragment.gameObject.getNumberOfPlayer())) {
+                                    GameFragment.gameObject.getHand(numCards);
+                                    GameFragment.mCardHandAdapter.notifyDataSetChanged();
+                                    ServerHandler.sendToAll(GameFragment.gameObject);
+                                } else {
+                                    Toast.makeText(getActivity(), "Not enough cards to DEAL!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (GameFragment.gameObject.deckCards.size() >= numCards) {
+                                    GameFragment.gameObject.mTable.putCardsOnTable(GameFragment.gameObject.getCardsFromDeck(numCards));
+                                    GameFragment.mTableViewAdapter.notifyDataSetChanged();
+                                    ServerHandler.sendToAll(GameFragment.gameObject);
+                                } else {
+                                    Toast.makeText(getActivity(), "Not enough cards to DEAL!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
                         }
                         dialog.dismiss();
                     }
-                });
+                }
+
+        );
         builderSingle.setNegativeButton("CANCEL",
-                new DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener()
+
+                {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                });
+                }
+
+        );
 
         return builderSingle.create();
     }

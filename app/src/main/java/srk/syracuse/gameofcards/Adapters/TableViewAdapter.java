@@ -38,7 +38,7 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_back_layout, parent, false));
+                .inflate(R.layout.table_design_layout, parent, false));
     }
 
     @Override

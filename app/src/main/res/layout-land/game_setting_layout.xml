@@ -84,7 +84,8 @@
         android:textStyle="bold"
         app:met_baseColor="#ffffff"
         android:gravity="center"
-        app:met_iconLeft="@drawable/deck_icon"
+        app:met_iconPadding="0dp"
+        app:met_iconLeft="@drawable/card_game"
         app:met_primaryColor="@color/editTextSelect"
         android:inputType="number"
         android:layout_alignTop="@+id/dealtType"
@@ -102,7 +103,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cardDesignList"
-            android:background="#ffffff"
+            android:background="@color/inputText"
             android:alpha="0.7"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -111,7 +112,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tableDesignList"
-            android:background="#ffffff"
+            android:background="@color/inputText"
             android:alpha="0.7"
             android:layout_weight="1"
             android:layout_marginLeft="3dp"

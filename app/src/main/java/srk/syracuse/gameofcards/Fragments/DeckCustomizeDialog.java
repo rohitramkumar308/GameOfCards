@@ -41,7 +41,7 @@ public class DeckCustomizeDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                 getActivity());
-        builderSingle.setIcon(R.drawable.card_icon);
+        builderSingle.setIcon(R.drawable.deck_icon);
         builderSingle.setTitle("Customize Deck");
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_list_fragment, null);
         builderSingle.setView(rootView);

@@ -49,7 +49,7 @@ public class DesignAdapter extends RecyclerView.Adapter<DesignAdapter.ViewHolder
         View v;
         if (isCardType) {
             v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_back_layout, viewGroup, false);
+                    .inflate(R.layout.table_design_layout, viewGroup, false);
         } else {
             v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.table_design_layout, viewGroup, false);

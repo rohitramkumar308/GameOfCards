@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -99,6 +100,13 @@ public class GameFragment extends Fragment {
         if (ServerConnectionThread.socketUserMap != null && ServerConnectionThread.socketUserMap.size() > 0) {
             LinearLayout linearLayout3 = (LinearLayout) rootView.findViewById(R.id.linearLayout3);
             linearLayout3.setVisibility(View.VISIBLE);
+        } else {
+            RelativeLayout.LayoutParams layoutParams;
+            layoutParams = (RelativeLayout.LayoutParams) mCardHand
+                    .getLayoutParams();
+            layoutParams.addRule(RelativeLayout.RIGHT_OF,
+                    0);
+            mCardHand.setLayoutParams(layoutParams);
         }
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,9 +118,13 @@ public class GameFragment extends Fragment {
         dealCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardDealDialog dealCards = new CardDealDialog();
-                dealCards.setTargetFragment(GameFragment.this, 2);
-                dealCards.show(getFragmentManager(), "Deal Cards");
+                if (gameObject.deckCards.size() == 0) {
+                    Toast.makeText(getActivity(), "Not enough cards to DEAL!", Toast.LENGTH_SHORT).show();
+                } else {
+                    CardDealDialog dealCards = new CardDealDialog();
+                    dealCards.setTargetFragment(GameFragment.this, 2);
+                    dealCards.show(getFragmentManager(), "Deal Cards");
+                }
             }
         });
         playButton = (CircleButton) rootView.findViewById(R.id.playButton);
@@ -129,7 +141,6 @@ public class GameFragment extends Fragment {
             @Override
             public void OnItemClick(View v, int position) {
                 View rootLayout = (View) v.getParent();
-                View cardFace = rootLayout.findViewById(R.id.cardDesign);
                 View cardBack = rootLayout.findViewById(R.id.cardDesignBack);
                 updateHand();
                 cardBack.setVisibility(View.INVISIBLE);
@@ -165,16 +176,14 @@ public class GameFragment extends Fragment {
 
             @Override
             public void OnItemLongClick(View v, int position) {
-                boolean fromTempHand = false;
                 tableChanged = true;
                 thisPlayer.hand.gameHand.add(gameObject.mTable.TableCards.get(position));
                 if (tempHandCards.contains(gameObject.mTable.TableCards.get(position))) {
                     tempHandCards.remove(gameObject.mTable.TableCards.get(position));
-                    fromTempHand = true;
                 }
                 if (tempHandCards.size() == 0 && !tableChanged) {
-                    playButton.setVisibility(View.GONE);
-                    myImageViewText.setVisibility(View.GONE);
+                    playButton.setVisibility(View.INVISIBLE);
+                    myImageViewText.setVisibility(View.INVISIBLE);
                 } else {
                     playButton.setVisibility(View.VISIBLE);
                     myImageViewText.setVisibility(View.VISIBLE);
@@ -200,8 +209,8 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 if (tempHandCards.size() > 0 || tableChanged) {
                     tableChanged = false;
-                    playButton.setVisibility(View.GONE);
-                    myImageViewText.setVisibility(View.GONE);
+                    playButton.setVisibility(View.INVISIBLE);
+                    myImageViewText.setVisibility(View.INVISIBLE);
                     updateGameForAll(gameObject, Constants.GAME_PLAY);
                 }
             }
