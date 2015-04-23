@@ -44,7 +44,7 @@ public class JoinGameFragment extends Fragment {
             public void onClick(View view) {
                 if (gameobject != null) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, new GameFragment(gameobject, ClientConnectionThread.socket)).addToBackStack(PlayerListFragment.class.getName())
+                            .replace(R.id.container, new GameFragment(gameobject, ClientConnectionThread.socket)).addToBackStack(JoinGameFragment.class.getName())
                             .commit();
                 } else {
                     Toast.makeText(getActivity(), "Game setup not complete. Please try again", Toast.LENGTH_SHORT).show();

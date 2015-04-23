@@ -54,6 +54,7 @@ public class Game implements Serializable {
         } else {
             getHand(this.numberOfCardsDraw);
         }
+        usernames.remove(usernames.size() - 1);
     }
 
     public ArrayList<Cards> populateDecks() {
@@ -75,6 +76,18 @@ public class Game implements Serializable {
                 this.deckCards.remove(0);
             }
         }
+    }
+
+    public ArrayList<Cards> getCardsFromDeck(int number) {
+        ArrayList<Cards> cardList = new ArrayList();
+        shuffleDeck(this.deckCards);
+        for (int i = 0; i < number; i++) {
+            Cards card = this.deckCards.get(0);
+            card.cardFaceUp = true;
+            cardList.add(card);
+            this.deckCards.remove(0);
+        }
+        return cardList;
     }
 
     public void getHand() {

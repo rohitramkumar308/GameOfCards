@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -152,7 +153,7 @@ public class GameFragment extends Fragment {
 
             }
         });
-        mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards);
+        mTableViewAdapter = new TableViewAdapter(context, gameObject.mTable.TableCards, gameObject.cardBackImage);
         mTableView.setLayoutManager(mTableLayoutManager);
         mTableView.setAdapter(mTableViewAdapter);
 
@@ -376,7 +377,7 @@ public class GameFragment extends Fragment {
                 updateGameForAll(gameObject, Constants.MOVE_FOLD);
                 break;
             case Constants.NEW_GAME:
-                getActivity().getFragmentManager().popBackStackImmediate();
+                getActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
     }

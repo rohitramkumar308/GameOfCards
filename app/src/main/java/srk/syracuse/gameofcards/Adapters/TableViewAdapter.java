@@ -27,10 +27,12 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
 
     ArrayList<Cards> cards;
     Context context;
+    int cardBack;
 
-    public TableViewAdapter(Context context, ArrayList<Cards> cards) {
+    public TableViewAdapter(Context context, ArrayList<Cards> cards, int cardBack) {
         this.context = context;
         this.cards = cards;
+        this.cardBack = cardBack;
     }
 
     @Override
@@ -45,6 +47,8 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.View
         if (currCard.cardFaceUp) {
             holder.imageView.setImageResource(context.getResources().getIdentifier(currCard.imageID, "drawable",
                     context.getPackageName()));
+        } else {
+            holder.imageView.setImageResource(this.cardBack);
         }
     }
 

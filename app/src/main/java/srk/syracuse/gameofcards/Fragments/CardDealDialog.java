@@ -54,7 +54,9 @@ public class CardDealDialog extends DialogFragment {
                             GameFragment.mCardHandAdapter.notifyDataSetChanged();
                             ServerHandler.sendToAll(GameFragment.gameObject);
                         } else {
-                            //GameFragment.gameObject.mTable.putCardsOnTable(GameFragment.gameObject.de);
+                            GameFragment.gameObject.mTable.putCardsOnTable(GameFragment.gameObject.getCardsFromDeck(Integer.parseInt(numberCards.getText().toString())));
+                            GameFragment.mTableViewAdapter.notifyDataSetChanged();
+                            ServerHandler.sendToAll(GameFragment.gameObject);
                         }
                         dialog.dismiss();
                     }

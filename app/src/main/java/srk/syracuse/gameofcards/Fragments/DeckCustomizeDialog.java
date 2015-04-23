@@ -89,7 +89,7 @@ public class DeckCustomizeDialog extends DialogFragment {
         CardCustomize cards = new CardCustomize();
         cards.setCardImage(R.drawable.joker_zero);
         cards.setIsSelected(true);
-        cards.setCardTitle("Joker");
+        cards.setCardTitle("joker");
         cardList.add(cards);
         String[] cardNames = getActivity().getResources().getStringArray(R.array.card_array);
         for (int j = 0; j < cardNames.length; j++) {

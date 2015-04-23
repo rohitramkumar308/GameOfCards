@@ -19,16 +19,7 @@ public class Cards implements Serializable {
     private int rank;
     public String imageID;
     public boolean cardFaceUp;
-
-
-    public enum Suits {
-        hearts,
-        spades,
-        diamonds,
-        clubs,
-        joker
-    }
-
+    
     public Cards() {
 
     }
@@ -78,81 +69,45 @@ public class Cards implements Serializable {
     }
 
     public String getValueAsString() {
-        if (suit == JOKER)
-            return "" + rank;
-        else {
-            switch (rank) {
-                case 1:
-                    return "ace";
-                case 2:
-                    return "two";
-                case 3:
-                    return "three";
-                case 4:
-                    return "four";
-                case 5:
-                    return "five";
-                case 6:
-                    return "six";
-                case 7:
-                    return "seven";
-                case 8:
-                    return "eight";
-                case 9:
-                    return "nine";
-                case 10:
-                    return "ten";
-                case 11:
-                    return "jack";
-                case 12:
-                    return "queen";
-                default:
-                    return "king";
-            }
+        switch (rank) {
+            case 0:
+                return "zero";
+            case 1:
+                return "ace";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            case 4:
+                return "four";
+            case 5:
+                return "five";
+            case 6:
+                return "six";
+            case 7:
+                return "seven";
+            case 8:
+                return "eight";
+            case 9:
+                return "nine";
+            case 10:
+                return "ten";
+            case 11:
+                return "jack";
+            case 12:
+                return "queen";
+            default:
+                return "king";
         }
     }
 
-//    public String toString() {
-//        if (suit == JOKER) {
-//            if (suit == 1)
-//                return "Joker";
-//            else
-//                return "Joker #" + rank;
-//        } else
-//            return getValueAsString() + " of " + getSuitAsString();
-//    }
-
-//    public ArrayList<Cards> getCopyForAll(String cardRank) {
-//        ArrayList<Cards> tempCardSuitList = new ArrayList();
-//        if (cardRank.equals("joker")) {
-//            Cards card = new Cards();
-//            card.imageID = cardRank;
-//            tempCardSuitList.add(card);
-//        } else {
-//            Cards card = new Cards();
-//            card.imageID = "diamonds_" + cardRank;
-//            tempCardSuitList.add(card);
-//            card = new Cards();
-//            card.imageID = "hearts_" + cardRank;
-//            tempCardSuitList.add(card);
-//            card = new Cards();
-//            card.imageID = "clubs_" + cardRank;
-//            tempCardSuitList.add(card);
-//            card = new Cards();
-//            card.imageID = "spades_" + cardRank;
-//            tempCardSuitList.add(card);
-//        }
-//        return tempCardSuitList;
-//    }
-
     public ArrayList<Cards> getCopyForAll(String cardRank) {
         ArrayList<Cards> tempCardSuitList = new ArrayList();
-        if (cardRank.equals("joker")) {
+        if (cardRank.equalsIgnoreCase("joker")) {
             Cards card = new Cards();
-            String[] meta = card.imageID.split("_");
-            card.rank = getRankFromString(meta[1]);
-            card.suit = getSuitFromString(meta[0]);
-            card.imageID = meta[0];
+            card.rank = 0;
+            card.suit = JOKER;
+            card.imageID = "joker_zero";
             tempCardSuitList.add(card);
         } else {
             Cards card = new Cards();
