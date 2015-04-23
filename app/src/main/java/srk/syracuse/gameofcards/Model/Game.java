@@ -18,6 +18,7 @@ public class Game implements Serializable {
     public Table mTable;
     private int actionKey;
     public int gameBackground;
+    public ArrayList<Cards> deckCards;
 
     public Game(ArrayList<String> usernames, int numberOfDeck, int numberOfCardsDraw, boolean drawEqual, ArrayList<Cards> restrictedCards, String gameName) {
         this.senderUsername = null;
@@ -44,6 +45,7 @@ public class Game implements Serializable {
             else
                 decks.add(new Deck());
         }
+        this.deckCards = populateDecks();
         for (int i = 0; i < numberOfPlayer; i++) {
             players.add(new Player(i + 1, usernames.get(i), new Hand(), true));
         }
@@ -54,47 +56,35 @@ public class Game implements Serializable {
         }
     }
 
-    public void getHand(int number) {
+    public ArrayList<Cards> populateDecks() {
         ArrayList<Cards> allCards = new ArrayList();
-        ArrayList<Cards> handCards = new ArrayList();
-        int deckNum;
-        boolean didGive;
-
         for (int i = 0; i < numberOfDeck; i++) {
             Deck temp = decks.get(i);
             for (Cards card : temp.cards) {
                 allCards.add(card);
             }
         }
+        return allCards;
+    }
 
+    public void getHand(int number) {
         for (int k = 0; k < numberOfPlayer; k++) {
             for (int i = 0; i < number; i++) {
-                shuffleDeck(allCards);
-                handCards.add(allCards.get(0));
-                allCards.remove(0);
+                shuffleDeck(this.deckCards);
+                players.get(k).hand.addCard(this.deckCards.get(0));
+                this.deckCards.remove(0);
             }
-            players.get(k).hand = new Hand(handCards);
-            handCards = new ArrayList<>();
         }
     }
 
     public void getHand() {
-        ArrayList<Cards> allCards = new ArrayList();
-
-        for (int i = 0; i < numberOfDeck; i++) {
-            Deck temp = decks.get(i);
-            for (Cards card : temp.cards) {
-                allCards.add(card);
-            }
-        }
-
-        while (allCards.size() > 0) {
+        while (this.deckCards.size() > 0) {
             int playernum = 0;
-            while (playernum < numberOfPlayer && allCards.size() > 0) {
-                if (allCards.size() != 1)
-                    shuffleDeck(allCards);
-                players.get(playernum).hand.addCard(allCards.get(0));
-                allCards.remove(0);
+            while (playernum < numberOfPlayer && this.deckCards.size() > 0) {
+                if (this.deckCards.size() != 1)
+                    shuffleDeck(this.deckCards);
+                players.get(playernum).hand.addCard(this.deckCards.get(0));
+                this.deckCards.remove(0);
                 playernum++;
             }
         }

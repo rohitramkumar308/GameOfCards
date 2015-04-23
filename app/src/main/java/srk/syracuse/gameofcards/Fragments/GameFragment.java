@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.markushi.ui.CircleButton;
 import srk.syracuse.gameofcards.Adapters.CardHandAdapter;
 import srk.syracuse.gameofcards.Adapters.TableViewAdapter;
 import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
@@ -42,12 +44,13 @@ public class GameFragment extends Fragment {
     public RecyclerView mTableView;
     public static CardHandAdapter mCardHandAdapter;
     public static TableViewAdapter mTableViewAdapter;
-    public Button foldButton;
+    public CircleButton foldButton;
 
-    public Button playButton;
+    public CircleButton playButton;
+    public TextView myImageViewText;
     public Button newGameButton;
     public Button dealCardButton;
-    public Button hideButton;
+    public CircleButton hideButton;
 
     public static Player thisPlayer = null;
     public AlertDialog dialog;
@@ -89,12 +92,12 @@ public class GameFragment extends Fragment {
         updateHand();
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
         mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
-        foldButton = (Button) rootView.findViewById(R.id.foldCardsButton);
+        foldButton = (CircleButton) rootView.findViewById(R.id.foldCardsButton);
         newGameButton = (Button) rootView.findViewById(R.id.newGameButton);
         dealCardButton = (Button) rootView.findViewById(R.id.dealCardsButton);
-        if (ServerConnectionThread.socketUserMap != null) {
-            newGameButton.setVisibility(View.VISIBLE);
-            dealCardButton.setVisibility(View.VISIBLE);
+        if (ServerConnectionThread.socketUserMap != null && ServerConnectionThread.socketUserMap.size() > 0) {
+            LinearLayout linearLayout3 = (LinearLayout) rootView.findViewById(R.id.linearLayout3);
+            linearLayout3.setVisibility(View.VISIBLE);
         }
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,16 +109,14 @@ public class GameFragment extends Fragment {
         dealCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog = confirmMove(Constants.NEW_GAME).create();
-                dialog.show();
+                CardDealDialog dealCards = new CardDealDialog();
+                dealCards.setTargetFragment(GameFragment.this, 2);
+                dealCards.show(getFragmentManager(), "Deal Cards");
             }
         });
-        hideButton = (Button) rootView.findViewById(R.id.hideCardsButton);
-
-        playButton = (Button) rootView.findViewById(R.id.playButton);
-        final com.skyfishjy.library.RippleBackground rippleBackground = (com.skyfishjy.library.RippleBackground) rootView.findViewById(R.id.playButtonAnimation);
-
-        hideButton = (Button) rootView.findViewById(R.id.hideCardsButton);
+        playButton = (CircleButton) rootView.findViewById(R.id.playButton);
+        myImageViewText = (TextView) rootView.findViewById(R.id.myImageViewText);
+        hideButton = (CircleButton) rootView.findViewById(R.id.hideCardsButton);
 
         mCardLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTableLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -142,7 +143,7 @@ public class GameFragment extends Fragment {
                 tempHandCards.add(thisPlayer.hand.gameHand.get(position));
                 if (tempHandCards.size() > 0) {
                     playButton.setVisibility(View.VISIBLE);
-                    rippleBackground.startRippleAnimation();
+                    myImageViewText.setVisibility(View.VISIBLE);
                 }
                 thisPlayer.hand.gameHand.remove(position);
                 mTableViewAdapter.notifyItemInserted(gameObject.mTable.TableCards.size() - 1);
@@ -172,7 +173,10 @@ public class GameFragment extends Fragment {
                 }
                 if (tempHandCards.size() == 0 && !tableChanged) {
                     playButton.setVisibility(View.GONE);
-                    rippleBackground.stopRippleAnimation();
+                    myImageViewText.setVisibility(View.GONE);
+                } else {
+                    playButton.setVisibility(View.VISIBLE);
+                    myImageViewText.setVisibility(View.VISIBLE);
                 }
 
                 gameObject.mTable.TableCards.remove(position);
@@ -196,8 +200,8 @@ public class GameFragment extends Fragment {
                 if (tempHandCards.size() > 0 || tableChanged) {
                     tableChanged = false;
                     playButton.setVisibility(View.GONE);
-                    rippleBackground.stopRippleAnimation();
-                    updateGameForAll(gameObject);
+                    myImageViewText.setVisibility(View.GONE);
+                    updateGameForAll(gameObject, Constants.GAME_PLAY);
                 }
             }
         });
@@ -245,11 +249,11 @@ public class GameFragment extends Fragment {
     public void setCardFaceUp(int position, boolean isFaceUp) {
         this.thisPlayer.hand.getCard(position).cardFaceUp = isFaceUp;
         this.thisPlayer.hand.isHandFaceUp();
-        Button b = (Button) rootView.findViewById(R.id.hideCardsButton);
+        TextView myImageViewText1 = (TextView) rootView.findViewById(R.id.myImageViewText1);
         if (thisPlayer.hand.handFaceUp)
-            b.setText("Hide Cards");
+            myImageViewText1.setText("Hide Cards");
         else
-            b.setText("Show Cards");
+            myImageViewText1.setText("Show Cards");
     }
 
     public static void updatePlayers() {
@@ -309,12 +313,26 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void updateGameForAll(Game gameObject) {
+    public void updateGameForAll(Game gameObject, int message) {
         if (ClientConnectionThread.serverStarted) {
+            onFold(message);
             ClientHandler.sendToServer(gameObject);
         } else {
             if (Constants.isPlayerActive(MainFragment.userName.getText().toString(), gameObject)) {
+                onFold(message);
                 ServerHandler.sendToAll(gameObject);
+            }
+        }
+    }
+
+    private void onFold(int actionMessage) {
+        if (Constants.MOVE_FOLD == actionMessage) {
+            thisPlayer.isActive = false;
+            for (int i = 0; i < gameObject.players.size(); i++) {
+                if (thisPlayer.username.equals(gameObject.players.get(i).username)) {
+                    gameObject.players.set(i, thisPlayer);
+                    break;
+                }
             }
         }
     }
@@ -338,12 +356,12 @@ public class GameFragment extends Fragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         actionTaken(message);
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
 
@@ -353,16 +371,12 @@ public class GameFragment extends Fragment {
     private void actionTaken(int keyword) {
         switch (keyword) {
             case Constants.MOVE_FOLD:
-                thisPlayer.isActive = false;
-                for (int i = 0; i < gameObject.players.size(); i++) {
-                    if (thisPlayer.username.equals(gameObject.players.get(i).username)) {
-                        gameObject.players.set(i, thisPlayer);
-                        break;
-                    }
-                }
                 currentUserImage.setImageResource(R.drawable.inactive_icon);
                 gameObject.setActionKey(Constants.MOVE_FOLD);
-                updateGameForAll(gameObject);
+                updateGameForAll(gameObject, Constants.MOVE_FOLD);
+                break;
+            case Constants.NEW_GAME:
+                getActivity().getFragmentManager().popBackStackImmediate();
                 break;
         }
     }

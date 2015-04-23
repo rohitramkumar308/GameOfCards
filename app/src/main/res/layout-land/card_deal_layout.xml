@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="244dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/radioGroup">
+        <RadioButton android:id="@+id/toPlayersRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Players"
+            />
+        <RadioButton android:id="@+id/onTableRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On Table"
+            />
+    </RadioGroup>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/dealCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number of Cards to Deal"
+        android:textSize="15dp"
+        android:maxLength="1"
+        android:textStyle="bold"
+        app:met_baseColor="#ffffff"
+        android:gravity="center"
+        app:met_iconLeft="@drawable/deck_icon"
+        app:met_primaryColor="@color/editTextSelect"
+        android:inputType="number"
+        android:layout_below="@+id/radioGroup"
+        android:layout_alignLeft="@+id/radioGroup"
+        android:layout_alignStart="@+id/radioGroup"
+        android:layout_marginTop="51dp" />
+
+</RelativeLayout>
