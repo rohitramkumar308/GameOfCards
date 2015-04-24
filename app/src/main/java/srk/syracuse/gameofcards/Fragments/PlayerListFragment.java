@@ -19,6 +19,7 @@ import srk.syracuse.gameofcards.Connections.ServerConnectionThread;
 import srk.syracuse.gameofcards.Model.Cards;
 import srk.syracuse.gameofcards.Model.Game;
 import srk.syracuse.gameofcards.R;
+import srk.syracuse.gameofcards.Utils.Constants;
 import srk.syracuse.gameofcards.Utils.ServerHandler;
 
 
@@ -165,9 +166,8 @@ public class PlayerListFragment extends Fragment {
         } else {
             gameObject.cardBackImage = SettingsFragment.selectedCardImage;
         }
+        gameObject.senderUsername = String.valueOf(Constants.NEW_GAME);
         ServerHandler.sendToAll(gameObject);
-
     }
-
 
 }

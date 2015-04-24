@@ -88,9 +88,9 @@ public class GameFragment extends Fragment {
         currentUserText = (TextView) rootView.findViewById(R.id.currentPlayerText);
         RelativeLayout relative = (RelativeLayout) rootView.findViewById(R.id.mainGameLayout);
         relative.setBackgroundResource(gameObject.gameBackground);
-
         context = getActivity();
         updatePlayers();
+        updatePlayerStatus();
         updateHand();
         mCardHand = (RecyclerView) rootView.findViewById(R.id.cardHand);
         mTableView = (RecyclerView) rootView.findViewById(R.id.tableView);
@@ -300,7 +300,14 @@ public class GameFragment extends Fragment {
         for (int i = 1; i <= playerList.size(); i++) {
             playerImage = (ImageView) rootView.findViewById(
                     GameFragment.context.getResources().getIdentifier("player" + i + "Image", "id", GameFragment.context.getPackageName()));
-            if (playerList.get(i - 1).isActive) {
+            if (playerList.get(i - 1).username.equals(MainFragment.userName.getText().toString())) {
+                playerImage = (ImageView) rootView.findViewById(R.id.currentPlayerImage);
+                if (playerList.get(i - 1).isActive) {
+                    playerImage.setImageResource(R.drawable.active_icon);
+                } else {
+                    playerImage.setImageResource(R.drawable.inactive_icon);
+                }
+            } else if (playerList.get(i - 1).isActive) {
                 playerImage.setImageResource(R.drawable.active_icon);
             } else {
                 playerImage.setImageResource(R.drawable.inactive_icon);

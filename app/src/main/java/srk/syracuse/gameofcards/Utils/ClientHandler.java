@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
+import srk.syracuse.gameofcards.Connections.ClientListenerThread;
 import srk.syracuse.gameofcards.Connections.ClientSenderThread;
 import srk.syracuse.gameofcards.Fragments.GameFragment;
 import srk.syracuse.gameofcards.Fragments.JoinGameFragment;
@@ -28,6 +29,10 @@ public class ClientHandler extends Handler {
         }
         if (clientObject instanceof Game) {
             if (GameFragment.gameObject != null) {
+                if (((Game) clientObject).senderUsername.equals(String.valueOf(Constants.NEW_GAME))) {
+                    ClientSenderThread.isActive = true;
+                    ((Game) clientObject).senderUsername = "";
+                }
                 GameFragment.gameObject = (Game) clientObject;
                 GameFragment.updatePlayerStatus();
                 GameFragment.updateTable();
