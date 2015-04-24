@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -71,13 +70,11 @@ public class GameFragment extends Fragment {
 
     public GameFragment(Game gameObject) {
         this.gameObject = gameObject;
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -327,6 +324,11 @@ public class GameFragment extends Fragment {
         if (mCardHandAdapter != null) {
             mCardHandAdapter.setCards(thisPlayer.hand.gameHand);
             mCardHandAdapter.notifyDataSetChanged();
+        }
+        if (gameObject.senderUsername.equals(String.valueOf(Constants.NEW_GAME)) && mCardHandAdapter != null) {
+            rootView.setBackgroundResource(gameObject.gameBackground);
+            mCardHandAdapter.setCardBack(gameObject.cardBackImage);
+            gameObject.senderUsername = "";
         }
     }
 

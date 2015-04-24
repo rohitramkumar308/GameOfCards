@@ -3,7 +3,9 @@ package srk.syracuse.gameofcards.Utils;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 
+import srk.syracuse.gameofcards.Activities.GameActivity;
 import srk.syracuse.gameofcards.Connections.ClientConnectionThread;
 import srk.syracuse.gameofcards.Connections.ClientListenerThread;
 import srk.syracuse.gameofcards.Connections.ClientSenderThread;
@@ -31,7 +33,7 @@ public class ClientHandler extends Handler {
             if (GameFragment.gameObject != null) {
                 if (((Game) clientObject).senderUsername.equals(String.valueOf(Constants.NEW_GAME))) {
                     ClientSenderThread.isActive = true;
-                    ((Game) clientObject).senderUsername = "";
+//                    ((Game) clientObject).senderUsername = "";
                 }
                 GameFragment.gameObject = (Game) clientObject;
                 GameFragment.updatePlayerStatus();

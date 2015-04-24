@@ -1,5 +1,6 @@
 package srk.syracuse.gameofcards.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,10 @@ public class SettingsFragment extends Fragment {
     private static int[] mTableDataSet;
     public static Spinner dealExactCards;
     public static MaterialEditText deckNumber;
+    private static int previousTablePosition = -1;
+    private static ImageView selectedTableImageView;
+    private static int previousCardPosition = -1;
+    private static ImageView selectedCardImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +114,22 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedCardImage = mCardDataSet[position];
+                if (Integer.valueOf(image.getTag().toString()) == mCardDataSet[position]) {
+                    if (selectedCardImageView != null) {
+                        selectedCardImageView.setBackgroundColor(Color.WHITE);
+                        selectedCardImageView.setTag(mCardDataSet[previousCardPosition]);
+                    }
+                    previousCardPosition = position;
+                    selectedCardImageView = image;
+                    image.setTag(Color.WHITE);
+                    image.setBackgroundColor(Color.RED);
+                    selectedCardImage = mCardDataSet[position];
+                } else {
+                    image.setBackgroundColor(Color.WHITE);
+                    image.setTag(mCardDataSet[position]);
+                    selectedCardImage = R.drawable.cardback1;
+                    image.setImageResource(mCardDataSet[position]);
+                }
             }
         });
 
@@ -117,7 +137,22 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView image = (ImageView) view.findViewById(R.id.cardDesign);
-                selectedTableImage = mTableDataSet[position];
+                if (Integer.valueOf(image.getTag().toString()) == mTableDataSet[position]) {
+                    if (selectedTableImageView != null) {
+                        selectedTableImageView.setBackgroundColor(Color.WHITE);
+                        selectedTableImageView.setTag(mTableDataSet[previousTablePosition]);
+                    }
+                    previousTablePosition = position;
+                    selectedTableImageView = image;
+                    image.setTag(Color.WHITE);
+                    image.setBackgroundColor(Color.RED);
+                    selectedTableImage = mTableDataSet[position];
+                } else {
+                    image.setBackgroundColor(Color.WHITE);
+                    image.setTag(mTableDataSet[position]);
+                    selectedTableImage = R.drawable.table_back1;
+                    image.setImageResource(mTableDataSet[position]);
+                }
             }
         });
         return rootView;

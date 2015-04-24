@@ -45,7 +45,6 @@ public class HostFragment extends Fragment {
                     if (numberPlayers > 5 || numberPlayers < 1) {
                         Toast.makeText(getActivity(), "Maximum 5 players allowed ", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), "Server started", Toast.LENGTH_SHORT).show();
                         ServerConnectionThread startServerThread = new ServerConnectionThread();
                         startServerThread.start();
                         fragmentManager.beginTransaction()
@@ -53,7 +52,7 @@ public class HostFragment extends Fragment {
                                 .commit();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Missing game name or player numbers", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Missing game name or number of players", Toast.LENGTH_SHORT).show();
                 }
             }
         });

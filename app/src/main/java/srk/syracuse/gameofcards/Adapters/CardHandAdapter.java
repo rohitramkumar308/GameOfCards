@@ -30,6 +30,15 @@ public class CardHandAdapter extends RecyclerView.Adapter<CardHandAdapter.ViewHo
 
     ArrayList<Cards> cards;
     Context context;
+
+    public int getCardBack() {
+        return cardBack;
+    }
+
+    public void setCardBack(int cardBack) {
+        this.cardBack = cardBack;
+    }
+
     int cardBack;
 
     public CardHandAdapter(Context context, ArrayList<Cards> cards, int cardBack) {
