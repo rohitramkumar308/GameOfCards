@@ -1,6 +1,8 @@
 package srk.syracuse.gameofcards.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,6 +43,15 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.main_screen_layout, container, false);
         Button hostGame = (Button) rootView.findViewById(R.id.hostGame);
         Button joinGame = (Button) rootView.findViewById(R.id.joinGame);
+        Button infoButton = (Button) rootView.findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new InformationFragment()).addToBackStack(InformationFragment.class.getName())
+                        .commit();
+            }
+        });
         WifiManager wifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
         Method[] wmMethods = wifi.getClass().getDeclaredMethods();
         userName = (MaterialEditText) rootView.findViewById(R.id.userName);

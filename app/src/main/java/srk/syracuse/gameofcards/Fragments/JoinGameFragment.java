@@ -43,8 +43,10 @@ public class JoinGameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (gameobject != null) {
+                    GameFragment gameFragment = new GameFragment();
+                    gameFragment.setParameters(gameobject, ClientConnectionThread.socket);
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, new GameFragment(gameobject, ClientConnectionThread.socket)).addToBackStack(JoinGameFragment.class.getName())
+                            .replace(R.id.container, gameFragment).addToBackStack(JoinGameFragment.class.getName())
                             .commit();
                 } else {
                     Toast.makeText(getActivity(), "Game setup not complete. Please try again", Toast.LENGTH_SHORT).show();

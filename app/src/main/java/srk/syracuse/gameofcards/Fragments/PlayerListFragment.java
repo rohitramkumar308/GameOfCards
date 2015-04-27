@@ -70,8 +70,10 @@ public class PlayerListFragment extends Fragment {
                 if (ServerConnectionThread.allPlayersJoined) {
                     try {
                         initializeGame();
+                        GameFragment gameFragment = new GameFragment();
+                        gameFragment.setParameters(gameObject, null);
                         fragmentManager.beginTransaction()
-                                .replace(R.id.container, new GameFragment(gameObject)).addToBackStack(GameFragment.class.getName())
+                                .replace(R.id.container, gameFragment).addToBackStack(GameFragment.class.getName())
                                 .commit();
                     } catch (IllegalArgumentException exception) {
                         Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();

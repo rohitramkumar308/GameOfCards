@@ -63,14 +63,15 @@ public class GameFragment extends Fragment {
     public static boolean tableChanged = false;
     public static ArrayList<Cards> tempHandCards = new ArrayList<Cards>();
 
-    public GameFragment(Game gameObject, Socket socket) {
+    public GameFragment() {
+
+    }
+
+    public void setParameters(Game gameObject, Socket socket) {
         this.gameObject = gameObject;
         this.socket = socket;
     }
 
-    public GameFragment(Game gameObject) {
-        this.gameObject = gameObject;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
