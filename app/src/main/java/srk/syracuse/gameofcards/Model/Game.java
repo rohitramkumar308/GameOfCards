@@ -78,6 +78,19 @@ public class Game implements Serializable {
         }
     }
 
+    public void setHandPlayer(int number, String userName) {
+        for (int k = 0; k < numberOfPlayer; k++) {
+            if (players.get(k).username.equals(userName)) {
+                for (int i = 0; i < number; i++) {
+                    shuffleDeck(this.deckCards);
+                    players.get(k).hand.addCard(this.deckCards.get(0));
+                    this.deckCards.remove(0);
+                }
+                break;
+            }
+        }
+    }
+
     public ArrayList<Cards> getCardsFromDeck(int number) {
         ArrayList<Cards> cardList = new ArrayList();
         shuffleDeck(this.deckCards);

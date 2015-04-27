@@ -1,46 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="244dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/radioGroup">
-        <RadioButton android:id="@+id/toPlayersRadio"
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radioGroup"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/toPlayersRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="To Players" />
+
+            <RadioButton
+                android:id="@+id/onTableRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="On Table" />
+        </RadioGroup>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/dealCards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To Players"
-            />
-        <RadioButton android:id="@+id/onTableRadio"
-            android:layout_width="wrap_content"
+            android:layout_alignLeft="@+id/radioGroup"
+            android:layout_alignStart="@+id/radioGroup"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="Enter Number of Cards to Deal"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:met_baseColor="#ffffff"
+            app:met_iconLeft="@drawable/card_game"
+            app:met_primaryColor="@color/editTextSelect" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/dealToPlayers"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="On Table"
-            />
-    </RadioGroup>
+            android:layout_alignLeft="@+id/dealCards"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignStart="@+id/dealCards"
+            android:layout_below="@+id/dealCards"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/dealCards"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter Number of Cards to Deal"
-        android:textSize="15dp"
-        android:maxLength="1"
-        android:textStyle="bold"
-        app:met_baseColor="#ffffff"
-        android:gravity="center"
-        app:met_iconLeft="@drawable/deck_icon"
-        app:met_primaryColor="@color/editTextSelect"
-        android:inputType="number"
-        android:layout_below="@+id/radioGroup"
-        android:layout_alignLeft="@+id/radioGroup"
-        android:layout_alignStart="@+id/radioGroup"
-        android:layout_marginTop="51dp" />
+            <RadioButton
+                android:id="@+id/allPlayers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="All" />
 
-</RelativeLayout>
+            <RadioButton
+                android:id="@+id/self"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="self" />
+
+            <RadioButton
+                android:id="@+id/player1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="player1"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/player2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="player2"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/player3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="player3"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/player4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="player4"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/player5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="player5"
+                android:visibility="gone" />
+        </RadioGroup>
+    </RelativeLayout>
+</ScrollView>
