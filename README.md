@@ -9,3 +9,5 @@ Highlights
 - There are no rules. The players to verbally establish the game rules and start playing. Hence enabling the users to play any card game.
 - Play with multiple decks.
 - Supports api 14 - 21
+
+Game of Cards on <a href="https://play.google.com/store/apps/details?id=srk.syracuse.gameofcards">Google Play Store</a>
