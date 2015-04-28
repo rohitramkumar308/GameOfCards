@@ -8,9 +8,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:clickable="true"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:text="@string/info_content" />
+        android:text="@string/info_content"
+        android:textIsSelectable="true" />
 
 
 </LinearLayout>
