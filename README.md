@@ -11,3 +11,5 @@ Highlights
 - Supports api 14 - 21
 
 Game of Cards on <a href="https://play.google.com/store/apps/details?id=srk.syracuse.gameofcards">Google Play Store</a>
+
+More information: <a href="https://medium.com/@rohitramkumar308/a-simple-client-server-game-26ceb7be673c#.a2pvvnlan"/>
