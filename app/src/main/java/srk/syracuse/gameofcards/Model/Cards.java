@@ -10,11 +10,6 @@ public class Cards implements Serializable {
     public final static int CLUBS = 3;
     public final static int JOKER = 4;
 
-    public final static int ACE = 1;
-    public final static int JACK = 11;
-    public final static int QUEEN = 12;
-    public final static int KING = 13;
-
     private int suit;
     private int rank;
     public String imageID;
