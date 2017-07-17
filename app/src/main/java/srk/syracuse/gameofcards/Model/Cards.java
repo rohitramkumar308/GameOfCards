@@ -4,16 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Cards implements Serializable {
-    public final static int SPADES = 0;
-    public final static int HEARTS = 1;
-    public final static int DIAMONDS = 2;
-    public final static int CLUBS = 3;
-    public final static int JOKER = 4;
 
-    public final static int ACE = 1;
-    public final static int JACK = 11;
-    public final static int QUEEN = 12;
-    public final static int KING = 13;
+    private enum Suit {
+        SPADES(0),
+        HEARTS(1),
+        DIAMONDS(2),
+        CLUBS(3),
+        JOKER(4);
+
+        private int value;
+
+        private Suit(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return this.value;
+        }
+    }
 
     private int suit;
     private int rank;
@@ -25,11 +33,16 @@ public class Cards implements Serializable {
     }
 
     public Cards(int _suit, int _rank) {
-        if (_suit != SPADES && _suit != HEARTS && _suit != DIAMONDS &&
-                _suit != CLUBS && _suit != JOKER)
+        if (_suit != Suit.SPADES.value() &&
+                _suit != Suit.HEARTS.value() &&
+                _suit != Suit.DIAMONDS.value() &&
+                _suit != Suit.CLUBS.value() &&
+                _suit != Suit.JOKER.value()) {
             throw new IllegalArgumentException("Illegal playing card suit");
-        if (_suit != JOKER && (_rank < 1 || _rank > 13))
+        }
+        if (_suit != Suit.JOKER.value() && (_rank < 1 || _rank > 13)) {
             throw new IllegalArgumentException("Illegal playing card value");
+        }
 
         this.suit = _suit;
         this.rank = _rank;
@@ -55,13 +68,13 @@ public class Cards implements Serializable {
 
     public String getSuitAsString() {
         switch (suit) {
-            case SPADES:
+            case 0:
                 return "spades";
-            case HEARTS:
+            case 1:
                 return "hearts";
-            case DIAMONDS:
+            case 2:
                 return "diamonds";
-            case CLUBS:
+            case 3:
                 return "clubs";
             default:
                 return "joker";
@@ -106,7 +119,7 @@ public class Cards implements Serializable {
         if (cardRank.equalsIgnoreCase("joker")) {
             Cards card = new Cards();
             card.rank = 0;
-            card.suit = JOKER;
+            card.suit = Suit.JOKER.value();
             card.imageID = "joker_zero";
             tempCardSuitList.add(card);
         } else {
@@ -144,20 +157,21 @@ public class Cards implements Serializable {
 
     public int getSuitFromString(String suit) {
         if (suit.equals("diamonds"))
-            return DIAMONDS;
+            return Suit.DIAMONDS.value();
         else if (suit.equals("hearts"))
-            return HEARTS;
+            return Suit.HEARTS.value();
         else if (suit.equals("clubs"))
-            return CLUBS;
+            return Suit.CLUBS.value();
         else if (suit.equals("spades"))
-            return SPADES;
+            return Suit.SPADES.value();
 
-        return JOKER;
+        return Suit.JOKER.value();
     }
 
     public int getRankFromString(String rank) {
-        if (suit == JOKER)
+        if (suit == Suit.JOKER.value()) {
             return 0;
+        }
         switch (rank) {
             case "ace":
                 return 1;
@@ -180,13 +194,13 @@ public class Cards implements Serializable {
             case "ten":
                 return 10;
             case "jack":
-                return JACK;
+                return 11;
             case "queen":
-                return QUEEN;
-            case "joker":
-                return JOKER;
+                return 12;
+            case "king":
+                return 13;
             default:
-                return KING;
+                return 0;
         }
     }
 
