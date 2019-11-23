@@ -1,6 +1,6 @@
 # GameOfCards
 
-Forgot your deck of cards at home. Don't worry because GameOfCards is here.
+Forgot your deck of cards at home? Don't worry because GameOfCards is here.
 Players may connect over a WIFI hotspot and start playing. One user hosts the game and the rest connect(max players allowed 6). The host has the authority to change the game settings and start the game.
 
 Highlights
