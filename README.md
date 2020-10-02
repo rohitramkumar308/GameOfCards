@@ -9,7 +9,8 @@ Highlights
 - There are no rules. The players to verbally establish the game rules and start playing. Hence enabling the users to play any card game.
 - Play with multiple decks.
 - Supports api 14 - 21
+- It will give you a good time pass and boost your mood
 
-Game of Cards on <a href="https://play.google.com/store/apps/details?id=srk.syracuse.gameofcards">Google Play Store</a>
+to play Game of Cards click here >>> <a href="https://play.google.com/store/apps/details?id=srk.syracuse.gameofcards">Google Play Store</a>
 
-More information: <a href="https://medium.com/@rohitramkumar308/a-simple-client-server-game-26ceb7be673c#.a2pvvnlan">A simple Client — Server game.</a>
+for More information click here >>>: <a href="https://medium.com/@rohitramkumar308/a-simple-client-server-game-26ceb7be673c#.a2pvvnlan">A simple Client — Server game.</a>
